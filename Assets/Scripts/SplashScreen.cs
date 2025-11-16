@@ -3,15 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class SplashScreen : MonoBehaviour
 {
-    public float splashDuration = 3f;  // Duration for the splash screen to show
+    public float splashDuration = 3f;  // Duration for splash screen to show
 
     void Start()
     {
-        Invoke("LoadMainMenu", splashDuration);  // Calls LoadMainMenu after 3 seconds
+        Invoke("LoadMainGameScene", splashDuration);  // Calls LoadMainGameScene after a delay
     }
 
-    void LoadMainMenu()
+    void LoadMainGameScene()
     {
-        SceneManager.LoadScene("MainGameScene");  // Change this to your main scene's name
+        SceneManager.LoadScene("MainGameScene");  // Replace with the actual name of your main game scene
     }
 }
