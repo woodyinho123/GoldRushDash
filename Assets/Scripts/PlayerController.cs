@@ -1,40 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float horizontalInput;
-    public float speed = 10.0f;
-    public float xRange = 10.0f;
+    public float speed = 5f;
+    private Rigidbody rb;
 
-    public GameObject projectilePrefab;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (transform.position.x < -xRange)
-        {
-            transform.position = new Vector3(-xRange, transform.position.y, transform.position.z);
-        }
+    void FixedUpdate()
+    { //Needto fix new input system to old***
+        // Old Input System axes
+        float h = Input.GetAxis("Horizontal"); // A/D or Left/Right
+        float v = Input.GetAxis("Vertical");   // W/S or Up/Down
 
-        if (transform.position.x > xRange)
-        {
-            transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
-        }
-        horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
+        // Combine into movement vector
+        Vector3 inputDir = new Vector3(h, 0, v);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        // Prevent diagonal super speed
+        inputDir = Vector3.ClampMagnitude(inputDir, 1f);
 
-            Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+        // Move the rigidbody
+        Vector3 move = inputDir * speed * Time.fixedDeltaTime;
+        rb.MovePosition(rb.position + move);
+
+        // Rotate player to face movement direction, need to change backwards to forwards*
+        if (inputDir.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(inputDir);
+            rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRot, 0.15f));
         }
     }
 }
