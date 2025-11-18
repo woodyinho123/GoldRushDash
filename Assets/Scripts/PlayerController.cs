@@ -1,4 +1,4 @@
-using UnityEditor.ShaderGraph.Internal;
+
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -6,10 +6,16 @@ public class PlayerController : MonoBehaviour
     public float speed = 5f;
     private Rigidbody rb;
     public int oreCount = 0;  // how many ore pieces collected
+    public Animator anim;   // reference to the miner animator
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        if (anim == null)
+        {
+            anim = GetComponentInChildren<Animator>();
+        }
     }
 
     void FixedUpdate()
@@ -20,6 +26,15 @@ public class PlayerController : MonoBehaviour
 
         // Combine into movement vector
         Vector3 inputDir = new Vector3(h, 0, v);
+
+        // How strong the input is (0 = idle, 1 = full tilt)
+        float inputMagnitude = inputDir.magnitude;
+
+        // Tell animator
+        if (anim != null)
+        {
+            anim.SetFloat("Speed", inputMagnitude);
+        }
 
         // Prevent diagonal super speed
         inputDir = Vector3.ClampMagnitude(inputDir, 1f);
