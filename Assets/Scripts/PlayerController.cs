@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
     private Rigidbody rb;
+    public int oreCount = 0;  // how many ore pieces collected
 
     void Start()
     {
@@ -33,5 +34,20 @@ public class PlayerController : MonoBehaviour
             Quaternion targetRot = Quaternion.LookRotation(inputDir);
             rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRot, 0.15f));
         }
+    }
+            private void OnTriggerEnter(Collider other)
+    {
+        // Check if we touched a Gold Ore trigger
+        if (other.CompareTag("GoldOre"))
+        {
+            oreCount++;
+            Debug.Log("Collected ore! Total: " + oreCount);
+
+            // Remove the ore from the scene
+            Destroy(other.gameObject);
+        }
+    
+
+
     }
 }
