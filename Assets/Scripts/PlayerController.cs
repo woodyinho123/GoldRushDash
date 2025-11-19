@@ -5,9 +5,8 @@ public class PlayerController : MonoBehaviour
     public float speed = 3f;
     public int oreCount = 0;
     public Animator anim;       // drag Miner Animator here in Inspector
-
-    private Rigidbody rb;
-
+     private Rigidbody rb;
+    
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -25,7 +24,6 @@ public class PlayerController : MonoBehaviour
 
         // Option A:
         transform.forward = Vector3.back;
-
         // If that makes him look the wrong way, comment that out and use:
         // transform.forward = Vector3.back;
     }
@@ -54,6 +52,8 @@ public class PlayerController : MonoBehaviour
             Quaternion targetRot = Quaternion.LookRotation(-inputDir);
             rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRot, 0.15f));
         }
+        
+
     }
 
     private void OnTriggerEnter(Collider other)

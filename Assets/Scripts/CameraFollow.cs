@@ -2,18 +2,17 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target;                       // drag PlayerRoot here
-    public Vector3 offset = new Vector3(0f, 3f, -8f); // tweak to taste
+    public Transform target;                // drag PlayerRoot here
+    public Vector3 offset = new Vector3(0f, 2f, -6f); // above + behind player
 
     void LateUpdate()
     {
-        if (target == null) return;
+        if (!target) return;
 
-        // Simple world-space offset behind + above the player
+        // World-space follow
         transform.position = target.position + offset;
 
-        // Look slightly above the player’s center
-        Vector3 lookPos = target.position + Vector3.up * 1.2f;
-        transform.LookAt(lookPos);
+        // Always look at the player
+        transform.LookAt(target.position);
     }
 }
