@@ -4,9 +4,9 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 3f;
     public int oreCount = 0;
-    public Animator anim;       // drag Miner Animator here in Inspector
-     private Rigidbody rb;
-    
+    public Animator anim;
+    private Rigidbody rb;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -20,14 +20,12 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         // Force the starting facing direction down the tunnel.
-        // Try one, and if he still looks at the camera, swap to the other.
 
-        // Option A:
+
+
         transform.forward = Vector3.back;
-        // If that makes him look the wrong way, comment that out and use:
-        // transform.forward = Vector3.back;
-    }
 
+    }
     void FixedUpdate()
     {
         float h = Input.GetAxisRaw("Horizontal");
@@ -48,13 +46,14 @@ public class PlayerController : MonoBehaviour
             Vector3 move = inputDir * speed * Time.fixedDeltaTime;
             rb.MovePosition(rb.position + move);
 
-            // Model needs flipped direction, so keep using -inputDir
+            // Model needs flipped direction
             Quaternion targetRot = Quaternion.LookRotation(-inputDir);
             rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRot, 0.15f));
         }
-        
+
 
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -62,7 +61,15 @@ public class PlayerController : MonoBehaviour
         {
             oreCount++;
             Debug.Log("Collected ore! Total: " + oreCount);
+            // Tell GameManager one ore was collected
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OreCollected();
+            }
+
             Destroy(other.gameObject);
         }
+        }
     }
-}
+
+

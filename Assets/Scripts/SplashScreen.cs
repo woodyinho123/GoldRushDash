@@ -12,6 +12,6 @@ public class SplashScreen : MonoBehaviour
 
     void LoadMainGameScene()
     {
-        SceneManager.LoadScene("MainGameScene");  // Replace with the actual name of your main game scene
+        SceneManager.LoadScene("MainGameScene");  
     }
 }
