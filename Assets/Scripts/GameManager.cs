@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
     // hook this to a button to restart
     public void RestartLevel()
     {
+        Debug.Log("RestartLevel was called");  // TEMP: for testing
+
         Time.timeScale = 1f;
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.buildIndex);
