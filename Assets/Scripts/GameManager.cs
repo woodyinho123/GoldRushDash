@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        // Simple singleton so Player can talk to this
+        // Simple singleton so my player can talk to this
         if (Instance == null)
         {
             Instance = this;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // Count how many ore pieces are in the scene at the start
+        // thisll count how many ore pieces are in the scene at the start
         totalOre = GameObject.FindGameObjectsWithTag("GoldOre").Length;
         collectedOre = 0;
 
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     public void OreCollected()
     {
-        collectedOre++;
+        collectedOre++;   //ore wasnt incrementing when picked up at first, now fixed*
 
         if (collectedOre >= totalOre)
         {
@@ -52,10 +52,10 @@ public class GameManager : MonoBehaviour
             gameOverPanel.SetActive(true);
     }
 
-    // hook this to a button to restart
+    // need to hook this to a button to restart
     public void RestartLevel()
     {
-        Debug.Log("RestartLevel was called");  // TEMP: for testing
+        Debug.Log("RestartLevel was called");  // restart button wasnt working, added this for Temp testing
 
         Time.timeScale = 1f;
         Scene scene = SceneManager.GetActiveScene();

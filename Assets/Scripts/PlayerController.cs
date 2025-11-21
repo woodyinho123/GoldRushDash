@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 3f;
-    public float turnSpeed = 180f;   // degrees per second
+    public float turnSpeed = 180f;   // in the degrees per second
     public int oreCount = 0;
     public Animator anim;
 
@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
 
         if (anim == null)
         {
+            //having problems with player idle and walking anims*
             // This will find the Animator on the Miner child
             anim = GetComponentInChildren<Animator>();
         }
@@ -22,21 +23,22 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        // Optional: set initial facing direction.
-        // If he starts facing the wrong way, change forward to back or tweak in the editor.
-       //transform.forward = Vector3.forward;
+       // *set initial facing direction
+        // If he starts facing the wrong way, change forward to back or tweak* 
+       //transform.forward = Vector3.forward; - need tofix this player is facing backwards***
+       //removed this altogether, player direction is now correct
     }
 
     void FixedUpdate()
     {
-        float h = Input.GetAxisRaw("Horizontal"); // Left/Right arrows or A/D
-        float v = Input.GetAxisRaw("Vertical");   // Up/Down arrows or W/S
+        float h = Input.GetAxisRaw("Horizontal"); // Left/Right arrows
+        float v = Input.GetAxisRaw("Vertical");   // Up/Down arrows 
 
-        // ----- MOVEMENT (forward/back relative to facing) -----
+        // MOVEMENT (forward/back relative to facing) - initital movement wasnt relative to camera, fixed**
         Vector3 move = transform.forward * -v * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + move);
 
-        // ----- ROTATION (turn left/right) -----
+        //ROTATION (turn left/right)
         if (Mathf.Abs(h) > 0.01f)
         {
             float turnAmount = h * turnSpeed * Time.fixedDeltaTime;
@@ -44,10 +46,10 @@ public class PlayerController : MonoBehaviour
             rb.MoveRotation(rb.rotation * deltaRotation);
         }
 
-        // ----- ANIMATION SPEED -----
+        // ANIMATION SPEED 
         if (anim != null)
         {
-            float speedParam = Mathf.Abs(v); // walk anim when moving forward OR backward
+            float speedParam = Mathf.Abs(v); // walk anim when moving forward OR backward, fixed*
             anim.SetFloat("Speed", speedParam);
         }
     }

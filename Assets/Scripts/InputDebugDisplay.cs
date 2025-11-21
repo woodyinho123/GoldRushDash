@@ -1,5 +1,5 @@
 using UnityEngine;
-using TMPro;   // <-- important for TextMeshPro
+using TMPro;   //needed to add this for textmeshpro to work
 
 public class InputDebugDisplay : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class InputDebugDisplay : MonoBehaviour
     {
         string keys = "";
 
-        // WASD or arrow keys – add/remove whatever you use
+        // getting arrow keys input
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             keys += "Up ";
 
@@ -22,7 +22,7 @@ public class InputDebugDisplay : MonoBehaviour
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             keys += "Right ";
 
-        // Show result on screen
+        // Shows result on screen
         if (string.IsNullOrEmpty(keys))
             debugText.text = "";                // nothing pressed = show nothing
         else

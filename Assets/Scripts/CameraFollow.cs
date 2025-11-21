@@ -2,17 +2,18 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target;                // drag PlayerRoot here
+    public Transform target;                // dragging playerRoot here
     public Vector3 offset = new Vector3(0f, 2f, -6f); // above + behind player
 
     void LateUpdate()
     {
         if (!target) return;
 
-        // World-space follow
+        // World-space follow instead of maze-relative
         transform.position = target.position + offset;
 
-        // Always look at the player
+        // always look at the player
         transform.LookAt(target.position);
     }
 }
+//i need to fix the camera circling and jitter which happens occasionally**
