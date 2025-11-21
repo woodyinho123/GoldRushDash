@@ -3263,7 +3263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 1
-  turnSpeed: 155
+  turnSpeed: 120
   oreCount: 0
   anim: {fileID: 1900779150}
 --- !u!54 &321215070
