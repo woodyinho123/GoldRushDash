@@ -3172,22 +3172,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoldOre_01 (4)
       objectReference: {fileID: 0}
-    - target: {fileID: 162688346552673926, guid: 5544a00f5d81e86459c22566a98cf3b0, type: 3}
-      propertyPath: m_TagString
-      value: GoldOre
-      objectReference: {fileID: 0}
-    - target: {fileID: 7793756009882962738, guid: 5544a00f5d81e86459c22566a98cf3b0, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.10457
-      objectReference: {fileID: 0}
-    - target: {fileID: 7793756009882962738, guid: 5544a00f5d81e86459c22566a98cf3b0, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7793756009882962738, guid: 5544a00f5d81e86459c22566a98cf3b0, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.8
-      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 5544a00f5d81e86459c22566a98cf3b0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.9
@@ -3339,9 +3323,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 1
   turnSpeed: 120
+  moveEnergyPerSecond: 5
   oreCount: 0
   anim: {fileID: 1900779150}
-  moveEnergyPerSecond: 5
 --- !u!54 &321215070
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4623,7 +4607,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 20, y: -20}
+  m_AnchoredPosition: {x: 170, y: -70}
   m_SizeDelta: {x: 300, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &466512177
@@ -18642,7 +18626,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20, y: -20}
+  m_AnchoredPosition: {x: -170, y: -70}
   m_SizeDelta: {x: 300, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2041798481
