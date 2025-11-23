@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
     public float turnSpeed = 180f;   // in the degrees per second
     public int oreCount = 0;
     public Animator anim;
+    public float moveEnergyPerSecond = 5f;
+
 
     private Rigidbody rb;
 
@@ -38,6 +40,14 @@ public class PlayerController : MonoBehaviour
         Vector3 move = transform.forward * -v * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + move);
 
+
+        // Only drain energy when moving forward/backward, not when standing still
+        if (Mathf.Abs(v) > 0.01f && GameManager.Instance != null)
+        {
+            GameManager.Instance.SpendEnergy(moveEnergyPerSecond * Time.fixedDeltaTime);
+        }
+
+
         //ROTATION (turn left/right)
         if (Mathf.Abs(h) > 0.01f)
         {
@@ -45,6 +55,8 @@ public class PlayerController : MonoBehaviour
             Quaternion deltaRotation = Quaternion.Euler(0f, turnAmount, 0f);
             rb.MoveRotation(rb.rotation * deltaRotation);
         }
+
+        
 
         // ANIMATION SPEED 
         if (anim != null)

@@ -1,18 +1,35 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;      // for Slider
+using TMPro;               // for TextMeshProUGUI
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public GameObject gameOverPanel;  // UI shown when all gold is collected
+    [Header("UI")]
+    public GameObject gameOverPanel;
+    public TextMeshProUGUI gameOverText;
+
+    [Header("Energy Settings")]
+    public float maxEnergy = 100f;
+    public Slider energyBar;
+
+    [Header("Timer Settings")]
+    public float maxTime = 120f;     // seconds
+    public Slider timerBar;
+    public TextMeshProUGUI timerLabel;
 
     private int totalOre;
     private int collectedOre;
 
+    private float currentEnergy;
+    private float currentTime;
+    private bool isGameOver = false;
+
     private void Awake()
     {
-        // Simple singleton so my player can talk to this
+        // Simple singleton
         if (Instance == null)
         {
             Instance = this;
@@ -25,40 +42,124 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // thisll count how many ore pieces are in the scene at the start
+        // Ensure time is running
+        Time.timeScale = 1f;
+
+        // Count ore at start
         totalOre = GameObject.FindGameObjectsWithTag("GoldOre").Length;
         collectedOre = 0;
 
+        // Init energy & timer
+        currentEnergy = maxEnergy;
+        currentTime = maxTime;
+
+        if (energyBar != null)
+        {
+            energyBar.minValue = 0f;
+            energyBar.maxValue = maxEnergy;
+            energyBar.value = maxEnergy;
+        }
+
+        if (timerBar != null)
+        {
+            timerBar.minValue = 0f;
+            timerBar.maxValue = maxTime;
+            timerBar.value = maxTime;
+        }
+
+        if (timerLabel != null)
+        {
+            timerLabel.text = Mathf.CeilToInt(currentTime).ToString() + "s";
+        }
+
         if (gameOverPanel != null)
+        {
             gameOverPanel.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if (isGameOver) return;
+
+    
+
+        // --------- TIMER COUNTDOWN ----------
+        currentTime -= Time.deltaTime;
+        currentTime = Mathf.Clamp(currentTime, 0f, maxTime);
+
+        if (timerBar != null)
+        {
+            timerBar.value = currentTime;
+        }
+
+        if (timerLabel != null)
+        {
+            timerLabel.text = Mathf.CeilToInt(currentTime).ToString() + "s";
+        }
+
+        if (currentTime <= 0f)
+        {
+            LoseGame("You ran out of time! The mine collapsed.");
+        }
     }
 
     public void OreCollected()
     {
-        collectedOre++;   //ore wasnt incrementing when picked up at first, now fixed*
+        collectedOre++;
 
-        if (collectedOre >= totalOre)
+        if (collectedOre >= totalOre && !isGameOver)
         {
-            GameOver();
+            WinGame();
         }
     }
 
-    private void GameOver()
+    private void WinGame()
     {
-        // Pause the game
+        GameOver("You collected all the gold!");
+    }
+
+    private void LoseGame(string reason)
+    {
+        GameOver(reason);
+    }
+
+    private void GameOver(string message)
+    {
+        isGameOver = true;
         Time.timeScale = 0f;
 
         if (gameOverPanel != null)
             gameOverPanel.SetActive(true);
+
+        if (gameOverText != null)
+            gameOverText.text = message;
     }
 
-    // need to hook this to a button to restart
+    // Hooked to your Restart button
     public void RestartLevel()
     {
-        Debug.Log("RestartLevel was called");  // restart button wasnt working, added this for Temp testing
-
         Time.timeScale = 1f;
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.buildIndex);
     }
+
+    public void SpendEnergy(float amount)
+    {
+        if (isGameOver) return;
+
+        currentEnergy -= amount;
+        currentEnergy = Mathf.Clamp(currentEnergy, 0f, maxEnergy);
+
+        if (energyBar != null)
+        {
+            energyBar.value = currentEnergy;
+        }
+
+        if (currentEnergy <= 0f)
+        {
+            LoseGame("You ran out of energy! The mine collapsed.");
+        }
+    }
+
 }
