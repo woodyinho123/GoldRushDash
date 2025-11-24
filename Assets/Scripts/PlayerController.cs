@@ -82,9 +82,10 @@ public class PlayerController : MonoBehaviour
         // Update mining flag
         isMining = wantsToMine;
 
-        if (isMining)
+        // DEBUG: see when we think we are mining
+        if (anim != null && isMining)
         {
-            Debug.Log("PlayerController: MINING (IsMining true)");
+            Debug.Log("Setting IsMining TRUE on Animator: " + anim.gameObject.name);
         }
 
         // Drive mining animation
