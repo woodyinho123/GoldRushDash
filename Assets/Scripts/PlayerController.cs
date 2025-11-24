@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal"); // Left/Right arrows
         float v = Input.GetAxisRaw("Vertical");   // Up/Down arrows 
 
-        // ----- MOVEMENT (disabled while mining) -----
+        // MOVEMENT (disabled while mining)
         if (!isMining)
         {
             Vector3 move = transform.forward * -v * moveSpeed * Time.fixedDeltaTime;
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // ----- ANIMATION SPEED (walking) -----
+        // ANIMATION SPEED (walking)
         if (anim != null)
         {
             float speedParam = (!isMining) ? Mathf.Abs(Input.GetAxisRaw("Vertical")) : 0f;
@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
         // Update mining flag
         isMining = wantsToMine;
 
-        // DEBUG: see when we think we are mining
+        // DEBUG see when we think we are mining
         if (anim != null && isMining)
         {
             Debug.Log("Setting IsMining TRUE on Animator: " + anim.gameObject.name);
@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
         // Drive mining animation
         if (anim != null)
         {
-            anim.SetBool("IsMining", isMining);   // IMPORTANT: name must match Animator
+            anim.SetBool("IsMining", isMining);   // IMPORTANT name must match Animator
         }
     }
 
