@@ -6,6 +6,11 @@ public class GoldOreMineable : MonoBehaviour
     public float miningTime = 2f;      // seconds required to mine
     public float mineEnergyCost = 10f; // energy spent when ore is fully mined
 
+    [Header("VFX / SFX")]
+    public ParticleSystem mineVFX;   // child on the ore
+    public AudioClip mineSfx;
+    [Range(0f, 1f)] public float mineSfxVolume = 1f;
+
     private float currentMiningTime = 0f;
     private bool isDepleted = false;
 
@@ -34,14 +39,29 @@ public class GoldOreMineable : MonoBehaviour
         if (isDepleted) return;
         isDepleted = true;
 
-        // Spend energy once when mining completes
+        // Play VFX
+        if (mineVFX != null)
+        {
+            // Detach so it isn't destroyed with the ore
+            mineVFX.transform.parent = null;
+            mineVFX.Play();
+            Destroy(mineVFX.gameObject, 2f);
+        }
+
+        // Play SFX
+        if (mineSfx != null)
+        {
+            AudioSource.PlayClipAtPoint(mineSfx, transform.position, mineSfxVolume);
+        }
+
+        // Spend energy & inform GameManager
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SpendEnergy(mineEnergyCost);
             GameManager.Instance.OreCollected();
         }
 
-        // Destroy this ore object
+        // Remove this ore
         Destroy(gameObject);
     }
 }

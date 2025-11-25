@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     public GameObject gameOverPanel;
+    public TextMeshProUGUI oreCounterText;      // new
     public TextMeshProUGUI gameOverText;
 
     [Header("Energy Settings")]
@@ -48,6 +49,8 @@ public class GameManager : MonoBehaviour
         // Count ore at start
         totalOre = GameObject.FindGameObjectsWithTag("GoldOre").Length;
         collectedOre = 0;
+
+        UpdateOreUI();
 
         // Init energy & timer
         currentEnergy = maxEnergy;
@@ -107,6 +110,7 @@ public class GameManager : MonoBehaviour
     public void OreCollected()
     {
         collectedOre++;
+        UpdateOreUI();
 
         if (collectedOre >= totalOre && !isGameOver)
         {
@@ -116,8 +120,18 @@ public class GameManager : MonoBehaviour
 
     private void WinGame()
     {
-        GameOver("You collected all the gold!");
+        string msg = $"You collected all the gold!\n({collectedOre}/{totalOre})";
+        GameOver(msg);
     }
+
+    private void UpdateOreUI()
+    {
+        if (oreCounterText != null)
+        {
+            oreCounterText.text = $"Ore: {collectedOre}/{totalOre}";
+        }
+    }
+
 
     private void LoseGame(string reason)
     {

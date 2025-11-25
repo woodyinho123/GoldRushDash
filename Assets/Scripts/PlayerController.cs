@@ -8,9 +8,13 @@ public class PlayerController : MonoBehaviour
     public int oreCount = 0;
     public Animator anim;
 
+    [SerializeField] private GameObject miningPromptUI;
+
     private Rigidbody rb;
     private GoldOreMineable currentOre;    // ore we are standing next to
     private bool isMining = false;         // are we currently mining?
+
+
 
     void Awake()
     {
@@ -26,6 +30,12 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("PlayerController: Animator not found on child!");
         }
+
+        if (miningPromptUI != null)
+        {
+            miningPromptUI.SetActive(false);
+        }
+
     }
 
     void FixedUpdate()
@@ -88,6 +98,13 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Setting IsMining TRUE on Animator: " + anim.gameObject.name);
         }
 
+        // Safety: if somehow we lost the ore, hide the prompt
+        if (currentOre == null && miningPromptUI != null && miningPromptUI.activeSelf)
+        {
+            miningPromptUI.SetActive(false);
+        }
+
+
         // Drive mining animation
         if (anim != null)
         {
@@ -102,6 +119,11 @@ public class PlayerController : MonoBehaviour
         {
             currentOre = ore;
             Debug.Log("PlayerController: entered ore trigger");
+
+            if (miningPromptUI != null)        //display mining prompt when near gold ore
+            {
+                miningPromptUI.SetActive(true);
+            }
         }
     }
 
@@ -113,6 +135,12 @@ public class PlayerController : MonoBehaviour
             currentOre.ResetMining();
             currentOre = null;
             Debug.Log("PlayerController: exited ore trigger");
+
+            if (miningPromptUI != null)
+            {
+                miningPromptUI.SetActive(false);  //hide when we leave ore
+
+            }
         }
     }
 }
