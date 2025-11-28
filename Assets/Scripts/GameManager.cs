@@ -2,10 +2,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;      // for Slider
 using TMPro;               // for TextMeshProUGUI
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    [Header("Music")]
+    public AudioSource backgroundMusicSource;
+    public float musicFadeDuration = 2f;   // seconds
+
 
     [Header("UI")]
     public GameObject gameOverPanel;
@@ -79,6 +85,15 @@ public class GameManager : MonoBehaviour
         {
             gameOverPanel.SetActive(false);
         }
+
+        // start music
+        if (backgroundMusicSource != null)
+        {
+            backgroundMusicSource.volume = 1f;
+            backgroundMusicSource.loop = true;
+            backgroundMusicSource.Play();
+
+        }
     }
 
     private void Update()
@@ -140,6 +155,8 @@ public class GameManager : MonoBehaviour
 
     private void GameOver(string message)
     {
+        if (isGameOver) return;
+
         isGameOver = true;
         Time.timeScale = 0f;
 
@@ -148,7 +165,35 @@ public class GameManager : MonoBehaviour
 
         if (gameOverText != null)
             gameOverText.text = message;
+
+        // fade out music
+        if (backgroundMusicSource != null)
+        {
+            Debug.Log("GameOver: starting music fade");
+            StartCoroutine(FadeOutMusic());
+        }
+
+        // finally pause gameplay
+        Time.timeScale = 0f;
     }
+
+    private IEnumerator FadeOutMusic()
+    {
+        float startVolume = backgroundMusicSource.volume;
+        float t = 0f;
+
+        while (t < musicFadeDuration)
+        {
+            t += Time.unscaledDeltaTime; // ignore timescale
+            float k = Mathf.Clamp01(t / musicFadeDuration);
+            backgroundMusicSource.volume = Mathf.Lerp(startVolume, 0f, k);
+            yield return null;
+        }
+
+        backgroundMusicSource.Stop();
+        backgroundMusicSource.volume = startVolume;
+    }
+
 
     // Hooked to your Restart button
     public void RestartLevel()

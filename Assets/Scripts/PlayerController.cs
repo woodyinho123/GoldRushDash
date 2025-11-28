@@ -15,6 +15,11 @@ public class PlayerController : MonoBehaviour
     private bool isMining = false;         // are we currently mining?
 
 
+    [Header("Footstep Audio")]
+    public AudioSource footstepSource;   // looped walking sound
+
+
+
 
     void Awake()
     {
@@ -34,6 +39,23 @@ public class PlayerController : MonoBehaviour
         if (miningPromptUI != null)
         {
             miningPromptUI.SetActive(false);
+        }
+
+        // Ensure we have a footstep AudioSource
+        if (footstepSource == null)
+        {
+            footstepSource = GetComponent<AudioSource>();
+        }
+
+        if (footstepSource != null)
+        {
+            // We want to control this manually
+            footstepSource.playOnAwake = false;
+            footstepSource.loop = true;
+        }
+        else
+        {
+            Debug.LogWarning("PlayerController: FootstepSource not assigned.");
         }
 
     }
@@ -63,6 +85,7 @@ public class PlayerController : MonoBehaviour
                 rb.MoveRotation(rb.rotation * deltaRotation);
             }
         }
+        
 
         // ANIMATION SPEED (walking)
         if (anim != null)
@@ -72,6 +95,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+   
     void Update()
     {
         // Are we in range of ore AND holding E?
@@ -110,7 +134,26 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("IsMining", isMining);   // IMPORTANT name must match Animator
         }
+
+        // ----- FOOTSTEPS (looped source on/off) -----
+        float moveInput = Input.GetAxisRaw("Vertical");
+        bool isWalking = !isMining && Mathf.Abs(moveInput) > 0.1f;
+
+        if (footstepSource != null)
+        {
+            if (isWalking)
+            {
+                if (!footstepSource.isPlaying)
+                    footstepSource.Play();
+            }
+            else
+            {
+                if (footstepSource.isPlaying)
+                    footstepSource.Stop();
+            }
+        }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
