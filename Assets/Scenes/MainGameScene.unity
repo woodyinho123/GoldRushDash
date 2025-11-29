@@ -2311,7 +2311,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 7d9bddc7a45a751469ba0c64deafb68a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.15
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -3515,8 +3515,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6517bdd916634448030e77f1b84c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 1
-  turnSpeed: 120
+  walkSpeed: 0.5
+  runSpeed: 1
+  turnSpeed: 80
   moveEnergyPerSecond: 5
   oreCount: 0
   anim: {fileID: 1900779150}
@@ -3608,7 +3609,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -4165,6 +4166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   backgroundMusicSource: {fileID: 235349819}
+  musicVolume: 0.4
   musicFadeDuration: 2
   gameOverPanel: {fileID: 593812652}
   oreCounterText: {fileID: 1715562011}
@@ -4202,7 +4204,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 7d9bddc7a45a751469ba0c64deafb68a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.7
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0

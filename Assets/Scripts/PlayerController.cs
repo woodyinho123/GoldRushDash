@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 3f;
-    public float turnSpeed = 180f;         // degrees per second
+    public float walkSpeed = 3f;
+    public float runSpeed = 6f;   // faster
+    public float turnSpeed = 180f; // degrees per second
     public float moveEnergyPerSecond = 5f;
     public int oreCount = 0;
     public Animator anim;
@@ -13,13 +14,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private GoldOreMineable currentOre;    // ore we are standing next to
     private bool isMining = false;         // are we currently mining?
-
+    private bool isRunning = false;        // are we currently running?
 
     [Header("Footstep Audio")]
-    public AudioSource footstepSource;   // looped walking sound
-
-
-
+    public AudioSource footstepSource;     // looped walking sound
 
     void Awake()
     {
@@ -57,7 +55,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogWarning("PlayerController: FootstepSource not assigned.");
         }
-
     }
 
     void FixedUpdate()
@@ -68,7 +65,13 @@ public class PlayerController : MonoBehaviour
         // MOVEMENT (disabled while mining)
         if (!isMining)
         {
-            Vector3 move = transform.forward * -v * moveSpeed * Time.fixedDeltaTime;
+            // decide if we want to run (hold Left Shift while moving)
+            bool wantsToRun = Input.GetKey(KeyCode.LeftShift) && Mathf.Abs(v) > 0.1f;
+            isRunning = wantsToRun;
+
+            float currentSpeed = isRunning ? runSpeed : walkSpeed;
+
+            Vector3 move = transform.forward * -v * currentSpeed * Time.fixedDeltaTime;
             rb.MovePosition(rb.position + move);
 
             // Only drain energy when actually moving
@@ -85,19 +88,24 @@ public class PlayerController : MonoBehaviour
                 rb.MoveRotation(rb.rotation * deltaRotation);
             }
         }
-        
+        else
+        {
+            // while mining we are not running
+            isRunning = false;
+        }
 
-        // ANIMATION SPEED (walking)
+        // ANIMATION SPEED (walking) + running flag
         if (anim != null)
         {
             float speedParam = (!isMining) ? Mathf.Abs(Input.GetAxisRaw("Vertical")) : 0f;
             anim.SetFloat("Speed", speedParam);
+            anim.SetBool("IsRunning", isRunning);   // drive running state
         }
     }
 
-   
     void Update()
     {
+        // ---------------- MINING ----------------
         // Are we in range of ore AND holding E?
         bool wantsToMine = (currentOre != null && Input.GetKey(KeyCode.E));
 
@@ -128,7 +136,6 @@ public class PlayerController : MonoBehaviour
             miningPromptUI.SetActive(false);
         }
 
-
         // Drive mining animation
         if (anim != null)
         {
@@ -153,7 +160,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -182,7 +188,6 @@ public class PlayerController : MonoBehaviour
             if (miningPromptUI != null)
             {
                 miningPromptUI.SetActive(false);  //hide when we leave ore
-
             }
         }
     }

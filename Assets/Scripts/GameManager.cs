@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Music")]
     public AudioSource backgroundMusicSource;
+    [Range(0f, 1f)] public float musicVolume = 0.15f;
     public float musicFadeDuration = 2f;   // seconds
 
 
@@ -89,7 +90,7 @@ public class GameManager : MonoBehaviour
         // start music
         if (backgroundMusicSource != null)
         {
-            backgroundMusicSource.volume = 1f;
+            backgroundMusicSource.volume = 0.15f;
             backgroundMusicSource.loop = true;
             backgroundMusicSource.Play();
 
