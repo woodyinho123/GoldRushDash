@@ -3498,7 +3498,7 @@ GameObject:
   - component: {fileID: 321215073}
   m_Layer: 0
   m_Name: PlayerRoot
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8467,90 +8467,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767613384}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &773465922
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1009814046169153982, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: dropPoints.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6467218713959171576, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.1809
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.1113
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.5378
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8941481853129393357, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_Name
-      value: FallingRock_01
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7632139215481770964, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-    - {fileID: 2290097942144748640, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-    - {fileID: 6467218713959171576, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-    - {fileID: 1009814046169153982, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8941481853129393357, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1355327237}
-  m_SourcePrefab: {fileID: 100100000, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
 --- !u!1001 &775643996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13178,36 +13094,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1350617643}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1355327236 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8941481853129393357, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-  m_PrefabInstance: {fileID: 773465922}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1355327237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355327236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 331d894ce24a27748a05e6e1fe8a13bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FallingRock
-  impactClip: {fileID: 8300000, guid: eef19df938ffee54883b554e331cdb1c, type: 3}
-  impactVolume: 0.8
-  fallDirection: {x: 0, y: -1, z: 0}
-  initialSpeed: 0
-  acceleration: 15
-  startOnAwake: 1
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  groundSkin: 0.02
-  energyDamage: 30
-  singleHit: 1
-  destroySecondsAfterImpact: 3
 --- !u!1001 &1358730796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19434,7 +19320,6 @@ GameObject:
   - component: {fileID: 2030036464}
   - component: {fileID: 2030036463}
   - component: {fileID: 2030036466}
-  - component: {fileID: 2030036467}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -19534,27 +19419,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 9.999999, y: 2.220446e-16, z: 9.999999}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &2030036467
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2030036461}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 5.000001
-  m_Center: {x: 0, y: -0.000000007450581, z: 0}
 --- !u!1001 &2033647996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20666,79 +20530,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1001 &1193450495425545256
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1009814046169153982, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: dropPoints.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.0156
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.1113
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.5378
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8941481853129393357, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_Name
-      value: FallingRock
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -20751,5 +20542,3 @@ SceneRoots:
   - {fileID: 344795534}
   - {fileID: 1870427662}
   - {fileID: 235349820}
-  - {fileID: 1193450495425545256}
-  - {fileID: 773465922}
