@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(FadeOutMusic());
         }
 
-        // and finally pause gameplay
+        // -and finally pause gameplay
         Time.timeScale = 0f;
     }
 

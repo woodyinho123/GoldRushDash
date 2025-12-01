@@ -3582,7 +3582,7 @@ Transform:
   m_GameObject: {fileID: 321215068}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.9999163, z: -0, w: 0.012936568}
-  m_LocalPosition: {x: -0.087, y: 0.0186, z: -1.1674}
+  m_LocalPosition: {x: -0.087, y: 0.0195, z: -1.1674}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8467,90 +8467,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767613384}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &773465922
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1009814046169153982, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: dropPoints.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6467218713959171576, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.1809
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.1113
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.5378
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8941481853129393357, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_Name
-      value: FallingRock_01
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7632139215481770964, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-    - {fileID: 2290097942144748640, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-    - {fileID: 6467218713959171576, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-    - {fileID: 1009814046169153982, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8941481853129393357, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1355327237}
-  m_SourcePrefab: {fileID: 100100000, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
 --- !u!1001 &775643996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13178,36 +13094,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1350617643}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1355327236 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8941481853129393357, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-  m_PrefabInstance: {fileID: 773465922}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1355327237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355327236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 331d894ce24a27748a05e6e1fe8a13bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FallingRock
-  impactClip: {fileID: 8300000, guid: eef19df938ffee54883b554e331cdb1c, type: 3}
-  impactVolume: 0.8
-  fallDirection: {x: 0, y: -1, z: 0}
-  initialSpeed: 0
-  acceleration: 15
-  startOnAwake: 1
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  groundSkin: 0.02
-  energyDamage: 30
-  singleHit: 1
-  destroySecondsAfterImpact: 3
 --- !u!1001 &1358730796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16319,165 +16205,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1597489785}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1607286594
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1607286600}
-  - component: {fileID: 1607286599}
-  - component: {fileID: 1607286598}
-  - component: {fileID: 1607286597}
-  - component: {fileID: 1607286595}
-  - component: {fileID: 1607286596}
-  m_Layer: 0
-  m_Name: FallingRock_Corridor1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1607286595
+--- !u!114 &1607286595 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1662288224994789338, guid: 631c6de05622123408ef4788efa498d4, type: 3}
+  m_PrefabInstance: {fileID: 4830322016403444617}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607286594}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 331d894ce24a27748a05e6e1fe8a13bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingRock
-  impactClip: {fileID: 8300000, guid: eef19df938ffee54883b554e331cdb1c, type: 3}
-  impactVolume: 1
-  fallDirection: {x: 0, y: -1, z: 0}
-  initialSpeed: 0
-  acceleration: 15
-  startOnAwake: 0
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  groundSkin: 0.02
-  energyDamage: 30
-  singleHit: 1
-  destroySecondsAfterImpact: 3
---- !u!65 &1607286596
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607286594}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &1607286597
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607286594}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 2.8592143
-  m_Center: {x: 0.18812679, y: 0.37159622, z: 0.18090643}
---- !u!23 &1607286598
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607286594}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 4f9cdbf54af944e45ba9ed892f2c436f, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1607286599
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607286594}
-  m_Mesh: {fileID: 4300000, guid: 53088b9f9e12f6c4e8e65ee5a84d1c5d, type: 3}
---- !u!4 &1607286600
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607286594}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0099, y: 0.1138, z: -0.74469}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1608743833 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4976853331106008, guid: 57bc482487154a64085c1d0847e454b3, type: 3}
@@ -19593,7 +19331,6 @@ GameObject:
   - component: {fileID: 2030036464}
   - component: {fileID: 2030036463}
   - component: {fileID: 2030036466}
-  - component: {fileID: 2030036467}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -19693,27 +19430,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 9.999999, y: 2.220446e-16, z: 9.999999}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &2030036467
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2030036461}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 5.000001
-  m_Center: {x: 0, y: -0.000000007450581, z: 0}
 --- !u!1001 &2033647996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20791,52 +20507,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1 &2142167998
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2142168000}
-  - component: {fileID: 2142167999}
-  m_Layer: 0
-  m_Name: RockTrigger_Corridor1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2142167999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2142167998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: badc2799493fc924aa338fd179ed95c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RockTriggerZone
-  rockToDrop: {fileID: 1607286595}
-  triggerOnce: 1
---- !u!4 &2142168000
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2142167998}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0192, y: 0.1138, z: -0.84}
-  m_LocalScale: {x: 1, y: 1, z: 2.7092}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2145298943 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1454373857832846, guid: 57bc482487154a64085c1d0847e454b3, type: 3}
@@ -20871,7 +20541,7 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1001 &1193450495425545256
+--- !u!1001 &2979934007381198614
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -20879,71 +20549,116 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1009814046169153982, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: dropPoints.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
+    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0156
+      value: -0.0076
       objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
+    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1113
+      value: 0.0384
       objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
+    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.5378
+      value: -0.8027
       objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
+    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
+    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
+    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
+    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
+    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
+    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8819924123553471202, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
+    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8941481853129393357, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
+    - target: {fileID: 5355875922206115091, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
+      propertyPath: rockToDrop
+      value: 
+      objectReference: {fileID: 1607286595}
+    - target: {fileID: 8925172710193630411, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
       propertyPath: m_Name
-      value: FallingRock
+      value: RockTrigger_Corridor1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 28ddc9f3b06999240820fb456f2b31a7, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
+--- !u!1001 &4830322016403444617
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 443881465450585522, guid: 631c6de05622123408ef4788efa498d4, type: 3}
+      propertyPath: m_Name
+      value: FallingRock_Corridor1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0099
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1302
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.74469
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 631c6de05622123408ef4788efa498d4, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -20956,7 +20671,5 @@ SceneRoots:
   - {fileID: 344795534}
   - {fileID: 1870427662}
   - {fileID: 235349820}
-  - {fileID: 1193450495425545256}
-  - {fileID: 773465922}
-  - {fileID: 1607286600}
-  - {fileID: 2142168000}
+  - {fileID: 4830322016403444617}
+  - {fileID: 2979934007381198614}
