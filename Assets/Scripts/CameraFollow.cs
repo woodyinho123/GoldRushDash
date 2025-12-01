@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target;                // dragging playerRoot here
-    public Vector3 offset = new Vector3(0f, 2f, -6f); // above + behind player
+    public Transform target;                // dragging playerroot here
+    public Vector3 offset = new Vector3(0f, 2f, -6f); // above and behind player*
 
     void LateUpdate()
     {
         if (!target) return;
-
-        // World-space follow instead of maze-relative
+        //change 2d maze controls to behind camera controlls***
+        // world space follow instead of maze relative
         transform.position = target.position + offset;
 
         // always look at the player

@@ -3,16 +3,16 @@ using UnityEngine.UI;
 
 public class GoldOreMineable : MonoBehaviour
 {
-    [Header("Mining Settings")]
-    public float miningTime = 2f;      // seconds required to mine
+   //mine settings
+    public float miningTime = 2f;      // the seconds required to mine
     public float mineEnergyCost = 10f; // energy spent when ore is fully mined
 
-    [Header("VFX / SFX")]
-    public ParticleSystem mineVFX;   // child on the ore
+    [Header("VFX and SFX")]
+    public ParticleSystem mineVFX;   // child on the ore*
     public AudioClip mineSfx;
     [Range(0f, 1f)] public float mineSfxVolume = 1f;
 
-    [Header("UI")]
+    [Header("players UI")]
     public Slider miningProgressSlider;
 
     private float currentMiningTime = 0f;
@@ -20,18 +20,18 @@ public class GoldOreMineable : MonoBehaviour
 
     void Start()
     {
-        // Auto-find slider if nothing is assigned in the Inspector
+       
         if (miningProgressSlider == null)
         {
-            miningProgressSlider = GetComponentInChildren<Slider>(true);  // true = include inactive
+            miningProgressSlider = GetComponentInChildren<Slider>(true); 
             if (miningProgressSlider == null)
             {
-                Debug.LogWarning($"[Ore {name}] No Slider found in children!");
+                Debug.LogWarning($"[ore {name}] no slider found in children");
                 return;
             }
         }
 
-        // Make sure the parent canvas is enabled
+        
         var canvasGO = miningProgressSlider.transform.parent.gameObject;
         if (!canvasGO.activeSelf)
             canvasGO.SetActive(true);
@@ -40,7 +40,7 @@ public class GoldOreMineable : MonoBehaviour
         miningProgressSlider.maxValue = 1f;   // we feed it 0–1
         miningProgressSlider.value = 0f;
 
-        // Start with just the slider hidden (not the whole canvas)
+        
         miningProgressSlider.gameObject.SetActive(false);
     
 }

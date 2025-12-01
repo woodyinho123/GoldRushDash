@@ -1,30 +1,30 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;      // for Slider
-using TMPro;               // for TextMeshProUGUI
+using UnityEngine.UI;      // for slider
+using TMPro;               // for textmeshPro
 using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [Header("Music")]
+    [Header("music")]
     public AudioSource backgroundMusicSource;
     [Range(0f, 1f)] public float musicVolume = 0.15f;
-    public float musicFadeDuration = 2f;   // seconds
+    public float musicFadeDuration = 2f;   // fade inseconds
 
 
     [Header("UI")]
     public GameObject gameOverPanel;
-    public TextMeshProUGUI oreCounterText;      // new
+    public TextMeshProUGUI oreCounterText;      // new*
     public TextMeshProUGUI gameOverText;
 
-    [Header("Energy Settings")]
+    [Header("Energy settings")]
     public float maxEnergy = 100f;
     public Slider energyBar;
 
-    [Header("Timer Settings")]
-    public float maxTime = 120f;     // seconds
+    [Header("Timer settings")]
+    public float maxTime = 120f;     // seconds again
     public Slider timerBar;
     public TextMeshProUGUI timerLabel;
 
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        // Simple singleton
+       
         if (Instance == null)
         {
             Instance = this;
@@ -50,16 +50,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // Ensure time is running
+        // ensure time is running
         Time.timeScale = 1f;
 
-        // Count ore at start
+        // count ore at thestart*
         totalOre = GameObject.FindGameObjectsWithTag("GoldOre").Length;
         collectedOre = 0;
 
         UpdateOreUI();
 
-        // Init energy & timer
+        // initialise energy and the timer
         currentEnergy = maxEnergy;
         currentTime = maxTime;
 
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
             gameOverPanel.SetActive(false);
         }
 
-        // start music
+        // start western music
         if (backgroundMusicSource != null)
         {
             backgroundMusicSource.volume = 0.15f;
@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
 
     
 
-        // --------- TIMER COUNTDOWN ----------
+        // timer countdown
         currentTime -= Time.deltaTime;
         currentTime = Mathf.Clamp(currentTime, 0f, maxTime);
 
@@ -167,14 +167,14 @@ public class GameManager : MonoBehaviour
         if (gameOverText != null)
             gameOverText.text = message;
 
-        // fade out music
+        // fade out the music
         if (backgroundMusicSource != null)
         {
             Debug.Log("GameOver: starting music fade");
             StartCoroutine(FadeOutMusic());
         }
 
-        // finally pause gameplay
+        // and finally pause gameplay
         Time.timeScale = 0f;
     }
 
@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
 
         while (t < musicFadeDuration)
         {
-            t += Time.unscaledDeltaTime; // ignore timescale
+            t += Time.unscaledDeltaTime; // ignore timescale here
             float k = Mathf.Clamp01(t / musicFadeDuration);
             backgroundMusicSource.volume = Mathf.Lerp(startVolume, 0f, k);
             yield return null;
@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    // Hooked to your Restart button
+    // hooking to  restart button
     public void RestartLevel()
     {
         Time.timeScale = 1f;

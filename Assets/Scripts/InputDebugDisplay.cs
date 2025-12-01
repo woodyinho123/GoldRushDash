@@ -22,10 +22,10 @@ public class InputDebugDisplay : MonoBehaviour
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             keys += "Right ";
 
-        // Shows result on screen
+        // shows result on screen
         if (string.IsNullOrEmpty(keys))
             debugText.text = "";                // nothing pressed = show nothing
         else
-            debugText.text = "Keys: " + keys;   // e.g. "Keys: Up Left"
+            debugText.text = "Keys: " + keys;  
     }
 }

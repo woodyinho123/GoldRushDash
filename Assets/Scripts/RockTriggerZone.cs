@@ -12,11 +12,11 @@ public class RockTriggerZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Only react to the player
+        // only react to player
         if (!other.CompareTag("Player"))
             return;
 
-        // If we already triggered and we only want it once, ignore
+        // if we already triggered and we only want it once then ignore
         if (triggerOnce && hasTriggered)
             return;
 

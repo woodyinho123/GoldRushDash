@@ -5,8 +5,7 @@ public class RockDamage : MonoBehaviour
 {
     [Header("Damage")]
     public float energyDamage = 25f;
-    public bool instantDeath = false;   // set true for lethal rocks
-
+    public bool instantDeath = false;   // true for lethal rocks
     [Header("Only damage the player once per fall")]
     public bool singleHit = true;
 
@@ -14,7 +13,7 @@ public class RockDamage : MonoBehaviour
 
     private void Reset()
     {
-        // Ensure our damage collider is a trigger so it detects overlaps easily
+        // make collider a trigger here
         var col = GetComponent<Collider>();
         if (col) col.isTrigger = true;
     }
@@ -29,7 +28,7 @@ public class RockDamage : MonoBehaviour
             {
                 if (instantDeath)
                 {
-                    // Use your existing LoseGame
+                    
                     var gm = GameManager.Instance;
                     var method = gm.GetType().GetMethod("LoseGame", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                     if (method != null) method.Invoke(gm, new object[] { "Crushed by falling rocks!" });

@@ -7,7 +7,7 @@ public class RockImpactFX : MonoBehaviour
     public AudioClip impactClip;
     [Range(0f, 1f)] public float impactVolume = 0.9f;
 
-    // Called by RockLinearMotion via SendMessage
+    
     public void OnRockImpact()
     {
         if (impactVFX != null)
