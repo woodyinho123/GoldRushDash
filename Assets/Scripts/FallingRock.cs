@@ -10,7 +10,9 @@ public class FallingRock : MonoBehaviour
     [Header("linear motion")]
   public Vector3 fallDirection = Vector3.down;
 
-   
+    [Header("VFX")]
+    public GameObject dustVFXPrefab;
+
     public float initialSpeed = 0f;
 
 
@@ -123,18 +125,48 @@ public class FallingRock : MonoBehaviour
         _impacted = true;
         _falling = false;
 
-        //  pllay impact sound
+        // 1. Spawn dust VFX at impact point
+        if (dustVFXPrefab != null)
+        {
+            // spawn at the rock's position 
+            GameObject dust = Instantiate(dustVFXPrefab, transform.position, Quaternion.identity);
+
+            // auto destroy the dust after a few seconds so it doesn't clutter the scene
+            Destroy(dust, 3f);
+        }
+
+        // 2. Play impact sound
         if (impactClip != null)
         {
             AudioSource.PlayClipAtPoint(impactClip, transform.position, impactVolume);
         }
 
-        
+        // 3. Disable rock visuals & collider so it turns into dust
+        //    (rock stays in scene for a short time but is invisible / not interactive)
+
+        // disable all meshrenderers on this rock (handles child meshes too)
+        foreach (var mr in GetComponentsInChildren<MeshRenderer>())
+        {
+            mr.enabled = false;
+        }
+
+        // disable colliders so it no longer hits the player or ground
+        foreach (var col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+
+        // 4.destroy the rock object after a short delay
         if (destroySecondsAfterImpact > 0f)
         {
             Destroy(gameObject, destroySecondsAfterImpact);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {

@@ -1118,7 +1118,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 216.5, y: 176.4, z: -190.5}
-  m_LocalScale: {x: 1, y: 5, z: 10}
+  m_LocalScale: {x: 1, y: 5, z: 11.339001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1439142968}
@@ -4554,10 +4554,6 @@ PrefabInstance:
       value: DiamondOre_01
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.80000013
-      objectReference: {fileID: 0}
-    - target: {fileID: 7793756009882962738, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
       propertyPath: m_LocalPosition.x
       value: -73.10001
       objectReference: {fileID: 0}
@@ -6271,14 +6267,14 @@ MonoBehaviour:
   backgroundMusicSource: {fileID: 235349819}
   musicVolume: 0.4
   musicFadeDuration: 2
-  gameOverPanel: {fileID: 0}
-  oreCounterText: {fileID: 0}
-  gameOverText: {fileID: 0}
+  gameOverPanel: {fileID: 365858345}
+  oreCounterText: {fileID: 1975082165}
+  gameOverText: {fileID: 320447609}
   maxEnergy: 100
-  energyBar: {fileID: 0}
+  energyBar: {fileID: 987755016}
   maxTime: 200
-  timerBar: {fileID: 0}
-  timerLabel: {fileID: 0}
+  timerBar: {fileID: 628580404}
+  timerLabel: {fileID: 376196651}
 --- !u!4 &344795534
 Transform:
   m_ObjectHideFlags: 0
@@ -10429,6 +10425,7 @@ MonoBehaviour:
   impactClip: {fileID: 8300000, guid: eef19df938ffee54883b554e331cdb1c, type: 3}
   impactVolume: 1
   fallDirection: {x: 0, y: -1, z: 0}
+  dustVFXPrefab: {fileID: 1378908346}
   initialSpeed: 0
   acceleration: 15
   startOnAwake: 0
@@ -11840,7 +11837,7 @@ Transform:
   m_GameObject: {fileID: 785687291}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7168025, z: -0, w: 0.69727635}
-  m_LocalPosition: {x: 0.9511, y: -0.0724, z: 1.3626}
+  m_LocalPosition: {x: 0.989, y: -0.0724, z: 1.361}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12531,6 +12528,7 @@ MonoBehaviour:
   impactClip: {fileID: 8300000, guid: eef19df938ffee54883b554e331cdb1c, type: 3}
   impactVolume: 1
   fallDirection: {x: 0, y: -1, z: 0}
+  dustVFXPrefab: {fileID: 1378908346}
   initialSpeed: 0
   acceleration: 15
   startOnAwake: 0
@@ -13361,6 +13359,7 @@ MonoBehaviour:
   impactClip: {fileID: 8300000, guid: eef19df938ffee54883b554e331cdb1c, type: 3}
   impactVolume: 1
   fallDirection: {x: 0, y: -1, z: 0}
+  dustVFXPrefab: {fileID: 1378908346}
   initialSpeed: 0
   acceleration: 15
   startOnAwake: 0
@@ -15888,7 +15887,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 197, y: 176.4, z: -179.2}
-  m_LocalScale: {x: 1, y: 5, z: 10}
+  m_LocalScale: {x: 1, y: 5, z: 10.993}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1439142968}
@@ -17689,7 +17688,7 @@ Transform:
   m_GameObject: {fileID: 1195987758}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0013, y: -0.089, z: -0.028}
+  m_LocalPosition: {x: -0.0013, y: -0.089, z: -0.0518}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18507,13 +18506,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1302397014}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.6749008, z: -0, w: 0.73790854}
-  m_LocalPosition: {x: -0.4782, y: -0.0908, z: 0.9815}
+  m_LocalRotation: {x: -0, y: -0.704033, z: -0, w: 0.7101673}
+  m_LocalPosition: {x: -0.4453, y: -0.0908, z: 0.9786001}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1285645799}
-  m_LocalEulerAnglesHint: {x: 0, y: -84.893, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -89.503, z: 0}
 --- !u!65 &1302397017
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19691,6 +19690,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366010174}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1378908346 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4489572051843948550, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
+  m_PrefabInstance: {fileID: 5389965742822475056}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1387663875
 GameObject:
   m_ObjectHideFlags: 0
@@ -20503,6 +20507,7 @@ MonoBehaviour:
   impactClip: {fileID: 8300000, guid: eef19df938ffee54883b554e331cdb1c, type: 3}
   impactVolume: 1
   fallDirection: {x: 0, y: -1, z: 0}
+  dustVFXPrefab: {fileID: 1378908346}
   initialSpeed: 0
   acceleration: 15
   startOnAwake: 0
@@ -20620,7 +20625,7 @@ Transform:
   m_GameObject: {fileID: 1428477438}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.93723494, z: -0, w: -0.34869868}
-  m_LocalPosition: {x: 0.043001913, y: 0, z: 1.7751617}
+  m_LocalPosition: {x: 0.0338, y: 0, z: 1.7858}
   m_LocalScale: {x: 0.010000001, y: 0.01, z: 0.02}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21278,7 +21283,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 344795533}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: RestartLevel
         m_Mode: 1
@@ -21364,6 +21369,7 @@ MonoBehaviour:
   impactClip: {fileID: 8300000, guid: eef19df938ffee54883b554e331cdb1c, type: 3}
   impactVolume: 1
   fallDirection: {x: 0, y: -1, z: 0}
+  dustVFXPrefab: {fileID: 1378908346}
   initialSpeed: 0
   acceleration: 15
   startOnAwake: 0
@@ -23462,6 +23468,7 @@ MonoBehaviour:
   impactClip: {fileID: 8300000, guid: eef19df938ffee54883b554e331cdb1c, type: 3}
   impactVolume: 1
   fallDirection: {x: 0, y: -1, z: 0}
+  dustVFXPrefab: {fileID: 1378908346}
   initialSpeed: 0
   acceleration: 15
   startOnAwake: 0
@@ -23578,13 +23585,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1571743945}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.8986945, z: -0, w: 0.43857533}
-  m_LocalPosition: {x: -0.973, y: 0, z: 1.767}
-  m_LocalScale: {x: 0.009999999, y: 0.01, z: 0.02}
+  m_LocalRotation: {x: -0, y: -0.9162217, z: -0, w: 0.4006716}
+  m_LocalPosition: {x: -0.97796243, y: 0, z: 1.7754333}
+  m_LocalScale: {x: 0.009999999, y: 0.01, z: 0.028851999}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1912033133}
-  m_LocalEulerAnglesHint: {x: 0, y: -127.974, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -132.76, z: 0}
 --- !u!1 &1585662484
 GameObject:
   m_ObjectHideFlags: 0
@@ -23947,7 +23954,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 206.8, y: 176.4, z: -190.5}
-  m_LocalScale: {x: 1, y: 5, z: 10}
+  m_LocalScale: {x: 1, y: 5, z: 10.801001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1439142968}
@@ -27001,7 +27008,7 @@ Transform:
   m_GameObject: {fileID: 1798483067}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.90512186, z: -0, w: 0.42515227}
-  m_LocalPosition: {x: 0.11353325, y: -0.0778, z: 1.9324701}
+  m_LocalPosition: {x: 0.1315, y: -0.0778, z: 1.9405}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30893,7 +30900,7 @@ Transform:
   m_GameObject: {fileID: 2142167998}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7174, y: -0.075399995, z: 0.67}
+  m_LocalPosition: {x: 0.7174, y: -0.075399995, z: 0.6322}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30950,12 +30957,69 @@ Transform:
   m_GameObject: {fileID: 7100040238912326861}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.6756091, z: -0, w: 0.7372601}
-  m_LocalPosition: {x: 0.7123219, y: 0, z: 0.67142826}
+  m_LocalPosition: {x: 0.7234, y: 0, z: 0.6705}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.02}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1912033133}
   m_LocalEulerAnglesHint: {x: 0, y: -85.003, z: 0}
+--- !u!1001 &5389965742822475056
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3263913406088950703, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.188
+      objectReference: {fileID: 0}
+    - target: {fileID: 3263913406088950703, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3263913406088950703, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3263913406088950703, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3263913406088950703, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3263913406088950703, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3263913406088950703, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3263913406088950703, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3263913406088950703, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3263913406088950703, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4489572051843948550, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
+      propertyPath: m_Name
+      value: RockDustVFX
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 22aa37249dc8b344280cc056620d2456, type: 3}
 --- !u!23 &6009419784540818644
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -31047,6 +31111,7 @@ MonoBehaviour:
   impactClip: {fileID: 8300000, guid: eef19df938ffee54883b554e331cdb1c, type: 3}
   impactVolume: 1
   fallDirection: {x: 0, y: -1, z: 0}
+  dustVFXPrefab: {fileID: 1378908346}
   initialSpeed: 0
   acceleration: 15
   startOnAwake: 0
@@ -31071,3 +31136,4 @@ SceneRoots:
   - {fileID: 1912033133}
   - {fileID: 1285645799}
   - {fileID: 209551415}
+  - {fileID: 5389965742822475056}
