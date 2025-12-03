@@ -74,11 +74,13 @@ public class PlayerController : MonoBehaviour
             Vector3 move = transform.forward * -v * currentSpeed * Time.fixedDeltaTime;
             rb.MovePosition(rb.position + move);
 
-            // Only drain energy when actually moving
-            if (Mathf.Abs(v) > 0.01f && GameManager.Instance != null)
+           
+            // Only drain energy when SPRINTING (Left Shift held while moving)
+            if (isRunning && Mathf.Abs(v) > 0.01f && GameManager.Instance != null)
             {
                 GameManager.Instance.SpendEnergy(moveEnergyPerSecond * Time.fixedDeltaTime);
             }
+
 
             // ROTATION (turn left/right)
             if (Mathf.Abs(h) > 0.01f)

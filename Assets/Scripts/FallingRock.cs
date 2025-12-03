@@ -105,14 +105,26 @@ public class FallingRock : MonoBehaviour
         {
             dir /= dist;
 
-            //spherecast to see if we hit ground
             if (Physics.SphereCast(from, _radius, dir, out RaycastHit hit, dist + groundSkin, groundMask, QueryTriggerInteraction.Ignore))
             {
-                //snap just above the ground
-                transform.position = hit.point - dir * (_radius - groundSkin);
-                Impact();
-                return;
+                // If we hit the player, don't treat it as ground – keep falling
+                if (hit.collider.CompareTag("Player"))
+                {
+                    transform.position = targetPos; // ignore this hit
+                }
+                else
+                {
+                    // real ground
+                    transform.position = hit.point - dir * (_radius - groundSkin);
+                    Impact();
+                    return;
+                }
             }
+            else
+            {
+                transform.position = targetPos;
+            }
+
         }
 
         // No ground hit yet
@@ -178,7 +190,8 @@ public class FallingRock : MonoBehaviour
 
             if (GameManager.Instance != null && energyDamage > 0f)
             {
-                GameManager.Instance.SpendEnergy(energyDamage);
+                GameManager.Instance.TakeDamage(energyDamage);
+
             }
 
             _hasHitPlayer = true;

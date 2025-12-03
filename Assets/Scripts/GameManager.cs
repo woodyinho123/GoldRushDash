@@ -1,99 +1,99 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;      // for slider
-using TMPro;               // for textmeshPro
+using UnityEngine.UI;
+using TMPro;
 using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [Header("music")]
+    [Header("Music")]
     public AudioSource backgroundMusicSource;
     [Range(0f, 1f)] public float musicVolume = 0.15f;
-    public float musicFadeDuration = 2f;   // fade inseconds
-
+    public float musicFadeDuration = 2f;
 
     [Header("UI")]
     public GameObject gameOverPanel;
-    public TextMeshProUGUI oreCounterText;      // new*
+    public TextMeshProUGUI oreCounterText;
     public TextMeshProUGUI gameOverText;
 
-    [Header("Energy settings")]
+    [Header("HEALTH SYSTEM")]
+    public float maxHealth = 100f;
+    public Slider healthBar;
+    private float currentHealth;
+
+    [Header("ENERGY SYSTEM")]
     public float maxEnergy = 100f;
     public Slider energyBar;
+    private float currentEnergy;
 
     [Header("Timer settings")]
-    public float maxTime = 120f;     // seconds again
+    public float maxTime = 120f;
     public Slider timerBar;
     public TextMeshProUGUI timerLabel;
 
     private int totalOre;
     private int collectedOre;
 
-    private float currentEnergy;
     private float currentTime;
     private bool isGameOver = false;
 
     private void Awake()
     {
-       
         if (Instance == null)
-        {
             Instance = this;
-        }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
     private void Start()
     {
-        // ensure time is running
         Time.timeScale = 1f;
 
-        // count ore at thestart*
+        // Count ore at start
         totalOre = GameObject.FindGameObjectsWithTag("GoldOre").Length;
         collectedOre = 0;
-
         UpdateOreUI();
 
-        // initialise energy and the timer
-        currentEnergy = maxEnergy;
-        currentTime = maxTime;
+        // --- HEALTH ---
+        currentHealth = maxHealth;
+        if (healthBar != null)
+        {
+            healthBar.minValue = 0f;
+            healthBar.maxValue = maxHealth;
+            healthBar.value = currentHealth;
+        }
 
+        // --- ENERGY ---
+        currentEnergy = maxEnergy;
         if (energyBar != null)
         {
             energyBar.minValue = 0f;
             energyBar.maxValue = maxEnergy;
-            energyBar.value = maxEnergy;
+            energyBar.value = currentEnergy;
         }
 
+        // --- TIMER ---
+        currentTime = maxTime;
         if (timerBar != null)
         {
             timerBar.minValue = 0f;
             timerBar.maxValue = maxTime;
-            timerBar.value = maxTime;
+            timerBar.value = currentTime;
         }
-
         if (timerLabel != null)
-        {
             timerLabel.text = Mathf.CeilToInt(currentTime).ToString() + "s";
-        }
 
         if (gameOverPanel != null)
-        {
             gameOverPanel.SetActive(false);
-        }
 
-        // start western music
+        // MUSIC
         if (backgroundMusicSource != null)
         {
-            backgroundMusicSource.volume = 0.15f;
+            backgroundMusicSource.volume = musicVolume;
             backgroundMusicSource.loop = true;
             backgroundMusicSource.Play();
-
         }
     }
 
@@ -101,54 +101,85 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver) return;
 
-    
-
-        // timer countdown
+        // Timer countdown
         currentTime -= Time.deltaTime;
         currentTime = Mathf.Clamp(currentTime, 0f, maxTime);
 
         if (timerBar != null)
-        {
             timerBar.value = currentTime;
-        }
 
         if (timerLabel != null)
-        {
             timerLabel.text = Mathf.CeilToInt(currentTime).ToString() + "s";
-        }
 
         if (currentTime <= 0f)
-        {
             LoseGame("You ran out of time! The mine collapsed.");
-        }
     }
 
+    // ----------------------
+    // GOLD COLLECTION
+    // ----------------------
     public void OreCollected()
     {
         collectedOre++;
         UpdateOreUI();
 
         if (collectedOre >= totalOre && !isGameOver)
-        {
             WinGame();
-        }
-    }
-
-    private void WinGame()
-    {
-        string msg = $"You collected all the gold!\n({collectedOre}/{totalOre})";
-        GameOver(msg);
     }
 
     private void UpdateOreUI()
     {
         if (oreCounterText != null)
-        {
             oreCounterText.text = $"Ore: {collectedOre}/{totalOre}";
+    }
+
+    private void WinGame()
+    {
+        string msg = $"You collected all the ore!\n({collectedOre}/{totalOre})";
+        GameOver(msg);
+    }
+
+    // ----------------------
+    // ENERGY (for mining only)
+    // ----------------------
+    public void SpendEnergy(float amount)
+    {
+        if (isGameOver) return;
+
+        currentEnergy -= amount;
+        currentEnergy = Mathf.Clamp(currentEnergy, 0f, maxEnergy);
+
+        if (energyBar != null)
+            energyBar.value = currentEnergy;
+
+        // GAME OVER when energy is empty
+        if (currentEnergy <= 0f)
+        {
+            LoseGame("You ran out of energy!");
         }
     }
 
 
+    // ----------------------
+    // HEALTH (for damage only)
+    // ----------------------
+    public void TakeDamage(float amount)
+    {
+        if (isGameOver) return;
+
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        if (healthBar != null)
+            healthBar.value = currentHealth;
+
+        if (currentHealth <= 0f)
+            LoseGame("You were crushed by falling rocks!");
+    }
+
+    // ----------------------
+    // GAME OVER
+    // ----------------------
     private void LoseGame(string reason)
     {
         GameOver(reason);
@@ -157,9 +188,7 @@ public class GameManager : MonoBehaviour
     private void GameOver(string message)
     {
         if (isGameOver) return;
-
         isGameOver = true;
-        Time.timeScale = 0f;
 
         if (gameOverPanel != null)
             gameOverPanel.SetActive(true);
@@ -167,14 +196,9 @@ public class GameManager : MonoBehaviour
         if (gameOverText != null)
             gameOverText.text = message;
 
-        // fade out the music
         if (backgroundMusicSource != null)
-        {
-            Debug.Log("GameOver: starting music fade");
             StartCoroutine(FadeOutMusic());
-        }
 
-        // -and finally pause gameplay
         Time.timeScale = 0f;
     }
 
@@ -185,9 +209,8 @@ public class GameManager : MonoBehaviour
 
         while (t < musicFadeDuration)
         {
-            t += Time.unscaledDeltaTime; // ignore timescale here
-            float k = Mathf.Clamp01(t / musicFadeDuration);
-            backgroundMusicSource.volume = Mathf.Lerp(startVolume, 0f, k);
+            t += Time.unscaledDeltaTime;
+            backgroundMusicSource.volume = Mathf.Lerp(startVolume, 0f, t / musicFadeDuration);
             yield return null;
         }
 
@@ -195,31 +218,13 @@ public class GameManager : MonoBehaviour
         backgroundMusicSource.volume = startVolume;
     }
 
-
-    // hooking to  restart button
+    // ----------------------
+    // RESTART
+    // ----------------------
     public void RestartLevel()
     {
         Time.timeScale = 1f;
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.buildIndex);
     }
-
-    public void SpendEnergy(float amount)
-    {
-        if (isGameOver) return;
-
-        currentEnergy -= amount;
-        currentEnergy = Mathf.Clamp(currentEnergy, 0f, maxEnergy);
-
-        if (energyBar != null)
-        {
-            energyBar.value = currentEnergy;
-        }
-
-        if (currentEnergy <= 0f)
-        {
-            LoseGame("You ran out of energy! The mine collapsed.");
-        }
-    }
-
 }
