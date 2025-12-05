@@ -3,67 +3,51 @@
 [RequireComponent(typeof(SphereCollider))]
 public class FallingRock : MonoBehaviour
 {
-
     public AudioClip impactClip;
     [Range(0f, 1f)] public float impactVolume = 1f;
 
     [Header("linear motion")]
-  public Vector3 fallDirection = Vector3.down;
+    public Vector3 fallDirection = Vector3.down;
+    public float initialSpeed = 0f;
+    public float acceleration = 15f;
+    public bool startOnAwake = true;
 
     [Header("VFX")]
     public GameObject dustVFXPrefab;
 
-    public float initialSpeed = 0f;
-
-
-    public float acceleration = 15f;
-
-   
-    public bool startOnAwake = true;
-
     [Header("ground detection")]
-    public LayerMask groundMask = ~0;  
-
-   
+    public LayerMask groundMask = ~0;
     public float groundSkin = 0.02f;
 
-  
-    [Tooltip("How much energy to remove when hitting the player.")]
-    public float energyDamage = 25f;
-
-    [Tooltip("if true this rock is lethal")]
+    [Tooltip("How much HEALTH to remove when hitting the player.")]
+    public float energyDamage = 25f;   // this is actually health damage now
+    [Tooltip("if true this rock is lethal (only damages once)")]
     public bool singleHit = true;
-
 
     [Tooltip("seconds to keep the rock after impact")]
     public float destroySecondsAfterImpact = 3f;
 
-  
     private Vector3 _startPos;
-    private float _t;               // time since drop
-    private bool _falling;          // are we currently falling
-    private bool _impacted;         // already hit the ground
-    private bool _hasHitPlayer;     // already damaged the player
-    private float _radius;          
+    private float _t;
+    private bool _falling;
+    private bool _impacted;
+    private bool _hasHitPlayer;
+    private float _radius;
 
-   
-    public float CurrentSpeed { get; private set; } 
+    public float CurrentSpeed { get; private set; }
 
     private void Awake()
     {
-     
+        // normalise direction
         if (fallDirection.sqrMagnitude < 1e-5f) fallDirection = Vector3.down;
         fallDirection.Normalize();
 
-       
+        // ensure we have a SphereCollider used as trigger for damage + size for spherecast
         SphereCollider sc = GetComponent<SphereCollider>();
-        if (sc == null)
-        {
-            sc = gameObject.AddComponent<SphereCollider>();
-        }
+        if (sc == null) sc = gameObject.AddComponent<SphereCollider>();
         sc.isTrigger = true;
 
-        
+        // world-space radius for spherecast
         float maxScale = Mathf.Max(transform.lossyScale.x, Mathf.Max(transform.lossyScale.y, transform.lossyScale.z));
         _radius = sc.radius * maxScale;
         if (_radius <= 0f) _radius = 0.5f;
@@ -88,14 +72,12 @@ public class FallingRock : MonoBehaviour
 
         _t += Time.deltaTime;
 
-      
         CurrentSpeed = initialSpeed + acceleration * _t;
-
         float displacement = initialSpeed * _t + 0.5f * acceleration * _t * _t;
 
         Vector3 targetPos = _startPos + fallDirection * displacement;
 
-        //check for ground between current position and target
+        // check for ground between current position and target
         Vector3 from = transform.position;
         Vector3 to = targetPos;
         Vector3 dir = (to - from);
@@ -107,14 +89,14 @@ public class FallingRock : MonoBehaviour
 
             if (Physics.SphereCast(from, _radius, dir, out RaycastHit hit, dist + groundSkin, groundMask, QueryTriggerInteraction.Ignore))
             {
-                // If we hit the player, don't treat it as ground – keep falling
+                // If we hit the PLAYER with the spherecast, do NOT treat it as ground – keep falling
                 if (hit.collider.CompareTag("Player"))
                 {
-                    transform.position = targetPos; // ignore this hit
+                    transform.position = targetPos;
                 }
                 else
                 {
-                    // real ground
+                    // real ground hit
                     transform.position = hit.point - dir * (_radius - groundSkin);
                     Impact();
                     return;
@@ -122,13 +104,14 @@ public class FallingRock : MonoBehaviour
             }
             else
             {
+                // no ground hit yet
                 transform.position = targetPos;
             }
-
         }
-
-        // No ground hit yet
-        transform.position = targetPos;
+        else
+        {
+            transform.position = targetPos;
+        }
     }
 
     private void Impact()
@@ -137,61 +120,46 @@ public class FallingRock : MonoBehaviour
         _impacted = true;
         _falling = false;
 
-        // 1. Spawn dust VFX at impact point
+        // spawn dust
         if (dustVFXPrefab != null)
         {
-            // spawn at the rock's position 
             GameObject dust = Instantiate(dustVFXPrefab, transform.position, Quaternion.identity);
-
-            // auto destroy the dust after a few seconds so it doesn't clutter the scene
             Destroy(dust, 3f);
         }
 
-        // 2. Play impact sound
+        // sound
         if (impactClip != null)
         {
             AudioSource.PlayClipAtPoint(impactClip, transform.position, impactVolume);
         }
 
-        // 3. Disable rock visuals & collider so it turns into dust
-        //    (rock stays in scene for a short time but is invisible / not interactive)
-
-        // disable all meshrenderers on this rock (handles child meshes too)
+        // disable visuals & colliders so it looks like it turned to dust
         foreach (var mr in GetComponentsInChildren<MeshRenderer>())
-        {
             mr.enabled = false;
-        }
 
-        // disable colliders so it no longer hits the player or ground
         foreach (var col in GetComponentsInChildren<Collider>())
-        {
             col.enabled = false;
-        }
 
-        // 4.destroy the rock object after a short delay
         if (destroySecondsAfterImpact > 0f)
-        {
             Destroy(gameObject, destroySecondsAfterImpact);
-        }
         else
-        {
             Destroy(gameObject);
-        }
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
         if (_hasHitPlayer && singleHit) return;
 
+        // debug to see what we're hitting
+        Debug.Log("FallingRock trigger hit: " + other.name);
+
         if (other.CompareTag("Player"))
         {
-            Debug.Log("FallingRock: hit player");
+            Debug.Log("FallingRock: hit PLAYER, dealing damage");
 
             if (GameManager.Instance != null && energyDamage > 0f)
             {
                 GameManager.Instance.TakeDamage(energyDamage);
-
             }
 
             _hasHitPlayer = true;
