@@ -1,5 +1,73 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &381017052604758396
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 836891477168576316}
+  - component: {fileID: 290900026463351148}
+  - component: {fileID: 351938462267631421}
+  m_Layer: 0
+  m_Name: RockTrigger_Corridor1 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &836891477168576316
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381017052604758396}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.36777005, y: 0.0035900027, z: -0.902}
+  m_LocalScale: {x: 16.054, y: 4, z: 4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2734831750579025174}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &290900026463351148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381017052604758396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: badc2799493fc924aa338fd179ed95c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RockTriggerZone
+  rockToDrop: {fileID: 8889082054426650625}
+  triggerOnce: 1
+--- !u!65 &351938462267631421
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381017052604758396}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.01, y: 0.01, z: 0.0001}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1318954115780636591
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,6 +99,7 @@ Transform:
   m_Children:
   - {fileID: 2433605217285551718}
   - {fileID: 2896579447402460366}
+  - {fileID: 836891477168576316}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4136463362506846871
@@ -62,7 +131,7 @@ Transform:
   m_GameObject: {fileID: 4136463362506846871}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.6756091, z: -0, w: 0.7372601}
-  m_LocalPosition: {x: 0.36976996, y: 0.1119, z: -0.97984}
+  m_LocalPosition: {x: 0.397, y: 0.1119, z: -0.982}
   m_LocalScale: {x: 0.02, y: 0.01, z: 0.02}
   m_ConstrainProportionsScale: 0
   m_Children: []

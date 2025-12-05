@@ -150,19 +150,23 @@ public class FallingRock : MonoBehaviour
     {
         if (_hasHitPlayer && singleHit) return;
 
-        // debug to see what we're hitting
         Debug.Log("FallingRock trigger hit: " + other.name);
 
         if (other.CompareTag("Player"))
         {
             Debug.Log("FallingRock: hit PLAYER, dealing damage");
 
-            if (GameManager.Instance != null && energyDamage > 0f)
+            if (GameManager.Instance != null)
             {
                 GameManager.Instance.TakeDamage(energyDamage);
+                Debug.Log($"FallingRock: requested {energyDamage} damage from GameManager.");
             }
 
             _hasHitPlayer = true;
         }
     }
+
+
+
+
 }

@@ -21,12 +21,13 @@ public class GameManager : MonoBehaviour
     [Header("HEALTH SYSTEM")]
     public float maxHealth = 100f;
     public Slider healthBar;
-    private float currentHealth;
+    [SerializeField] private float currentHealth;
 
     [Header("ENERGY SYSTEM")]
     public float maxEnergy = 100f;
     public Slider energyBar;
-    private float currentEnergy;
+    [SerializeField] private float currentEnergy;
+
 
     [Header("Timer settings")]
     public float maxTime = 120f;
@@ -173,9 +174,13 @@ public class GameManager : MonoBehaviour
         if (healthBar != null)
             healthBar.value = currentHealth;
 
+        Debug.Log($"[Health] damage={amount}, currentHealth={currentHealth}, sliderValue={(healthBar != null ? healthBar.value : -1)}");
+
         if (currentHealth <= 0f)
             LoseGame("You were crushed by falling rocks!");
     }
+
+
 
     // ----------------------
     // GAME OVER
