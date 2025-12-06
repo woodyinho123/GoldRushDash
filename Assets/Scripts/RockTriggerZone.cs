@@ -1,34 +1,53 @@
 using UnityEngine;
+using System.Collections;
 
 public class RockTriggerZone : MonoBehaviour
 {
-    [Tooltip("The FallingRock this trigger will drop.")]
+    [Header("Rock to control")]
     public FallingRock rockToDrop;
 
-    [Tooltip("Trigger only once, even if the player re-enters.")]
-    public bool triggerOnce = true;
+    [Header("Timing")]
+    [Tooltip("Delay between player entering the trigger and rock starting to fall.")]
+    public float dropDelay = 0.8f;
 
-    private bool hasTriggered = false;
+    [Header("Warning FX")]
+    [Tooltip("Optional: AudioSource with a warning clip (rumble, crack, etc).")]
+    public AudioSource warningAudio;
+
+    private bool triggered = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        // only react to player
-        if (!other.CompareTag("Player"))
-            return;
+        if (triggered) return;
+        if (!other.CompareTag("Player")) return;
 
-        // if we already triggered and we only want it once then ignore
-        if (triggerOnce && hasTriggered)
-            return;
+        triggered = true;
+        Debug.Log($"RockTriggerZone: Player entered, will drop rock {rockToDrop} after {dropDelay} sec");
+
+        // Play warning sound immediately when player enters
+        if (warningAudio != null)
+        {
+            warningAudio.Play();
+        }
 
         if (rockToDrop != null)
         {
-            Debug.Log("RockTriggerZone: Player entered, dropping rock " + rockToDrop.name);
-            rockToDrop.Drop();
-            hasTriggered = true;
+            StartCoroutine(DelayedDrop());
         }
         else
         {
-            Debug.LogWarning("RockTriggerZone: No rockToDrop assigned on " + name);
+            Debug.LogWarning($"RockTriggerZone: No rockToDrop assigned on {name}");
+        }
+    }
+
+    private IEnumerator DelayedDrop()
+    {
+        // Wait before starting the fall
+        yield return new WaitForSeconds(dropDelay);
+
+        if (rockToDrop != null)
+        {
+            rockToDrop.Drop();
         }
     }
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &381017052604758396
+--- !u!1 &3064575497055271063
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,113 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 836891477168576316}
-  - component: {fileID: 290900026463351148}
-  - component: {fileID: 351938462267631421}
-  m_Layer: 0
-  m_Name: RockTrigger_Corridor1 (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &836891477168576316
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381017052604758396}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.36777005, y: 0.0035900027, z: -0.902}
-  m_LocalScale: {x: 16.054, y: 4, z: 4}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2734831750579025174}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &290900026463351148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381017052604758396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: badc2799493fc924aa338fd179ed95c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RockTriggerZone
-  rockToDrop: {fileID: 8889082054426650625}
-  triggerOnce: 1
---- !u!65 &351938462267631421
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381017052604758396}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.01, y: 0.01, z: 0.0001}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1318954115780636591
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2734831750579025174}
-  m_Layer: 0
-  m_Name: RockTrap
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2734831750579025174
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1318954115780636591}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.28763, y: 0.03481, z: 1.93562}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2433605217285551718}
-  - {fileID: 2896579447402460366}
-  - {fileID: 836891477168576316}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4136463362506846871
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2433605217285551718}
-  - component: {fileID: 2839583528266552220}
-  - component: {fileID: 1626839680931152416}
-  - component: {fileID: 7941711307501498930}
-  - component: {fileID: 8889082054426650625}
+  - component: {fileID: 404420835968084504}
+  - component: {fileID: 2111311531673300312}
+  - component: {fileID: 4375647412977513862}
+  - component: {fileID: 7656731717749748883}
+  - component: {fileID: 6331811324977204770}
   m_Layer: 0
   m_Name: FallingRock_Corridor1
   m_TagString: Untagged
@@ -122,36 +20,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2433605217285551718
+--- !u!4 &404420835968084504
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4136463362506846871}
+  m_GameObject: {fileID: 3064575497055271063}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.6756091, z: -0, w: 0.7372601}
-  m_LocalPosition: {x: 0.397, y: 0.1119, z: -0.982}
+  m_LocalPosition: {x: 0.3792, y: 0.1119, z: -0.9805}
   m_LocalScale: {x: 0.02, y: 0.01, z: 0.02}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2734831750579025174}
+  m_Father: {fileID: 3609295101316277926}
   m_LocalEulerAnglesHint: {x: 0, y: -85.003, z: 0}
---- !u!33 &2839583528266552220
+--- !u!33 &2111311531673300312
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4136463362506846871}
+  m_GameObject: {fileID: 3064575497055271063}
   m_Mesh: {fileID: 4300000, guid: 53088b9f9e12f6c4e8e65ee5a84d1c5d, type: 3}
---- !u!23 &1626839680931152416
+--- !u!23 &4375647412977513862
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4136463362506846871}
+  m_GameObject: {fileID: 3064575497055271063}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -193,13 +91,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7941711307501498930
+--- !u!135 &7656731717749748883
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4136463362506846871}
+  m_GameObject: {fileID: 3064575497055271063}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -214,13 +112,13 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 3
   m_Center: {x: 0.36, y: 3.76, z: 0.03}
---- !u!114 &8889082054426650625
+--- !u!114 &6331811324977204770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4136463362506846871}
+  m_GameObject: {fileID: 3064575497055271063}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 331d894ce24a27748a05e6e1fe8a13bd, type: 3}
@@ -229,19 +127,17 @@ MonoBehaviour:
   impactClip: {fileID: 8300000, guid: eef19df938ffee54883b554e331cdb1c, type: 3}
   impactVolume: 1
   fallDirection: {x: 0, y: -1, z: 0}
-  initialSpeed: 0
-  acceleration: 2
-  startOnAwake: 0
+  fallSpeed: 0.3
   dustVFXPrefab: {fileID: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 55
-  groundSkin: 0.02
+  groundSkin: 0.08
   energyDamage: 30
+  damageRadius: 0.15
   singleHit: 1
-  damageRadius: 1
-  destroySecondsAfterImpact: 0.8
---- !u!1 &7064216036515448991
+  destroySecondsAfterImpact: 1
+--- !u!1 &3553831388323037252
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,52 +145,54 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2896579447402460366}
-  - component: {fileID: 658848053003163803}
-  - component: {fileID: 9008431580320449313}
+  - component: {fileID: 4302670227771789388}
+  - component: {fileID: 3739975971233027212}
+  - component: {fileID: 3122647553351369905}
+  - component: {fileID: 5417418437792552832}
   m_Layer: 0
-  m_Name: RockTrigger_Corridor1
+  m_Name: RockTrigger_Corridor_Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2896579447402460366
+--- !u!4 &4302670227771789388
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7064216036515448991}
+  m_GameObject: {fileID: 3553831388323037252}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.36777005, y: 0.0035900027, z: -1.0515199}
+  m_LocalPosition: {x: 0.365, y: 0.0035900027, z: -1.1172}
   m_LocalScale: {x: 16.054, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2734831750579025174}
+  m_Father: {fileID: 3609295101316277926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &658848053003163803
+--- !u!114 &3739975971233027212
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7064216036515448991}
+  m_GameObject: {fileID: 3553831388323037252}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: badc2799493fc924aa338fd179ed95c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RockTriggerZone
-  rockToDrop: {fileID: 8889082054426650625}
-  triggerOnce: 1
---- !u!65 &9008431580320449313
+  rockToDrop: {fileID: 6331811324977204770}
+  dropDelay: 0.8
+  warningAudio: {fileID: 5417418437792552832}
+--- !u!65 &3122647553351369905
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7064216036515448991}
+  m_GameObject: {fileID: 3553831388323037252}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -309,3 +207,133 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.01, y: 0.01, z: 0.0001}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &5417418437792552832
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3553831388323037252}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: ee7f0f0870c86d84bb1c8599e2234f9e, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.127
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &5390367289646769772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3609295101316277926}
+  m_Layer: 0
+  m_Name: RockTrap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3609295101316277926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5390367289646769772}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.28763, y: 0.03481, z: 1.93562}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 404420835968084504}
+  - {fileID: 4302670227771789388}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
