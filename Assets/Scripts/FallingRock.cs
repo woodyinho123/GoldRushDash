@@ -10,7 +10,7 @@ public class FallingRock : MonoBehaviour
     public Vector3 fallDirection = Vector3.down;
     public float initialSpeed = 0f;
     public float acceleration = 15f;
-    public bool startOnAwake = true;
+    public bool startOnAwake = false;   // we trigger by zone
 
     [Header("VFX")]
     public GameObject dustVFXPrefab;
@@ -20,12 +20,13 @@ public class FallingRock : MonoBehaviour
     public float groundSkin = 0.02f;
 
     [Tooltip("How much HEALTH to remove when hitting the player.")]
-    public float energyDamage = 25f;   // this is actually health damage now
-    [Tooltip("if true this rock is lethal (only damages once)")]
+    public float energyDamage = 30f;
+    [Tooltip("If true, only damages once.")]
     public bool singleHit = true;
-
-    [Tooltip("seconds to keep the rock after impact")]
-    public float destroySecondsAfterImpact = 3f;
+    [Tooltip("Radius around the impact where the player takes damage.")]
+    public float damageRadius = 2f;
+ [Tooltip("Seconds to keep the rock after impact")]
+    public float destroySecondsAfterImpact = 0.8f;
 
     private Vector3 _startPos;
     private float _t;
@@ -38,17 +39,15 @@ public class FallingRock : MonoBehaviour
 
     private void Awake()
     {
-        // normalise direction
         if (fallDirection.sqrMagnitude < 1e-5f) fallDirection = Vector3.down;
         fallDirection.Normalize();
 
-        // ensure we have a SphereCollider used as trigger for damage + size for spherecast
         SphereCollider sc = GetComponent<SphereCollider>();
         if (sc == null) sc = gameObject.AddComponent<SphereCollider>();
-        sc.isTrigger = true;
+        sc.isTrigger = true;   // trigger used for damage
 
-        // world-space radius for spherecast
-        float maxScale = Mathf.Max(transform.lossyScale.x, Mathf.Max(transform.lossyScale.y, transform.lossyScale.z));
+        float maxScale = Mathf.Max(transform.lossyScale.x,
+                           Mathf.Max(transform.lossyScale.y, transform.lossyScale.z));
         _radius = sc.radius * maxScale;
         if (_radius <= 0f) _radius = 0.5f;
     }
@@ -77,7 +76,6 @@ public class FallingRock : MonoBehaviour
 
         Vector3 targetPos = _startPos + fallDirection * displacement;
 
-        // check for ground between current position and target
         Vector3 from = transform.position;
         Vector3 to = targetPos;
         Vector3 dir = (to - from);
@@ -87,16 +85,17 @@ public class FallingRock : MonoBehaviour
         {
             dir /= dist;
 
-            if (Physics.SphereCast(from, _radius, dir, out RaycastHit hit, dist + groundSkin, groundMask, QueryTriggerInteraction.Ignore))
+            if (Physics.SphereCast(from, _radius, dir, out RaycastHit hit,
+                                   dist + groundSkin, groundMask,
+                                   QueryTriggerInteraction.Ignore))
             {
-                // If we hit the PLAYER with the spherecast, do NOT treat it as ground – keep falling
+                // If we hit the player with the spherecast, ignore it as "ground"
                 if (hit.collider.CompareTag("Player"))
                 {
                     transform.position = targetPos;
                 }
                 else
                 {
-                    // real ground hit
                     transform.position = hit.point - dir * (_radius - groundSkin);
                     Impact();
                     return;
@@ -104,7 +103,6 @@ public class FallingRock : MonoBehaviour
             }
             else
             {
-                // no ground hit yet
                 transform.position = targetPos;
             }
         }
@@ -120,20 +118,23 @@ public class FallingRock : MonoBehaviour
         _impacted = true;
         _falling = false;
 
-        // spawn dust
+        // First: damage player near the impact point
+        DealImpactDamage();
+
+        //  pllay impact sound
+        if (impactClip != null)
+        {
+            AudioSource.PlayClipAtPoint(impactClip, transform.position, impactVolume);
+        }
+
+        // spawn dust VFX
         if (dustVFXPrefab != null)
         {
             GameObject dust = Instantiate(dustVFXPrefab, transform.position, Quaternion.identity);
             Destroy(dust, 3f);
         }
 
-        // sound
-        if (impactClip != null)
-        {
-            AudioSource.PlayClipAtPoint(impactClip, transform.position, impactVolume);
-        }
-
-        // disable visuals & colliders so it looks like it turned to dust
+        // hide rock mesh & colliders so it "turns to dust"
         foreach (var mr in GetComponentsInChildren<MeshRenderer>())
             mr.enabled = false;
 
@@ -146,25 +147,31 @@ public class FallingRock : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
+
+    private void DealImpactDamage()
     {
-        if (_hasHitPlayer && singleHit) return;
+        if (GameManager.Instance == null || energyDamage <= 0f) return;
 
-        Debug.Log("FallingRock trigger hit: " + other.name);
+        // Check everything around the rock’s impact point
+        Collider[] hits = Physics.OverlapSphere(
+            transform.position,
+            damageRadius,
+            ~0,                         // all layers
+            QueryTriggerInteraction.Ignore
+        );
 
-        if (other.CompareTag("Player"))
+        foreach (Collider hit in hits)
         {
-            Debug.Log("FallingRock: hit PLAYER, dealing damage");
-
-            if (GameManager.Instance != null)
+            if (hit.CompareTag("Player"))
             {
+                Debug.Log($"Rock impact damaged player for {energyDamage}");
                 GameManager.Instance.TakeDamage(energyDamage);
-                Debug.Log($"FallingRock: requested {energyDamage} damage from GameManager.");
+                break; // only damage once
             }
-
-            _hasHitPlayer = true;
         }
     }
+
+   
 
 
 

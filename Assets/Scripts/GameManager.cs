@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float currentEnergy;
 
 
+
     [Header("Timer settings")]
     public float maxTime = 120f;
     public Slider timerBar;
@@ -114,6 +115,12 @@ public class GameManager : MonoBehaviour
 
         if (currentTime <= 0f)
             LoseGame("You ran out of time! The mine collapsed.");
+
+        // DEBUG: test health damage with the H key
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            TakeDamage(10f);
+        }
     }
 
     // ----------------------
@@ -179,6 +186,7 @@ public class GameManager : MonoBehaviour
         if (currentHealth <= 0f)
             LoseGame("You were crushed by falling rocks!");
     }
+
 
 
 

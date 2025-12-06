@@ -239,6 +239,7 @@ MonoBehaviour:
   groundSkin: 0.02
   energyDamage: 30
   singleHit: 1
+  damageRadius: 1
   destroySecondsAfterImpact: 0.8
 --- !u!1 &7064216036515448991
 GameObject:
