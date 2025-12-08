@@ -113,7 +113,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.3274205
+  m_Radius: 4
   m_Center: {x: 1.8388197e-10, y: 0, z: 0.18340778}
 --- !u!114 &5675139896752072987
 MonoBehaviour:
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3bced1c2a00a446a6fcd4e439e9fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoldOreMineable
-  miningTime: 3
+  miningTime: 2
   mineEnergyCost: 30
   mineVFX: {fileID: 7373180677875894809}
   mineSfx: {fileID: 8300000, guid: 027381ab061fe534483645dc7c5fa128, type: 3}

@@ -4171,8 +4171,12 @@ MonoBehaviour:
   gameOverPanel: {fileID: 593812652}
   oreCounterText: {fileID: 1715562011}
   gameOverText: {fileID: 1330580009}
+  maxHealth: 100
+  healthBar: {fileID: 0}
+  currentHealth: 0
   maxEnergy: 100
   energyBar: {fileID: 466512177}
+  currentEnergy: 0
   maxTime: 120
   timerBar: {fileID: 2041798481}
   timerLabel: {fileID: 639839716}
@@ -16205,17 +16209,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1597489785}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1607286595 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1662288224994789338, guid: 631c6de05622123408ef4788efa498d4, type: 3}
-  m_PrefabInstance: {fileID: 4830322016403444617}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 331d894ce24a27748a05e6e1fe8a13bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FallingRock
 --- !u!4 &1608743833 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4976853331106008, guid: 57bc482487154a64085c1d0847e454b3, type: 3}
@@ -20541,124 +20534,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1001 &2979934007381198614
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.0076
-      objectReference: {fileID: 0}
-    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0384
-      objectReference: {fileID: 0}
-    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.8027
-      objectReference: {fileID: 0}
-    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3021571627318660606, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5355875922206115091, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
-      propertyPath: rockToDrop
-      value: 
-      objectReference: {fileID: 1607286595}
-    - target: {fileID: 8925172710193630411, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
-      propertyPath: m_Name
-      value: RockTrigger_Corridor1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: da96583753d5d93408c0d3d406ce22a7, type: 3}
---- !u!1001 &4830322016403444617
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 443881465450585522, guid: 631c6de05622123408ef4788efa498d4, type: 3}
-      propertyPath: m_Name
-      value: FallingRock_Corridor1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.0099
-      objectReference: {fileID: 0}
-    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.1302
-      objectReference: {fileID: 0}
-    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.74469
-      objectReference: {fileID: 0}
-    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5404423642031929817, guid: 631c6de05622123408ef4788efa498d4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 631c6de05622123408ef4788efa498d4, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -20671,5 +20546,3 @@ SceneRoots:
   - {fileID: 344795534}
   - {fileID: 1870427662}
   - {fileID: 235349820}
-  - {fileID: 4830322016403444617}
-  - {fileID: 2979934007381198614}

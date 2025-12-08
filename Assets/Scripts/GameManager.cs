@@ -85,7 +85,8 @@ public class GameManager : MonoBehaviour
             timerBar.value = currentTime;
         }
         if (timerLabel != null)
-            timerLabel.text = Mathf.CeilToInt(currentTime).ToString() + "s";
+            timerLabel.text = Mathf.CeilToInt(currentTime) + " SECONDS UNTIL COLLAPSE!";
+
 
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
@@ -111,7 +112,8 @@ public class GameManager : MonoBehaviour
             timerBar.value = currentTime;
 
         if (timerLabel != null)
-            timerLabel.text = Mathf.CeilToInt(currentTime).ToString() + "s";
+            timerLabel.text = Mathf.CeilToInt(currentTime) + " SECONDS UNTIL COLLAPSE!";
+
 
         if (currentTime <= 0f)
             LoseGame("You ran out of time! The mine collapsed.");
