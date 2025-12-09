@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Movement")]
     public float walkSpeed = 3f;
-    public float runSpeed = 6f;   // faster
-    public float turnSpeed = 180f; // degrees per second
+    public float runSpeed = 6f;        // faster
+    public float turnSpeed = 180f;     // degrees per second
     public float moveEnergyPerSecond = 5f;
     public int oreCount = 0;
     public Animator anim;
@@ -16,8 +18,19 @@ public class PlayerController : MonoBehaviour
     private bool isMining = false;         // are we currently mining?
     private bool isRunning = false;        // are we currently running?
 
+    [Header("Jump")]
+    public float jumpForce = 6f;          // used when jumping OFF ladders
+
     [Header("Footstep Audio")]
     public AudioSource footstepSource;     // looped walking sound
+
+    [Header("Ladder Climbing")]
+    public float ladderClimbSpeed = 3f;      // up / down speed
+    public float ladderSideJumpForce = 5f;   // sideways push when jumping off
+    public float ladderSnapSpeed = 10f;      // how fast we snap to ladder centre
+
+    private bool isOnLadder = false;
+    private Transform currentLadder;         // which ladder we're on
 
     void Awake()
     {
@@ -57,12 +70,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // ---------------------- PHYSICS MOVEMENT ----------------------
     void FixedUpdate()
     {
-        float h = Input.GetAxisRaw("Horizontal"); // Left/Right arrows
-        float v = Input.GetAxisRaw("Vertical");   // Up/Down arrows 
+        float h = Input.GetAxisRaw("Horizontal"); // A/D
+        float v = Input.GetAxisRaw("Vertical");   // W/S
 
-        // MOVEMENT (disabled while mining)
+        // LADDER MODE
+        if (isOnLadder)
+        {
+            HandleLadderMovement(h, v);
+            return; // skip normal walking / running while on ladder
+        }
+
+        // --------- NORMAL GROUND MOVEMENT (your original code) ---------
         if (!isMining)
         {
             // decide if we want to run (hold Left Shift while moving)
@@ -71,16 +92,15 @@ public class PlayerController : MonoBehaviour
 
             float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
+            // move forward/back along local forward
             Vector3 move = transform.forward * -v * currentSpeed * Time.fixedDeltaTime;
             rb.MovePosition(rb.position + move);
 
-           
-            // Only drain energy when SPRINTING (Left Shift held while moving)
+            // Only drain energy when SPRINTING
             if (isRunning && Mathf.Abs(v) > 0.01f && GameManager.Instance != null)
             {
                 GameManager.Instance.SpendEnergy(moveEnergyPerSecond * Time.fixedDeltaTime);
             }
-
 
             // ROTATION (turn left/right)
             if (Mathf.Abs(h) > 0.01f)
@@ -99,16 +119,18 @@ public class PlayerController : MonoBehaviour
         // ANIMATION SPEED (walking) + running flag
         if (anim != null)
         {
-            float speedParam = (!isMining) ? Mathf.Abs(Input.GetAxisRaw("Vertical")) : 0f;
+            float speedParam = (!isMining) ? Mathf.Abs(v) : 0f;
             anim.SetFloat("Speed", speedParam);
-            anim.SetBool("IsRunning", isRunning);   // drive running state
+            anim.SetBool("IsRunning", isRunning);
         }
     }
 
+
+
+    // ---------------------- NON-PHYSICS / INPUT ----------------------
     void Update()
     {
         // ---------------- MINING ----------------
-        // Are we in range of ore AND holding E?
         bool wantsToMine = (currentOre != null && Input.GetKey(KeyCode.E));
 
         if (currentOre != null)
@@ -123,10 +145,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Update mining flag
         isMining = wantsToMine;
 
-        // DEBUG see when we think we are mining
         if (anim != null && isMining)
         {
             Debug.Log("Setting IsMining TRUE on Animator: " + anim.gameObject.name);
@@ -141,12 +161,12 @@ public class PlayerController : MonoBehaviour
         // Drive mining animation
         if (anim != null)
         {
-            anim.SetBool("IsMining", isMining);   // IMPORTANT name must match Animator
+            anim.SetBool("IsMining", isMining);
         }
 
         // ----- FOOTSTEPS (looped source on/off) -----
         float moveInput = Input.GetAxisRaw("Vertical");
-        bool isWalking = !isMining && Mathf.Abs(moveInput) > 0.1f;
+        bool isWalking = !isMining && Mathf.Abs(moveInput) > 0.1f && !isOnLadder;
 
         if (footstepSource != null)
         {
@@ -163,6 +183,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // ---------------------- ORE TRIGGERS ----------------------
     private void OnTriggerEnter(Collider other)
     {
         GoldOreMineable ore = other.GetComponent<GoldOreMineable>();
@@ -171,7 +192,7 @@ public class PlayerController : MonoBehaviour
             currentOre = ore;
             Debug.Log("PlayerController: entered ore trigger");
 
-            if (miningPromptUI != null)        //display mining prompt when near gold ore
+            if (miningPromptUI != null)
             {
                 miningPromptUI.SetActive(true);
             }
@@ -189,8 +210,84 @@ public class PlayerController : MonoBehaviour
 
             if (miningPromptUI != null)
             {
-                miningPromptUI.SetActive(false);  //hide when we leave ore
+                miningPromptUI.SetActive(false);
             }
         }
     }
+
+    // ---------------------- LADDER API (called by LadderZone) ----------------------
+    public void SetOnLadder(bool onLadder, Transform ladderTransform)
+    {
+        if (onLadder)
+        {
+            isOnLadder = true;
+            currentLadder = ladderTransform;
+
+            isRunning = false;
+            rb.linearVelocity = Vector3.zero;
+              rb.useGravity = false;   // stop falling while on ladder
+        }
+        else
+        {
+            if (currentLadder == ladderTransform)
+            {
+                isOnLadder = false;
+                currentLadder = null;
+                rb.useGravity = true;    // re-enable gravity
+            }
+        }
+    }
+
+    // ---------------------- LADDER MOVEMENT (Rigidbody) ----------------------
+    private void HandleLadderMovement(float h, float v)
+    {
+        // v = up/down input, h = left/right input
+
+        // Start from current position
+        Vector3 targetPos = rb.position;
+
+        // 1) Vertical climb
+        if (Mathf.Abs(v) > 0.01f)
+        {
+            Vector3 climbDir = Vector3.up * v; // +1 up, -1 down
+            targetPos += climbDir * ladderClimbSpeed * Time.fixedDeltaTime;
+        }
+
+        // 2) Gentle centering towards the ladder in X/Z
+        if (currentLadder != null)
+        {
+            Vector3 ladderPos = currentLadder.position;
+
+            float snap = ladderSnapSpeed * 0.2f; // soften snap
+            targetPos.x = Mathf.Lerp(targetPos.x, ladderPos.x, Time.fixedDeltaTime * snap);
+            targetPos.z = Mathf.Lerp(targetPos.z, ladderPos.z, Time.fixedDeltaTime * snap);
+        }
+
+        // Single MovePosition doing both climb + centering
+        rb.MovePosition(targetPos);
+
+        // 3) Jump off the ladder
+        if (Input.GetButtonDown("Jump"))
+        {
+            isOnLadder = false;
+            currentLadder = null;
+            rb.useGravity = true;
+
+            // Upward + sideways push
+            Vector3 jumpDir = Vector3.up * jumpForce;
+            Vector3 side = transform.right * h * ladderSideJumpForce;
+            rb.AddForce(jumpDir + side, ForceMode.VelocityChange);
+        }
+
+        // 4) Climb animation
+        if (anim != null)
+        {
+            anim.SetFloat("Speed", Mathf.Abs(v));
+            anim.SetBool("IsRunning", false);
+        }
+    }
+
+
+
+
 }
