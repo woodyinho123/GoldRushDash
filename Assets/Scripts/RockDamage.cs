@@ -4,8 +4,9 @@ using UnityEngine;
 public class RockDamage : MonoBehaviour
 {
     [Header("Damage")]
-    public float energyDamage = 25f;
-    public bool instantDeath = false;   // true for lethal rocks
+    public float damage = 25f;         // how much HEALTH to remove
+    public bool instantDeath = false;  // true for lethal rocks
+
     [Header("Only damage the player once per fall")]
     public bool singleHit = true;
 
@@ -13,33 +14,39 @@ public class RockDamage : MonoBehaviour
 
     private void Reset()
     {
-        // make collider a trigger here
+        // Make sure collider is a trigger
         var col = GetComponent<Collider>();
-        if (col) col.isTrigger = true;
+        if (col != null)
+            col.isTrigger = true;
+    }
+
+    private void OnEnable()
+    {
+        // reset between spawns
+        _hasHitPlayer = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_hasHitPlayer && singleHit) return;
+        if (singleHit && _hasHitPlayer)
+            return;
 
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player"))
+            return;
+
+        if (GameManager.Instance == null)
+            return;
+
+        if (instantDeath)
         {
-            if (GameManager.Instance != null)
-            {
-                if (instantDeath)
-                {
-                    
-                    var gm = GameManager.Instance;
-                    var method = gm.GetType().GetMethod("LoseGame", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                    if (method != null) method.Invoke(gm, new object[] { "Crushed by falling rocks!" });
-                }
-                else
-                {
-                    GameManager.Instance.SpendEnergy(energyDamage);
-                }
-            }
-
-            _hasHitPlayer = true;
+            // Take enough damage to guarantee death
+            GameManager.Instance.TakeDamage(GameManager.Instance.maxHealth);
         }
+        else
+        {
+            GameManager.Instance.TakeDamage(damage);
+        }
+
+        _hasHitPlayer = true;
     }
 }

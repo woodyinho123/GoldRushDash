@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private bool ladderJumpRequested = false;
 
     private bool isClimbing => isOnLadder;
+    public bool IsOnLadder => isOnLadder;
 
     [Header("Ladder Jump")]
     public float postLadderNoRotateTime = 0.3f; // how long after ladder jump we block rotation

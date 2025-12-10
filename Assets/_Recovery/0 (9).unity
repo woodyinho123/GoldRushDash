@@ -19769,7 +19769,7 @@ Transform:
   m_GameObject: {fileID: 1205118704}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.0046125124, z: -0, w: -0.99998945}
-  m_LocalPosition: {x: 9.4, y: 2.831, z: 6.6}
+  m_LocalPosition: {x: 12.99, y: 2.831, z: -6.79}
   m_LocalScale: {x: 15, y: 15, z: 15}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34129,7 +34129,7 @@ GameObject:
   - component: {fileID: 1894379123}
   - component: {fileID: 1894379122}
   - component: {fileID: 1894379121}
-  - component: {fileID: 1894379124}
+  - component: {fileID: 1894379120}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -34152,6 +34152,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 165819005}
   m_LocalEulerAnglesHint: {x: 4.738, y: 0.36, z: 0.321}
+--- !u!114 &1894379120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894379118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f841e871ea96d104290c8ba662dd1774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleCameraFollow
+  target: {fileID: 1205118709}
+  playerController: {fileID: 1205118706}
+  normalOffset: {x: 0, y: 2, z: -6}
+  ladderOffset: {x: 0, y: 4, z: -5}
+  normalLookUp: 0
+  ladderLookUp: 4
+  normalFOV: 60
+  ladderFOV: 80
+  fovLerpSpeed: 5
 --- !u!114 &1894379121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34255,24 +34276,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &1894379124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894379118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f97cfde094f7a714fbd14baf068374c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LadderCameraAdjust
-  player: {fileID: 1205118706}
-  cam: {fileID: 1894379123}
-  extraLadderPitch: -20
-  rotationLerpSpeed: 5
-  ladderFOV: 80
-  fovLerpSpeed: 5
 --- !u!1001 &1898335038
 PrefabInstance:
   m_ObjectHideFlags: 0

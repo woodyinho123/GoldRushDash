@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7292c4659c0b00b47bf827d2a7d2d3af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RockDamage
-  energyDamage: 20
+  damage: 20
   instantDeath: 0
   singleHit: 1
 --- !u!1 &4791064507947527714
