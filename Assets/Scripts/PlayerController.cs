@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     [Header("Ladder Jump")]
     public float postLadderNoRotateTime = 0.3f; // how long after ladder jump we block rotation
     private float _postLadderTimer = 0f;
+    private bool _airborneFromLadder = false;
 
     [Header("Fall Damage")]
     // Negative value: e.g. -18 means "if we hit the ground while falling faster than -18"
@@ -115,17 +116,23 @@ public class PlayerController : MonoBehaviour
                 float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
                 // move forward/back along local forward
-                Vector3 move = transform.forward * -v * currentSpeed * Time.fixedDeltaTime;
-                rb.MovePosition(rb.position + move);
+                bool canUseGroundControls = !_airborneFromLadder;
 
-                // Only drain energy when SPRINTING
-                if (isRunning && Mathf.Abs(v) > 0.01f && GameManager.Instance != null)
+                // move forward/back along local forward (only if not in ladder-airborne state)
+                if (canUseGroundControls)
                 {
-                    GameManager.Instance.SpendEnergy(moveEnergyPerSecond * Time.fixedDeltaTime);
+                    Vector3 move = transform.forward * -v * currentSpeed * Time.fixedDeltaTime;
+                    rb.MovePosition(rb.position + move);
+
+                    // Only drain energy when SPRINTING
+                    if (isRunning && Mathf.Abs(v) > 0.01f && GameManager.Instance != null)
+                    {
+                        GameManager.Instance.SpendEnergy(moveEnergyPerSecond * Time.fixedDeltaTime);
+                    }
                 }
 
-                // ROTATION (turn left/right) - DISABLED during post-ladder cooldown
-                bool canRotate = (_postLadderTimer <= 0f);   // <- key condition
+                // ROTATION (turn left/right) - DISABLED during post-ladder cooldown AND ladder-airborne
+                bool canRotate = !_airborneFromLadder && (_postLadderTimer <= 0f);
 
                 if (canRotate && Mathf.Abs(h) > 0.01f)
                 {
@@ -133,6 +140,7 @@ public class PlayerController : MonoBehaviour
                     Quaternion deltaRotation = Quaternion.Euler(0f, turnAmount, 0f);
                     rb.MoveRotation(rb.rotation * deltaRotation);
                 }
+
             }
             else
             {
@@ -179,6 +187,13 @@ public class PlayerController : MonoBehaviour
         }
 
         wasGrounded = groundedNow;
+
+        // If we hit the ground or another ladder, we're no longer in ladder-airborne state
+        if (groundedNow || isOnLadder)
+        {
+            _airborneFromLadder = false;
+        }
+
     }
 
     // ---------------------- NON-PHYSICS / INPUT ----------------------
@@ -340,7 +355,7 @@ public class PlayerController : MonoBehaviour
         // 4) Jump off the ladder (uses the flag we set in Update)
         if (ladderJumpRequested)
         {
-            ladderJumpRequested = false;   // consume request
+            ladderJumpRequested = false;
 
             isOnLadder = false;
             currentLadder = null;
@@ -352,8 +367,11 @@ public class PlayerController : MonoBehaviour
 
             // Upward + sideways push
             Vector3 jumpDir = Vector3.up * jumpForce;
-            Vector3 side = transform.right * -h * ladderSideJumpForce; // minus = A=left, D=right
+            Vector3 side = transform.right * -h * ladderSideJumpForce;
             rb.AddForce(jumpDir + side, ForceMode.VelocityChange);
+
+            // NEW: mark that we're flying due to a ladder jump
+            _airborneFromLadder = true;
 
             // Start the cooldown: no rotation allowed while this is > 0
             _postLadderTimer = postLadderNoRotateTime;
@@ -361,9 +379,10 @@ public class PlayerController : MonoBehaviour
             if (anim != null)
             {
                 anim.SetBool("IsClimbing", false);
-                anim.SetTrigger("Jump");   // play jump animation
+                anim.SetTrigger("Jump");
             }
         }
+
 
         // 5) Climb animation while on ladder
         if (anim != null)
