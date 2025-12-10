@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     private float currentTime;
     private bool isGameOver = false;
 
+    private int score = 0;
+
     private void Awake()
     {
         if (Instance == null)
@@ -141,6 +143,12 @@ public class GameManager : MonoBehaviour
     {
         if (oreCounterText != null)
             oreCounterText.text = $"Ore: {collectedOre}/{totalOre}";
+    }
+
+    public void AddScore(int amount)
+    {
+        score += amount;
+        Debug.Log("Score = " + score);
     }
 
     private void WinGame()

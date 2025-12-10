@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
+using System.Reflection;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,13 +28,24 @@ public class PlayerController : MonoBehaviour
     [Header("Ladder Climbing")]
     public float ladderClimbSpeed = 3f;      // up / down speed
     public float ladderSideJumpForce = 5f;   // sideways push when jumping off
-    public float ladderSnapSpeed = 10f;      // how fast we snap to ladder centre
     public float ladderSideMoveSpeed = 2f;
+
     private bool isOnLadder = false;
     private Transform currentLadder;         // which ladder we're on
-    private BoxCollider currentLadderCollider;                                        // optional – but makes checks easier
-    private bool isClimbing => isOnLadder;
+    private BoxCollider currentLadderCollider; // ladder bounds for clamping
     private bool ladderJumpRequested = false;
+
+    private bool isClimbing => isOnLadder;
+
+    [Header("Ladder Jump")]
+    public float postLadderNoRotateTime = 0.3f; // how long after ladder jump we block rotation
+    private float _postLadderTimer = 0f;
+
+    [Header("Fall Damage")]
+    // Negative value: e.g. -18 means "if we hit the ground while falling faster than -18"
+    public float fatalFallSpeed = -18f;
+    private bool wasGrounded = false;
+    private float lastVerticalSpeed = 0f;
 
     void Awake()
     {
@@ -79,44 +91,54 @@ public class PlayerController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal"); // A/D
         float v = Input.GetAxisRaw("Vertical");   // W/S
 
+        // Count down "no rotation" window after ladder jumps
+        if (_postLadderTimer > 0f)
+        {
+            _postLadderTimer -= Time.fixedDeltaTime;
+        }
+
         // LADDER MODE
         if (isOnLadder)
         {
             HandleLadderMovement(h, v);
-            return; // skip normal walking / running while on ladder
-        }
-
-        // --------- NORMAL GROUND MOVEMENT (your original code) ---------
-        if (!isMining)
-        {
-            // decide if we want to run (hold Left Shift while moving)
-            bool wantsToRun = Input.GetKey(KeyCode.LeftShift) && Mathf.Abs(v) > 0.1f;
-            isRunning = wantsToRun;
-
-            float currentSpeed = isRunning ? runSpeed : walkSpeed;
-
-            // move forward/back along local forward
-            Vector3 move = transform.forward * -v * currentSpeed * Time.fixedDeltaTime;
-            rb.MovePosition(rb.position + move);
-
-            // Only drain energy when SPRINTING
-            if (isRunning && Mathf.Abs(v) > 0.01f && GameManager.Instance != null)
-            {
-                GameManager.Instance.SpendEnergy(moveEnergyPerSecond * Time.fixedDeltaTime);
-            }
-
-            // ROTATION (turn left/right)
-            if (Mathf.Abs(h) > 0.01f)
-            {
-                float turnAmount = h * turnSpeed * Time.fixedDeltaTime;
-                Quaternion deltaRotation = Quaternion.Euler(0f, turnAmount, 0f);
-                rb.MoveRotation(rb.rotation * deltaRotation);
-            }
+            // we still want fall tracking below, so do NOT 'return' before that
         }
         else
         {
-            // while mining we are not running
-            isRunning = false;
+            // --------- NORMAL GROUND MOVEMENT ---------
+            if (!isMining)
+            {
+                // decide if we want to run (hold Left Shift while moving)
+                bool wantsToRun = Input.GetKey(KeyCode.LeftShift) && Mathf.Abs(v) > 0.1f;
+                isRunning = wantsToRun;
+
+                float currentSpeed = isRunning ? runSpeed : walkSpeed;
+
+                // move forward/back along local forward
+                Vector3 move = transform.forward * -v * currentSpeed * Time.fixedDeltaTime;
+                rb.MovePosition(rb.position + move);
+
+                // Only drain energy when SPRINTING
+                if (isRunning && Mathf.Abs(v) > 0.01f && GameManager.Instance != null)
+                {
+                    GameManager.Instance.SpendEnergy(moveEnergyPerSecond * Time.fixedDeltaTime);
+                }
+
+                // ROTATION (turn left/right) - DISABLED during post-ladder cooldown
+                bool canRotate = (_postLadderTimer <= 0f);   // <- key condition
+
+                if (canRotate && Mathf.Abs(h) > 0.01f)
+                {
+                    float turnAmount = h * turnSpeed * Time.fixedDeltaTime;
+                    Quaternion deltaRotation = Quaternion.Euler(0f, turnAmount, 0f);
+                    rb.MoveRotation(rb.rotation * deltaRotation);
+                }
+            }
+            else
+            {
+                // while mining we are not running
+                isRunning = false;
+            }
         }
 
         // ANIMATION SPEED (walking) + running flag
@@ -125,12 +147,39 @@ public class PlayerController : MonoBehaviour
             float speedParam = (!isMining) ? Mathf.Abs(v) : 0f;
             anim.SetFloat("Speed", speedParam);
             anim.SetBool("IsRunning", isRunning);
-            anim.SetBool("IsClimbing", isOnLadder);   // NEW
+            anim.SetBool("IsClimbing", isOnLadder);
         }
 
+        // ---------------- FALL DAMAGE ----------------
+        // Track vertical speed
+        lastVerticalSpeed = rb.linearVelocity.y;
+
+        bool groundedNow = IsGrounded();
+
+        // Just landed this frame
+        if (groundedNow && !wasGrounded)
+        {
+            if (lastVerticalSpeed < fatalFallSpeed)
+            {
+                // Use reflection to call GameManager.LoseGame with a custom message,
+                // same pattern as RockDamage instantDeath.
+                if (GameManager.Instance != null)
+                {
+                    var gm = GameManager.Instance;
+                    var method = gm.GetType().GetMethod(
+                        "LoseGame",
+                        BindingFlags.NonPublic | BindingFlags.Instance
+                    );
+                    if (method != null)
+                    {
+                        method.Invoke(gm, new object[] { "You died from a fatal fall!" });
+                    }
+                }
+            }
+        }
+
+        wasGrounded = groundedNow;
     }
-
-
 
     // ---------------------- NON-PHYSICS / INPUT ----------------------
     void Update()
@@ -192,7 +241,6 @@ public class PlayerController : MonoBehaviour
         {
             ladderJumpRequested = true;
         }
-
     }
 
     // ---------------------- ORE TRIGGERS ----------------------
@@ -235,7 +283,7 @@ public class PlayerController : MonoBehaviour
             isOnLadder = true;
             currentLadder = ladderTransform;
 
-            // Try to grab the ladder’s BoxCollider for accurate centering
+            // Cache the ladder's BoxCollider (on the same object as LadderZone)
             currentLadderCollider = ladderTransform.GetComponent<BoxCollider>();
 
             isRunning = false;
@@ -254,10 +302,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     // ---------------------- LADDER MOVEMENT (Rigidbody) ----------------------
     private void HandleLadderMovement(float h, float v)
     {
+        // v = up/down input, h = left/right input
+
         // Start from current position
         Vector3 targetPos = rb.position;
 
@@ -275,44 +324,60 @@ public class PlayerController : MonoBehaviour
             targetPos += sideDir * ladderSideMoveSpeed * Time.fixedDeltaTime;
         }
 
-        // 3) (centering code REMOVED)
+        // 3) Clamp inside the ladder's BoxCollider so we don't leave sideways
+        if (currentLadderCollider != null)
+        {
+            Bounds b = currentLadderCollider.bounds;
+            float margin = 0.05f; // small padding so we don't sit exactly on the edge
+
+            targetPos.x = Mathf.Clamp(targetPos.x, b.min.x + margin, b.max.x - margin);
+            targetPos.z = Mathf.Clamp(targetPos.z, b.min.z + margin, b.max.z - margin);
+        }
 
         // Apply climb + side move in one go
         rb.MovePosition(targetPos);
 
-        // 4) Jump off the ladder (unchanged)
+        // 4) Jump off the ladder (uses the flag we set in Update)
         if (ladderJumpRequested)
         {
-            ladderJumpRequested = false;
+            ladderJumpRequested = false;   // consume request
 
             isOnLadder = false;
             currentLadder = null;
-            currentLadderCollider = null;   // optional
+            currentLadderCollider = null;
             rb.useGravity = true;
 
+            // Stop any leftover ladder velocity before we launch
+            rb.linearVelocity = Vector3.zero;
+
+            // Upward + sideways push
             Vector3 jumpDir = Vector3.up * jumpForce;
-            Vector3 side = transform.right * -h * ladderSideJumpForce;
+            Vector3 side = transform.right * -h * ladderSideJumpForce; // minus = A=left, D=right
             rb.AddForce(jumpDir + side, ForceMode.VelocityChange);
+
+            // Start the cooldown: no rotation allowed while this is > 0
+            _postLadderTimer = postLadderNoRotateTime;
 
             if (anim != null)
             {
                 anim.SetBool("IsClimbing", false);
-                anim.SetTrigger("Jump");
+                anim.SetTrigger("Jump");   // play jump animation
             }
         }
 
-        // 5) Climb animation while on ladder (unchanged)
+        // 5) Climb animation while on ladder
         if (anim != null)
         {
-            anim.SetFloat("Speed", Mathf.Abs(v));
+            anim.SetFloat("Speed", Mathf.Abs(v));  // how fast the legs move
             anim.SetBool("IsRunning", false);
             anim.SetBool("IsClimbing", true);
         }
     }
 
-
-
-
-
-
+    // ---------------------- GROUND CHECK ----------------------
+    private bool IsGrounded()
+    {
+        // Simple raycast down from the player; you can adjust distance if needed
+        return Physics.Raycast(transform.position, Vector3.down, 1.1f);
+    }
 }

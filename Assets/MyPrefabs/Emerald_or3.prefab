@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 492737169892121067}
   - component: {fileID: 5675139896752072987}
   m_Layer: 0
-  m_Name: Emerald_ore
+  m_Name: Emerald_or3
   m_TagString: GoldOre
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
