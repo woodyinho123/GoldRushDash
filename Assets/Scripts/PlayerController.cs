@@ -28,9 +28,12 @@ public class PlayerController : MonoBehaviour
     public float ladderClimbSpeed = 3f;      // up / down speed
     public float ladderSideJumpForce = 5f;   // sideways push when jumping off
     public float ladderSnapSpeed = 10f;      // how fast we snap to ladder centre
-
+    public float ladderSideMoveSpeed = 2f;
     private bool isOnLadder = false;
     private Transform currentLadder;         // which ladder we're on
+    private BoxCollider currentLadderCollider;                                        // optional – but makes checks easier
+    private bool isClimbing => isOnLadder;
+    private bool ladderJumpRequested = false;
 
     void Awake()
     {
@@ -122,7 +125,9 @@ public class PlayerController : MonoBehaviour
             float speedParam = (!isMining) ? Mathf.Abs(v) : 0f;
             anim.SetFloat("Speed", speedParam);
             anim.SetBool("IsRunning", isRunning);
+            anim.SetBool("IsClimbing", isOnLadder);   // NEW
         }
+
     }
 
 
@@ -181,6 +186,13 @@ public class PlayerController : MonoBehaviour
                     footstepSource.Stop();
             }
         }
+
+        // Capture jump input for ladders (so FixedUpdate doesn't miss it)
+        if (isOnLadder && Input.GetButtonDown("Jump"))
+        {
+            ladderJumpRequested = true;
+        }
+
     }
 
     // ---------------------- ORE TRIGGERS ----------------------
@@ -223,9 +235,12 @@ public class PlayerController : MonoBehaviour
             isOnLadder = true;
             currentLadder = ladderTransform;
 
+            // Try to grab the ladder’s BoxCollider for accurate centering
+            currentLadderCollider = ladderTransform.GetComponent<BoxCollider>();
+
             isRunning = false;
             rb.linearVelocity = Vector3.zero;
-              rb.useGravity = false;   // stop falling while on ladder
+            rb.useGravity = false;   // stop falling while on ladder
         }
         else
         {
@@ -233,16 +248,16 @@ public class PlayerController : MonoBehaviour
             {
                 isOnLadder = false;
                 currentLadder = null;
+                currentLadderCollider = null;
                 rb.useGravity = true;    // re-enable gravity
             }
         }
     }
 
+
     // ---------------------- LADDER MOVEMENT (Rigidbody) ----------------------
     private void HandleLadderMovement(float h, float v)
     {
-        // v = up/down input, h = left/right input
-
         // Start from current position
         Vector3 targetPos = rb.position;
 
@@ -253,39 +268,49 @@ public class PlayerController : MonoBehaviour
             targetPos += climbDir * ladderClimbSpeed * Time.fixedDeltaTime;
         }
 
-        // 2) Gentle centering towards the ladder in X/Z
-        if (currentLadder != null)
+        // 2) Side-to-side move along the ladder
+        if (Mathf.Abs(h) > 0.01f)
         {
-            Vector3 ladderPos = currentLadder.position;
-
-            float snap = ladderSnapSpeed * 0.2f; // soften snap
-            targetPos.x = Mathf.Lerp(targetPos.x, ladderPos.x, Time.fixedDeltaTime * snap);
-            targetPos.z = Mathf.Lerp(targetPos.z, ladderPos.z, Time.fixedDeltaTime * snap);
+            Vector3 sideDir = transform.right * -h;  // A/D
+            targetPos += sideDir * ladderSideMoveSpeed * Time.fixedDeltaTime;
         }
 
-        // Single MovePosition doing both climb + centering
+        // 3) (centering code REMOVED)
+
+        // Apply climb + side move in one go
         rb.MovePosition(targetPos);
 
-        // 3) Jump off the ladder
-        if (Input.GetButtonDown("Jump"))
+        // 4) Jump off the ladder (unchanged)
+        if (ladderJumpRequested)
         {
+            ladderJumpRequested = false;
+
             isOnLadder = false;
             currentLadder = null;
+            currentLadderCollider = null;   // optional
             rb.useGravity = true;
 
-            // Upward + sideways push
             Vector3 jumpDir = Vector3.up * jumpForce;
-            Vector3 side = transform.right * h * ladderSideJumpForce;
+            Vector3 side = transform.right * -h * ladderSideJumpForce;
             rb.AddForce(jumpDir + side, ForceMode.VelocityChange);
+
+            if (anim != null)
+            {
+                anim.SetBool("IsClimbing", false);
+                anim.SetTrigger("Jump");
+            }
         }
 
-        // 4) Climb animation
+        // 5) Climb animation while on ladder (unchanged)
         if (anim != null)
         {
             anim.SetFloat("Speed", Mathf.Abs(v));
             anim.SetBool("IsRunning", false);
+            anim.SetBool("IsClimbing", true);
         }
     }
+
+
 
 
 
