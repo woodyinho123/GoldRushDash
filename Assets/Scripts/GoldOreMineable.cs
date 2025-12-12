@@ -18,6 +18,10 @@ public class GoldOreMineable : MonoBehaviour
     private float currentMiningTime = 0f;
     private bool isDepleted = false;
 
+    [Header("Score")]
+    public int scoreValue = 15;   // or whatever value mined ore should give
+
+
     void Start()
     {
        
@@ -124,7 +128,11 @@ public class GoldOreMineable : MonoBehaviour
         {
             GameManager.Instance.SpendEnergy(mineEnergyCost);
             GameManager.Instance.OreCollected();
+
+            // ADD SCORE ONCE when mining completes
+            GameManager.Instance.AddScore(scoreValue);
         }
+
 
         // Remove this ore
         Destroy(gameObject);

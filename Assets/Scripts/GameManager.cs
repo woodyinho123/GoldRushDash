@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+
+
     [Header("Music")]
     public AudioSource backgroundMusicSource;
     [Range(0f, 1f)] public float musicVolume = 0.15f;
@@ -28,12 +30,15 @@ public class GameManager : MonoBehaviour
     public Slider energyBar;
     [SerializeField] private float currentEnergy;
 
-
-
     [Header("Timer settings")]
     public float maxTime = 120f;
     public Slider timerBar;
     public TextMeshProUGUI timerLabel;
+
+    [Header("HUD messages / energy")]
+    [SerializeField] private TMP_Text hudMessageText;      // drag TMP text here in Inspector
+    [SerializeField] private float energyRechargeDelay = 3f;   // wait before regen starts
+    [SerializeField] private float energyRechargeRate = 15f;   // energy/second while regening
 
     private int totalOre;
     private int collectedOre;
@@ -41,7 +46,17 @@ public class GameManager : MonoBehaviour
     private float currentTime;
     private bool isGameOver = false;
 
-    private int score = 0;
+    // energy / HUD helpers
+    private bool isRechargingEnergy = false;
+    private Coroutine hudMessageCoroutine;
+
+    // For PlayerController: true if we have any usable energy
+    public bool HasEnergy => currentEnergy > 0.01f;
+
+    [Header("Score")]
+    public int score = 0;
+    [SerializeField] private TMP_Text scoreText;   // drag a TMP text here
+
 
     private void Awake()
     {
@@ -89,9 +104,17 @@ public class GameManager : MonoBehaviour
         if (timerLabel != null)
             timerLabel.text = Mathf.CeilToInt(currentTime) + " SECONDS UNTIL COLLAPSE!";
 
+        // SCORE
+        score = 0;
+        UpdateScoreUI();
 
+        // Hide game over panel at start
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
+
+        // Hide HUD message at start
+        if (hudMessageText != null)
+            hudMessageText.gameObject.SetActive(false);
 
         // MUSIC
         if (backgroundMusicSource != null)
@@ -115,7 +138,6 @@ public class GameManager : MonoBehaviour
 
         if (timerLabel != null)
             timerLabel.text = Mathf.CeilToInt(currentTime) + " SECONDS UNTIL COLLAPSE!";
-
 
         if (currentTime <= 0f)
             LoseGame("You ran out of time! The mine collapsed.");
@@ -145,11 +167,20 @@ public class GameManager : MonoBehaviour
             oreCounterText.text = $"Ore: {collectedOre}/{totalOre}";
     }
 
+
     public void AddScore(int amount)
     {
         score += amount;
-        Debug.Log("Score = " + score);
+        if (score < 0) score = 0;
+        UpdateScoreUI();
     }
+
+    private void UpdateScoreUI()
+    {
+        if (scoreText != null)
+            scoreText.text = $"Score: {score}";
+    }
+
 
     private void WinGame()
     {
@@ -158,28 +189,86 @@ public class GameManager : MonoBehaviour
     }
 
     // ----------------------
-    // ENERGY (for mining only)
+    // ENERGY (stamina style)
     // ----------------------
     public void SpendEnergy(float amount)
     {
         if (isGameOver) return;
+        if (amount <= 0f) return;
+
+        // Already empty? just make sure regen is running
+        if (currentEnergy <= 0f)
+        {
+            currentEnergy = 0f;
+            if (!isRechargingEnergy)
+                StartCoroutine(EnergyRechargeRoutine());
+            return;
+        }
 
         currentEnergy -= amount;
         currentEnergy = Mathf.Clamp(currentEnergy, 0f, maxEnergy);
+        UpdateEnergyUI();
 
-        if (energyBar != null)
-            energyBar.value = currentEnergy;
-
-        // GAME OVER when energy is empty
+        // Hit zero: show warning + start regen (NO game over)
         if (currentEnergy <= 0f)
         {
-            LoseGame("You ran out of energy!");
+            currentEnergy = 0f;
+            ShowHudMessage("YOU RAN OUT OF ENERGY!");
+            if (!isRechargingEnergy)
+                StartCoroutine(EnergyRechargeRoutine());
         }
     }
 
+    private void UpdateEnergyUI()
+    {
+        if (energyBar != null)
+            energyBar.value = currentEnergy;
+    }
+
+    private IEnumerator EnergyRechargeRoutine()
+    {
+        if (isRechargingEnergy) yield break;
+        isRechargingEnergy = true;
+
+        // Wait a bit before starting to recharge
+        yield return new WaitForSeconds(energyRechargeDelay);
+
+        while (!isGameOver && currentEnergy < maxEnergy)
+        {
+            currentEnergy += energyRechargeRate * Time.deltaTime;
+            currentEnergy = Mathf.Clamp(currentEnergy, 0f, maxEnergy);
+            UpdateEnergyUI();
+            yield return null;
+        }
+
+        isRechargingEnergy = false;
+    }
+
+    private void ShowHudMessage(string message)
+    {
+        if (hudMessageText == null) return;
+
+        hudMessageText.text = message;
+        hudMessageText.gameObject.SetActive(true);
+
+        if (hudMessageCoroutine != null)
+            StopCoroutine(hudMessageCoroutine);
+
+        hudMessageCoroutine = StartCoroutine(HideHudMessageAfterDelay(2f));
+    }
+
+    private IEnumerator HideHudMessageAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (hudMessageText != null)
+            hudMessageText.gameObject.SetActive(false);
+
+        hudMessageCoroutine = null;
+    }
 
     // ----------------------
-    // HEALTH (for damage only)
+    // HEALTH
     // ----------------------
     public void TakeDamage(float amount)
     {
@@ -197,8 +286,11 @@ public class GameManager : MonoBehaviour
             LoseGame("You were crushed by falling rocks!");
     }
 
-
-
+    // Called by lava trigger
+    public void LavaDeath()
+    {
+        LoseGame("You fell into lava and died!");
+    }
 
     // ----------------------
     // GAME OVER

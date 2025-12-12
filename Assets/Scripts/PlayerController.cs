@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     [Header("Ladder Jump")]
     public float postLadderNoRotateTime = 0.3f; // how long after ladder jump we block rotation
     private float _postLadderTimer = 0f;
-    private bool _airborneFromLadder = false;
+    private bool _airborneFromLadder = false; 
 
     [Header("Fall Damage")]
     // Negative value: e.g. -18 means "if we hit the ground while falling faster than -18"
@@ -111,8 +111,17 @@ public class PlayerController : MonoBehaviour
             if (!isMining)
             {
                 // decide if we want to run (hold Left Shift while moving)
+                // decide if we want to run (hold Left Shift while moving)
                 bool wantsToRun = Input.GetKey(KeyCode.LeftShift) && Mathf.Abs(v) > 0.1f;
+
+                // No sprinting if we're out of energy
+                if (GameManager.Instance != null && !GameManager.Instance.HasEnergy)
+                {
+                    wantsToRun = false;
+                }
+
                 isRunning = wantsToRun;
+
 
                 float currentSpeed = isRunning ? runSpeed : walkSpeed;
 

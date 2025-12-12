@@ -133,6 +133,7 @@ MonoBehaviour:
   mineSfx: {fileID: 8300000, guid: 027381ab061fe534483645dc7c5fa128, type: 3}
   mineSfxVolume: 0.7
   miningProgressSlider: {fileID: 6912575499785972414}
+  scoreValue: 10
 --- !u!1 &289756367368310549
 GameObject:
   m_ObjectHideFlags: 0
