@@ -2,64 +2,75 @@ using UnityEngine;
 
 public class CameraCollision : MonoBehaviour
 {
-    [Header("Target (usually PlayerRoot or Focal Point)")]
-    public Transform target;
+    [Header("References")]
+    public Transform pivot; // drag Focal Point here
 
-    [Header("Collision")]
-    public LayerMask collisionMask = ~0;  // what counts as walls (default = everything)
-    public float skinOffset = 0.2f;       // how far from the wall to keep the camera
-    public float heightOffset = 1.5f;     // ray origin above target position
-    public float moveSpeed = 15f;         // how fast the camera moves
+    [Header("Collision settings")]
+    public float cameraRadius = 0.25f;
+    public float minDistance = 0.7f;
+    public float collisionOffset = 0.15f;
+    public float smoothing = 10f;
+
+    [Header("Layers")]
+    public LayerMask collisionMask = ~0; // everything by default
 
     private Vector3 _defaultLocalPos;
+    private float _currentDist;
+    private float _desiredDist;
 
-    void Start()
+    void Awake()
     {
-        // Remember where the camera is relative to its parent at start
-        _defaultLocalPos = transform.localPosition;
-
-        if (target == null && transform.parent != null)
+        if (pivot == null)
         {
-            target = transform.parent;
+            Debug.LogWarning("CameraCollision: Pivot not assigned. Disabling.");
+            enabled = false;
+            return;
         }
+
+        // Camera's intended local offset relative to pivot (Focal Point)
+        _defaultLocalPos = pivot.InverseTransformPoint(transform.position);
+
+        _currentDist = _defaultLocalPos.magnitude;
+        _desiredDist = _currentDist;
     }
 
     void LateUpdate()
     {
-        if (target == null) return;
+        if (pivot == null) return;
 
-        // Ideal camera world position (no collision)
-        Vector3 desiredWorldPos = target.TransformPoint(_defaultLocalPos);
+        Vector3 pivotWorldPos = pivot.position;
 
-        // Ray origin: from player, slightly above feet
-        Vector3 origin = target.position + Vector3.up * heightOffset;
+        // Desired camera world position if there was no collision
+        Vector3 desiredWorldPos = pivot.TransformPoint(_defaultLocalPos);
 
-        RaycastHit hit;
-        bool hasHit = Physics.Linecast(
-            origin,
-            desiredWorldPos,
-            out hit,
-            collisionMask,
-            QueryTriggerInteraction.Ignore
-        );
+        Vector3 toCam = desiredWorldPos - pivotWorldPos;
+        float maxDist = toCam.magnitude;
+        if (maxDist < 0.001f) return;
 
-        Vector3 targetPos = desiredWorldPos;
+        Vector3 dir = toCam / maxDist;
 
-        if (hasHit)
+        float targetDist = maxDist;
+
+        // SphereCast from pivot toward desired camera position
+        if (Physics.SphereCast(
+                pivotWorldPos,
+                cameraRadius,
+                dir,
+                out RaycastHit hit,
+                maxDist,
+                collisionMask,
+                QueryTriggerInteraction.Ignore))
         {
-            // Move camera to just in front of the wall
-            float dist = Vector3.Distance(origin, hit.point) - skinOffset;
-            dist = Mathf.Max(0.0f, dist);
-
-            Vector3 dir = (desiredWorldPos - origin).normalized;
-            targetPos = origin + dir * dist;
+            targetDist = Mathf.Max(minDistance, hit.distance - collisionOffset);
         }
 
-        // Smoothly move camera to new position
-        transform.position = Vector3.Lerp(
-            transform.position,
-            targetPos,
-            Time.deltaTime * moveSpeed
-        );
+        // Smooth distance so it doesn't snap forward
+        _desiredDist = targetDist;
+        _currentDist = Mathf.Lerp(_currentDist, _desiredDist, Time.deltaTime * smoothing);
+
+        Vector3 targetWorldPos = pivotWorldPos + dir * _currentDist;
+
+        // Smooth position
+        transform.position = Vector3.Lerp(transform.position, targetWorldPos, Time.deltaTime * smoothing);
     }
 }
