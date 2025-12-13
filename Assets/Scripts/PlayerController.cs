@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jump")]
     public float jumpForce = 6f;          // used when jumping OFF ladders
+    public float forwardJumpForce = 4f;       // NEW: forward push when ground-jumping
+    private bool groundJumpRequested = false; // NEW
+    private float groundJumpV = 0f;           // NEW: stores vertical input at jump press
 
     [Header("Footstep Audio")]
     public AudioSource footstepSource;     // looped walking sound
@@ -137,14 +140,28 @@ public class PlayerController : MonoBehaviour
                 // move forward/back along local forward (only if not in ladder-airborne state)
                 if (canUseGroundControls)
                 {
-                    Vector3 move = transform.forward * -v * currentSpeed * Time.fixedDeltaTime;
-                    rb.MovePosition(rb.position + move);
+                    Vector3 desiredDelta = transform.forward * -v * currentSpeed * Time.fixedDeltaTime;
 
-                    // Only drain energy when SPRINTING
-                    if (isRunning && Mathf.Abs(v) > 0.01f && GameManager.Instance != null)
+                    // Sweep first: if we'd hit something, slide along it instead of pushing through
+                    Vector3 appliedDelta = desiredDelta;
+
+                    if (desiredDelta.sqrMagnitude > 0.000001f)
                     {
-                        GameManager.Instance.SpendEnergy(moveEnergyPerSecond * Time.fixedDeltaTime);
+                        if (rb.SweepTest(desiredDelta.normalized, out RaycastHit hit, desiredDelta.magnitude, QueryTriggerInteraction.Ignore))
+                        {
+                            // Remove the "into the wall" part -> slide along surface
+                            appliedDelta = Vector3.ProjectOnPlane(desiredDelta, hit.normal);
+                        }
+
+                        rb.MovePosition(rb.position + appliedDelta);
+
+                        // Only drain energy when sprinting AND we actually moved a meaningful amount
+                        if (isRunning && Mathf.Abs(v) > 0.01f && GameManager.Instance != null && appliedDelta.magnitude > 0.0005f)
+                        {
+                            GameManager.Instance.SpendEnergy(moveEnergyPerSecond * Time.fixedDeltaTime);
+                        }
                     }
+
                 }
 
                 // ROTATION (turn left/right) - DISABLED during post-ladder cooldown AND ladder-airborne
@@ -156,6 +173,22 @@ public class PlayerController : MonoBehaviour
                     Quaternion deltaRotation = Quaternion.Euler(0f, turnAmount, 0f);
                     rb.MoveRotation(rb.rotation * deltaRotation);
                 }
+
+                // Apply ground jump in physics step (does not interfere with ladder jump)
+                if (groundJumpRequested && !isOnLadder && IsGrounded())
+                {
+                    groundJumpRequested = false;
+
+                    // Clear vertical velocity so jump height is consistent
+                    rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+
+                    // Use your same "forward sign" convention (-v)
+                    Vector3 forward = transform.forward * -groundJumpV;
+                    Vector3 jumpVec = Vector3.up * jumpForce + forward * forwardJumpForce;
+
+                    rb.AddForce(jumpVec, ForceMode.VelocityChange);
+                }
+
 
             }
             else
@@ -271,6 +304,14 @@ public class PlayerController : MonoBehaviour
                     footstepSource.Stop();
             }
         }
+
+        // Ground jump (Space + forward/back). Does NOT affect ladder jump.
+        if (!isOnLadder && !isMining && Input.GetButtonDown("Jump") && IsGrounded())
+        {
+            groundJumpRequested = true;
+            groundJumpV = Input.GetAxisRaw("Vertical");
+        }
+
 
         // Capture jump input for ladders (so FixedUpdate doesn't miss it)
         if (isOnLadder && Input.GetButtonDown("Jump"))
