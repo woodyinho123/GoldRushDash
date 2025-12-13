@@ -8,8 +8,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-
-
     [Header("Music")]
     public AudioSource backgroundMusicSource;
     [Range(0f, 1f)] public float musicVolume = 0.15f;
@@ -29,6 +27,7 @@ public class GameManager : MonoBehaviour
     public float maxEnergy = 100f;
     public Slider energyBar;
     [SerializeField] private float currentEnergy;
+    private float lastEnergyUseTime = -999f; // NEW: tracks when we last spent energy
 
     [Header("Timer settings")]
     public float maxTime = 120f;
@@ -46,12 +45,24 @@ public class GameManager : MonoBehaviour
     private float currentTime;
     private bool isGameOver = false;
 
+    
+    private Coroutine rechargeDelayCoroutine;
+    private Coroutine rechargeCoroutine;
+
+
     // energy / HUD helpers
     private bool isRechargingEnergy = false;
     private Coroutine hudMessageCoroutine;
 
     // For PlayerController: true if we have any usable energy
-    public bool HasEnergy => currentEnergy > 0.01f;
+    private const float ENERGY_EMPTY_EPS = 0.01f;   // NEW: treat <= this as empty
+
+    public bool HasEnergy => currentEnergy > ENERGY_EMPTY_EPS;
+
+
+    // NEW: if you hit 0 energy, sprint stays locked until fully recharged
+    private bool sprintLocked = false;
+    public bool CanSprint => !sprintLocked && HasEnergy;  // HasEnergy just avoids weird edge cases
 
     [Header("Score")]
     public int score = 0;
@@ -142,6 +153,8 @@ public class GameManager : MonoBehaviour
         if (currentTime <= 0f)
             LoseGame("You ran out of time! The mine collapsed.");
 
+    
+
         // DEBUG: test health damage with the H key
         if (Input.GetKeyDown(KeyCode.H))
         {
@@ -196,33 +209,60 @@ public class GameManager : MonoBehaviour
         if (isGameOver) return;
         if (amount <= 0f) return;
 
-        // Already empty? just make sure regen is running
-        if (currentEnergy <= 0f)
-        {
-            currentEnergy = 0f;
-            if (!isRechargingEnergy)
-                StartCoroutine(EnergyRechargeRoutine());
-            return;
-        }
+        // Mark the last time energy was used (unscaled so pausing doesn't break logic)
+        lastEnergyUseTime = Time.unscaledTime;
 
+        // Stop any recharge currently happening or waiting
+        StopEnergyRechargeCoroutines();
+
+        // Spend energy
         currentEnergy -= amount;
         currentEnergy = Mathf.Clamp(currentEnergy, 0f, maxEnergy);
         UpdateEnergyUI();
 
-        // Hit zero: show warning + start regen (NO game over)
-        if (currentEnergy <= 0f)
+        // If we hit "empty", lock sprint until full
+        if (currentEnergy <= ENERGY_EMPTY_EPS)
         {
             currentEnergy = 0f;
+            sprintLocked = true;
+            UpdateEnergyUI();
+
             ShowHudMessage("YOU RAN OUT OF ENERGY!");
-            if (!isRechargingEnergy)
-                StartCoroutine(EnergyRechargeRoutine());
         }
+
+        // Start countdown to recharge AFTER delay (even if not empty)
+        rechargeDelayCoroutine = StartCoroutine(EnergyRechargeAfterDelay());
     }
 
-    private void UpdateEnergyUI()
+    private void StopEnergyRechargeCoroutines()
     {
-        if (energyBar != null)
-            energyBar.value = currentEnergy;
+        isRechargingEnergy = false;
+
+        if (rechargeDelayCoroutine != null)
+        {
+            StopCoroutine(rechargeDelayCoroutine);
+            rechargeDelayCoroutine = null;
+        }
+
+        if (rechargeCoroutine != null)
+        {
+            StopCoroutine(rechargeCoroutine);
+            rechargeCoroutine = null;
+        }
+    }
+    private IEnumerator EnergyRechargeAfterDelay()
+    {
+        // Wait until we've gone energyRechargeDelay seconds with NO energy use
+        while (!isGameOver && (Time.unscaledTime - lastEnergyUseTime) < energyRechargeDelay)
+            yield return null;
+
+        // Only start recharging if we actually need it
+        if (!isGameOver && currentEnergy < maxEnergy)
+        {
+            rechargeCoroutine = StartCoroutine(EnergyRechargeRoutine());
+        }
+
+        rechargeDelayCoroutine = null;
     }
 
     private IEnumerator EnergyRechargeRoutine()
@@ -230,19 +270,39 @@ public class GameManager : MonoBehaviour
         if (isRechargingEnergy) yield break;
         isRechargingEnergy = true;
 
-        // Wait a bit before starting to recharge
-        yield return new WaitForSeconds(energyRechargeDelay);
-
-        while (!isGameOver && currentEnergy < maxEnergy)
+        while (!isGameOver && isRechargingEnergy && currentEnergy < maxEnergy)
         {
-            currentEnergy += energyRechargeRate * Time.deltaTime;
+            currentEnergy += energyRechargeRate * Time.unscaledDeltaTime;
             currentEnergy = Mathf.Clamp(currentEnergy, 0f, maxEnergy);
             UpdateEnergyUI();
             yield return null;
         }
 
+        // If full, unlock sprint and show message once
+        if (!isGameOver && currentEnergy >= maxEnergy - 0.01f)
+        {
+            currentEnergy = maxEnergy;
+            UpdateEnergyUI();
+
+            if (sprintLocked)
+            {
+                sprintLocked = false;
+                ShowHudMessage("SPRINT READY!");
+            }
+        }
+
         isRechargingEnergy = false;
+        rechargeCoroutine = null;
     }
+
+
+    private void UpdateEnergyUI()
+    {
+        if (energyBar != null)
+            energyBar.value = currentEnergy;
+    }
+
+  
 
     private void ShowHudMessage(string message)
     {
@@ -259,7 +319,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator HideHudMessageAfterDelay(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
+
 
         if (hudMessageText != null)
             hudMessageText.gameObject.SetActive(false);

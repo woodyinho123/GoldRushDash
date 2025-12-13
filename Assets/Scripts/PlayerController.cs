@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float moveEnergyPerSecond = 5f;
     public int oreCount = 0;
     public Animator anim;
+    public float mineEnergyPerSecond = 4f;
 
     [SerializeField] private GameObject miningPromptUI;
 
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
     [Header("Ladder Jump")]
     public float postLadderNoRotateTime = 0.3f; // how long after ladder jump we block rotation
     private float _postLadderTimer = 0f;
-    private bool _airborneFromLadder = false; 
+    private bool _airborneFromLadder = false;
 
     [Header("Fall Damage")]
     // Negative value: e.g. -18 means "if we hit the ground while falling faster than -18"
@@ -114,11 +115,16 @@ public class PlayerController : MonoBehaviour
                 // decide if we want to run (hold Left Shift while moving)
                 bool wantsToRun = Input.GetKey(KeyCode.LeftShift) && Mathf.Abs(v) > 0.1f;
 
+
+
                 // No sprinting if we're out of energy
-                if (GameManager.Instance != null && !GameManager.Instance.HasEnergy)
+                // No sprinting if sprint is locked (only unlocks at full energy)
+                // No sprinting if sprint is locked (only unlocks at full energy)
+                if (GameManager.Instance != null && !GameManager.Instance.CanSprint)
                 {
                     wantsToRun = false;
                 }
+
 
                 isRunning = wantsToRun;
 
@@ -217,6 +223,10 @@ public class PlayerController : MonoBehaviour
             if (wantsToMine)
             {
                 currentOre.Mine(Time.deltaTime);
+
+                // ONLY drain energy while actively mining (holding E)
+                if (GameManager.Instance != null)
+                    GameManager.Instance.SpendEnergy(mineEnergyPerSecond * Time.deltaTime);
             }
             else
             {
@@ -225,6 +235,7 @@ public class PlayerController : MonoBehaviour
         }
 
         isMining = wantsToMine;
+
 
         if (anim != null && isMining)
         {
