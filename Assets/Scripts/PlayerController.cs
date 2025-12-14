@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public float mineEnergyPerSecond = 4f;
 
     [SerializeField] private GameObject miningPromptUI;
-    
+
 
     private Rigidbody rb;
     private CapsuleCollider capsule; // NEW
@@ -42,6 +42,9 @@ public class PlayerController : MonoBehaviour
     public float ladderClimbSpeed = 3f;      // up / down speed
     public float ladderSideJumpForce = 5f;   // sideways push when jumping off
     public float ladderSideMoveSpeed = 2f;
+
+    [Header("Ladder Tuning (optional)")]
+    public float ladderSpeedMultiplier = 1f;  // default 1 = unchanged
 
     private bool isOnLadder = false;
     private Transform currentLadder;         // which ladder we're on
@@ -65,7 +68,8 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-      
+
+
         capsule = GetComponent<CapsuleCollider>();
         if (capsule == null)
         {
@@ -448,6 +452,20 @@ public class PlayerController : MonoBehaviour
             // Cache the ladder's BoxCollider (on the same object as LadderZone)
             currentLadderCollider = ladderTransform.GetComponent<BoxCollider>();
 
+            // Snap player inside the ladder bounds once on entry to prevent jitter
+            if (currentLadderCollider != null)
+            {
+                Bounds b = currentLadderCollider.bounds;
+                float margin = 0.08f; // a bit bigger than your clamp margin (0.05)
+
+                Vector3 pos = rb.position;
+                pos.x = Mathf.Clamp(pos.x, b.min.x + margin, b.max.x - margin);
+                pos.z = Mathf.Clamp(pos.z, b.min.z + margin, b.max.z - margin);
+
+                rb.position = pos;           // snap immediately
+                rb.linearVelocity = Vector3.zero; // kill any shove
+            }
+
             isRunning = false;
             rb.linearVelocity = Vector3.zero;
             rb.useGravity = false;   // stop falling while on ladder
@@ -476,7 +494,8 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Abs(v) > 0.01f)
         {
             Vector3 climbDir = Vector3.up * v; // +1 up, -1 down
-            targetPos += climbDir * ladderClimbSpeed * Time.fixedDeltaTime;
+            targetPos += climbDir * (ladderClimbSpeed * ladderSpeedMultiplier) * Time.fixedDeltaTime;
+
         }
 
         // 2) Side-to-side move along the ladder
