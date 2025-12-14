@@ -1,9 +1,16 @@
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 using System.Reflection;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Ground Step / Slope")]
+    public float maxSlopeAngle = 55f;
+    public float stepHeight = 0.35f;      // try 0.25–0.45
+    public float stepDown = 0.6f;         // how far we can snap down after stepping
+    public LayerMask movementMask = ~0;   // set in Inspector if needed
+    public float stepUpPerFrame = 0.12f;  // NEW: limits vertical pop (tune 0.08–0.2)
+
+
     [Header("Movement")]
     public float walkSpeed = 3f;
     public float runSpeed = 6f;        // faster
@@ -14,8 +21,10 @@ public class PlayerController : MonoBehaviour
     public float mineEnergyPerSecond = 4f;
 
     [SerializeField] private GameObject miningPromptUI;
+    
 
     private Rigidbody rb;
+    private CapsuleCollider capsule; // NEW
     private GoldOreMineable currentOre;    // ore we are standing next to
     private bool isMining = false;         // are we currently mining?
     private bool isRunning = false;        // are we currently running?
@@ -56,6 +65,12 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+      
+        capsule = GetComponent<CapsuleCollider>();
+        if (capsule == null)
+        {
+            Debug.LogError("PlayerController: No CapsuleCollider found on the player. Add one to PlayerRoot.");
+        }
 
         if (anim == null)
         {
@@ -142,27 +157,97 @@ public class PlayerController : MonoBehaviour
                 {
                     Vector3 desiredDelta = transform.forward * -v * currentSpeed * Time.fixedDeltaTime;
 
-                    // Sweep first: if we'd hit something, slide along it instead of pushing through
-                    Vector3 appliedDelta = desiredDelta;
-
                     if (desiredDelta.sqrMagnitude > 0.000001f)
                     {
-                        if (rb.SweepTest(desiredDelta.normalized, out RaycastHit hit, desiredDelta.magnitude, QueryTriggerInteraction.Ignore))
+                        Vector3 newPos = rb.position;
+
+                        if (capsule != null)
                         {
-                            // Remove the "into the wall" part -> slide along surface
-                            appliedDelta = Vector3.ProjectOnPlane(desiredDelta, hit.normal);
+                            // Build capsule endpoints in world space
+                            float radius = capsule.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.z);
+                            float height = capsule.height * transform.lossyScale.y;
+                            radius = Mathf.Max(0.01f, radius);
+
+                            Vector3 center = transform.TransformPoint(capsule.center);
+
+                            float half = Mathf.Max(0f, (height * 0.5f) - radius);
+
+                            Vector3 p1 = center + Vector3.up * half;
+                            Vector3 p2 = center - Vector3.up * half;
+
+                            Vector3 dir = desiredDelta.normalized;
+                            float dist = desiredDelta.magnitude;
+                            const float skin = 0.02f;
+
+                            // Cast the capsule forward; if hit, stop just before the wall
+                            float slopeCos = Mathf.Cos(maxSlopeAngle * Mathf.Deg2Rad);
+
+                            if (Physics.CapsuleCast(p1, p2, radius, dir, out RaycastHit hit, dist + skin, movementMask, QueryTriggerInteraction.Ignore))
+
+                            {
+                                bool walkableSlope = hit.normal.y >= slopeCos;
+
+                                if (walkableSlope)
+                                {
+                                    // Move along the slope instead of stopping
+                                    Vector3 slopeDelta = Vector3.ProjectOnPlane(desiredDelta, hit.normal);
+
+                                    if (slopeDelta.sqrMagnitude > 0.000001f)
+                                    {
+                                        Vector3 slopeDir = slopeDelta.normalized;
+                                        float slopeDist = slopeDelta.magnitude;
+
+                                        // Cast again along the slope movement to avoid clipping into other geometry
+                                        if (Physics.CapsuleCast(p1, p2, radius, slopeDir, out RaycastHit slopeHit, slopeDist + skin, movementMask, QueryTriggerInteraction.Ignore))
+                                        {
+                                            // If slope-move is blocked by a small lip/mound edge, try stepping up
+                                            bool stepped = TryStepMove(ref newPos, slopeDelta, p1, p2, radius, movementMask, skin);
+
+                                            if (!stepped)
+                                            {
+                                                // Can't step -> move as close as possible
+                                                float safeSlopeDist = Mathf.Max(0f, slopeHit.distance - skin);
+                                                newPos += slopeDir * safeSlopeDist;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            newPos += slopeDelta;
+                                        }
+
+                                    }
+                                }
+                                else
+                                {
+                                    // Too steep: treat like a wall (stop just before it)
+                                    float safeDist = Mathf.Max(0f, hit.distance - skin);
+                                    newPos += dir * safeDist;
+                                }
+                            }
+                            else
+                            {
+                                // No hit — move full amount
+                                newPos += desiredDelta;
+                            }
+
+                        }
+                        else
+                        {
+                            // Fallback if capsule isn't set
+                            newPos += desiredDelta;
                         }
 
-                        rb.MovePosition(rb.position + appliedDelta);
+                        Vector3 appliedDelta = newPos - rb.position;
+                        rb.MovePosition(newPos);
 
-                        // Only drain energy when sprinting AND we actually moved a meaningful amount
+                        // Drain sprint energy only if sprinting AND we actually moved
                         if (isRunning && Mathf.Abs(v) > 0.01f && GameManager.Instance != null && appliedDelta.magnitude > 0.0005f)
                         {
                             GameManager.Instance.SpendEnergy(moveEnergyPerSecond * Time.fixedDeltaTime);
                         }
                     }
-
                 }
+
 
                 // ROTATION (turn left/right) - DISABLED during post-ladder cooldown AND ladder-airborne
                 bool canRotate = !_airborneFromLadder && (_postLadderTimer <= 0f);
@@ -454,6 +539,61 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("IsClimbing", true);
         }
     }
+
+    private bool TryStepMove(ref Vector3 newPos, Vector3 desiredDelta,
+                         Vector3 p1, Vector3 p2, float radius,
+                         LayerMask mask, float skin)
+    {
+        if (desiredDelta.sqrMagnitude < 0.000001f)
+            return false;
+        // Don't step-up if we're not grounded (prevents popping during airtime)
+        if (!IsGrounded())
+            return false;
+
+
+        Vector3 dir = desiredDelta.normalized;
+        float dist = desiredDelta.magnitude;
+
+        // 1) try moving from a raised capsule (step up)
+        Vector3 up = Vector3.up * stepHeight;
+        Vector3 p1Up = p1 + up;
+        Vector3 p2Up = p2 + up;
+
+        // must have space at the raised position
+        if (Physics.CheckCapsule(p1Up, p2Up, radius, mask, QueryTriggerInteraction.Ignore))
+            return false;
+
+        // must be clear to move forward from the raised position
+        if (Physics.CapsuleCast(p1Up, p2Up, radius, dir, out _, dist + skin, mask, QueryTriggerInteraction.Ignore))
+            return false;
+
+        // 2) apply the raised move
+        Vector3 steppedPos = newPos + up + desiredDelta;
+
+        // 3) snap down to ground (so we don't "float")
+        Vector3 snapStart = steppedPos + Vector3.up * skin;
+        if (Physics.Raycast(snapStart, Vector3.down, out RaycastHit downHit, stepHeight + stepDown, mask, QueryTriggerInteraction.Ignore))
+        {
+            // only snap onto walkable surfaces
+            float slopeCos = Mathf.Cos(maxSlopeAngle * Mathf.Deg2Rad);
+            if (downHit.normal.y >= slopeCos)
+            {
+                float targetY = downHit.point.y + skin;
+
+                // Smooth the vertical snap so stairs/mounds don't look like a hop
+                steppedPos.y = Mathf.MoveTowards(newPos.y, targetY, stepUpPerFrame);
+
+                newPos = steppedPos;
+                return true;
+
+            }
+        }
+
+        // If no ground found, still allow the step move (eg small ledge)
+        newPos = steppedPos;
+        return true;
+    }
+
 
     // ---------------------- GROUND CHECK ----------------------
     private bool IsGrounded()
