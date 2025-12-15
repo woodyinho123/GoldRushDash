@@ -6626,6 +6626,10 @@ MonoBehaviour:
   energyRechargeRate: 15
   score: 0
   scoreText: {fileID: 105348909}
+  checkpointsEnabled: 0
+  respawnHealth: 100
+  deathRespawnDamage: 15
+  lavaRespawnDamage: 25
 --- !u!4 &344795534
 Transform:
   m_ObjectHideFlags: 0

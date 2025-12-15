@@ -14,10 +14,10 @@ public class LavaKillZone : MonoBehaviour
     {
         if (!other.CompareTag("Player"))
             return;
-
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.LavaDeath();
+            GameManager.Instance.RespawnToCheckpoint("YOU FELL IN LAVA!");
         }
+
     }
 }

@@ -68,6 +68,16 @@ public class GameManager : MonoBehaviour
     public int score = 0;
     [SerializeField] private TMP_Text scoreText;   // drag a TMP text here
 
+    [Header("CHECKPOINTS")]
+    [SerializeField] private bool checkpointsEnabled = false;     // TURN ON in Level 3 only
+    [SerializeField] private float respawnHealth = 100f;          // health after respawn (set to maxHealth in Start)
+    [SerializeField] private float deathRespawnDamage = 15f;      // damage applied after respawn (rocks)
+    [SerializeField] private float lavaRespawnDamage = 25f;       // damage applied after respawn (lava)
+
+    private Vector3 _checkpointPos;
+    private Quaternion _checkpointRot;
+    private bool _hasCheckpoint = false;
+
 
     private void Awake()
     {
@@ -80,6 +90,19 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1f;
+        // CHECKPOINT INIT
+        respawnHealth = maxHealth;
+
+        var playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            _checkpointPos = playerObj.transform.position;
+            _checkpointRot = playerObj.transform.rotation;
+            _hasCheckpoint = true;
+        }
+
+       
+
 
         // Count ore at start
         totalOre = GameObject.FindGameObjectsWithTag("GoldOre").Length;
@@ -302,9 +325,9 @@ public class GameManager : MonoBehaviour
             energyBar.value = currentEnergy;
     }
 
-  
 
-    private void ShowHudMessage(string message)
+
+    private void ShowHudMessage(string message, float durationSeconds = 2f)
     {
         if (hudMessageText == null) return;
 
@@ -314,8 +337,10 @@ public class GameManager : MonoBehaviour
         if (hudMessageCoroutine != null)
             StopCoroutine(hudMessageCoroutine);
 
-        hudMessageCoroutine = StartCoroutine(HideHudMessageAfterDelay(2f));
+        hudMessageCoroutine = StartCoroutine(HideHudMessageAfterDelay(durationSeconds));
     }
+
+
 
     private IEnumerator HideHudMessageAfterDelay(float delay)
     {
@@ -326,6 +351,100 @@ public class GameManager : MonoBehaviour
             hudMessageText.gameObject.SetActive(false);
 
         hudMessageCoroutine = null;
+    }
+
+    public void SetCheckpoint(Transform checkpointTransform, string message = "CHECKPOINT REACHED!")
+    {
+        if (!checkpointsEnabled || checkpointTransform == null) return;
+
+        _checkpointPos = checkpointTransform.position;
+        _checkpointRot = checkpointTransform.rotation;
+        _hasCheckpoint = true;
+
+        ShowHudMessage(message, 2f);
+    }
+
+    public void RespawnToCheckpoint(string message = "RESPAWNING...")
+    {
+        if (!checkpointsEnabled || !_hasCheckpoint) return;
+        if (isGameOver) return;
+
+        var playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj == null) return;
+
+        // Teleport player safely
+        var rb = playerObj.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.position = _checkpointPos;
+            rb.rotation = _checkpointRot;
+        }
+        else
+        {
+            playerObj.transform.SetPositionAndRotation(_checkpointPos, _checkpointRot);
+        }
+
+        // Optional: small damage + brief invulnerability so you don't instantly die again
+        if (lavaRespawnDamage > 0f)
+            TakeDamage(lavaRespawnDamage);
+
+    
+
+
+        ShowHudMessage(message, 1.5f);
+    }
+
+    
+
+    private void RespawnInternal(string message, float postRespawnDamage)
+    {
+        if (!_hasCheckpoint) return;
+        if (isGameOver) return;
+
+        var playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj == null) return;
+
+        // Restore health first
+        currentHealth = Mathf.Clamp(respawnHealth, 1f, maxHealth);
+        if (healthBar != null) healthBar.value = currentHealth;
+
+        // Teleport player
+        var rb = playerObj.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.position = _checkpointPos;
+            rb.rotation = _checkpointRot;
+        }
+        else
+        {
+            playerObj.transform.SetPositionAndRotation(_checkpointPos, _checkpointRot);
+        }
+
+        // Apply penalty damage AFTER moving (without triggering death loop)
+        if (postRespawnDamage > 0f)
+        {
+            currentHealth -= postRespawnDamage;
+            currentHealth = Mathf.Clamp(currentHealth, 1f, maxHealth);
+            if (healthBar != null) healthBar.value = currentHealth;
+        }
+
+        ShowHudMessage(message, 2f);
+    }
+
+    public void RespawnFromRocks()
+    {
+        if (!checkpointsEnabled) return;
+        RespawnInternal("YOU WERE CRUSHED! (RESPAWN)", deathRespawnDamage);
+    }
+
+    public void RespawnFromLava()
+    {
+        if (!checkpointsEnabled) return;
+        RespawnInternal("YOU FELL IN LAVA! (RESPAWN)", lavaRespawnDamage);
     }
 
     // ----------------------
@@ -344,14 +463,24 @@ public class GameManager : MonoBehaviour
         Debug.Log($"[Health] damage={amount}, currentHealth={currentHealth}, sliderValue={(healthBar != null ? healthBar.value : -1)}");
 
         if (currentHealth <= 0f)
-            LoseGame("You were crushed by falling rocks!");
+        {
+            if (checkpointsEnabled)
+                RespawnFromRocks();
+            else
+                LoseGame("You were crushed by falling rocks!");
+        }
+
     }
 
     // Called by lava trigger
     public void LavaDeath()
     {
-        LoseGame("You fell into lava and died!");
+        if (checkpointsEnabled)
+            RespawnFromLava();
+        else
+            LoseGame("You fell into lava and died!");
     }
+
 
     // ----------------------
     // GAME OVER
