@@ -3907,18 +3907,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6517bdd916634448030e77f1b84c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  maxSlopeAngle: 55
+  stepHeight: 0.35
+  stepDown: 0.6
+  movementMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  stepUpPerFrame: 0.12
   walkSpeed: 0.5
   runSpeed: 1
   turnSpeed: 80
   moveEnergyPerSecond: 5
   oreCount: 0
   anim: {fileID: 1900779150}
+  mineEnergyPerSecond: 4
   miningPromptUI: {fileID: 1404333601}
   jumpForce: 6
+  forwardJumpForce: 4
   footstepSource: {fileID: 321215073}
   ladderClimbSpeed: 3
   ladderSideJumpForce: 5
   ladderSideMoveSpeed: 2
+  ladderSpeedMultiplier: 1
   postLadderNoRotateTime: 0.3
   fatalFallSpeed: -18
 --- !u!54 &321215070

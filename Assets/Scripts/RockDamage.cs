@@ -10,6 +10,11 @@ public class RockDamage : MonoBehaviour
     [Header("Only damage the player once per fall")]
     public bool singleHit = true;
 
+    [Header("Hit Feedback")]
+    public AudioClip hitPlayerClip;
+    [Range(0f, 1f)] public float hitPlayerVolume = 0.9f;
+
+
     private bool _hasHitPlayer;
 
     private void Reset()
@@ -41,6 +46,15 @@ public class RockDamage : MonoBehaviour
         {
             // Take enough damage to guarantee death
             GameManager.Instance.TakeDamage(GameManager.Instance.maxHealth);
+
+            // NEW: hit feedback (flash + sound)
+            var pc = other.GetComponentInParent<PlayerController>();
+            if (pc != null)
+                pc.FlashDamage();
+
+            if (hitPlayerClip != null)
+                AudioSource.PlayClipAtPoint(hitPlayerClip, transform.position, hitPlayerVolume);
+
         }
         else
         {

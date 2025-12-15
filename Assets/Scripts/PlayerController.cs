@@ -24,10 +24,24 @@ public class PlayerController : MonoBehaviour
 
 
     private Rigidbody rb;
+    // NEW: we temporarily freeze rotation on ladders to stop physics torque/jitter
+    private RigidbodyConstraints _constraintsBeforeLadder;
+
     private CapsuleCollider capsule; // NEW
     private GoldOreMineable currentOre;    // ore we are standing next to
     private bool isMining = false;         // are we currently mining?
     private bool isRunning = false;        // are we currently running?
+
+    [Header("Damage Feedback")]
+    [SerializeField] private Renderer[] damageFlashRenderers;
+    [SerializeField] private float damageFlashDuration = 0.15f;
+
+    private MaterialPropertyBlock _damageMpb;
+    private Color[] _damageOrigColors;
+    private int _baseColorId;
+    private int _colorId;
+    private Coroutine _damageFlashCo;
+
 
     [Header("Jump")]
     public float jumpForce = 6f;          // used when jumping OFF ladders
@@ -108,13 +122,52 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogWarning("PlayerController: FootstepSource not assigned.");
         }
+
+        // NEW: damage flash setup
+        _damageMpb = new MaterialPropertyBlock();
+        _baseColorId = Shader.PropertyToID("_BaseColor"); // URP/Lit
+        _colorId = Shader.PropertyToID("_Color");         // Standard
+
+        if (damageFlashRenderers == null || damageFlashRenderers.Length == 0)
+            damageFlashRenderers = GetComponentsInChildren<Renderer>();
+
+        _damageOrigColors = new Color[damageFlashRenderers.Length];
+        for (int i = 0; i < damageFlashRenderers.Length; i++)
+        {
+            var r = damageFlashRenderers[i];
+            if (r == null || r.sharedMaterial == null)
+            {
+                _damageOrigColors[i] = Color.white;
+                continue;
+            }
+
+            if (r.sharedMaterial.HasProperty(_baseColorId))
+                _damageOrigColors[i] = r.sharedMaterial.GetColor(_baseColorId);
+            else if (r.sharedMaterial.HasProperty(_colorId))
+                _damageOrigColors[i] = r.sharedMaterial.GetColor(_colorId);
+            else
+                _damageOrigColors[i] = Color.white;
+        }
+
     }
 
     // ---------------------- PHYSICS MOVEMENT ----------------------
     void FixedUpdate()
     {
-        float h = Input.GetAxisRaw("Horizontal"); // A/D
-        float v = Input.GetAxisRaw("Vertical");   // W/S
+        float h = Input.GetAxisRaw("Horizontal"); // A/D + Arrow keys (used for turning on ground)
+        float v = Input.GetAxisRaw("Vertical");   // W/S + Up/Down Arrow (forward/back)
+
+        // NEW: Q/R strafe (no mining conflict)
+        float strafe = 0f;
+
+        // Q = left
+        if (Input.GetKey(KeyCode.Q)) strafe -= 1f;
+
+        // R = right
+        if (Input.GetKey(KeyCode.R)) strafe += 1f;
+
+        // NEW: prevent collision torque from spinning the player/camera
+        rb.angularVelocity = Vector3.zero;
 
         // Count down "no rotation" window after ladder jumps
         if (_postLadderTimer > 0f)
@@ -125,9 +178,15 @@ public class PlayerController : MonoBehaviour
         // LADDER MODE
         if (isOnLadder)
         {
-            HandleLadderMovement(h, v);
+            // IMPORTANT: ladder sideways movement uses A/D ONLY (not arrow keys)
+            float ladderH = 0f;
+            if (Input.GetKey(KeyCode.A)) ladderH -= 1f;
+            if (Input.GetKey(KeyCode.D)) ladderH += 1f;
+
+            HandleLadderMovement(ladderH, v);
             // we still want fall tracking below, so do NOT 'return' before that
         }
+
         else
         {
             // --------- NORMAL GROUND MOVEMENT ---------
@@ -135,7 +194,8 @@ public class PlayerController : MonoBehaviour
             {
                 // decide if we want to run (hold Left Shift while moving)
                 // decide if we want to run (hold Left Shift while moving)
-                bool wantsToRun = Input.GetKey(KeyCode.LeftShift) && Mathf.Abs(v) > 0.1f;
+                bool wantsToRun = Input.GetKey(KeyCode.LeftShift) && (Mathf.Abs(v) > 0.1f || Mathf.Abs(strafe) > 0.1f);
+
 
 
 
@@ -154,14 +214,21 @@ public class PlayerController : MonoBehaviour
                 float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
                 // move forward/back along local forward
+                // move forward/back + strafe (only if not in ladder-airborne state)
                 bool canUseGroundControls = !_airborneFromLadder;
 
-                // move forward/back along local forward (only if not in ladder-airborne state)
                 if (canUseGroundControls)
                 {
-                    Vector3 desiredDelta = transform.forward * -v * currentSpeed * Time.fixedDeltaTime;
+                    Vector3 moveDir = (transform.forward * -v) + (transform.right * strafe);
+
+                    // Prevent faster diagonal speed
+                    if (moveDir.sqrMagnitude > 1f)
+                        moveDir.Normalize();
+
+                    Vector3 desiredDelta = moveDir * currentSpeed * Time.fixedDeltaTime;
 
                     if (desiredDelta.sqrMagnitude > 0.000001f)
+
                     {
                         Vector3 newPos = rb.position;
 
@@ -290,11 +357,16 @@ public class PlayerController : MonoBehaviour
         // ANIMATION SPEED (walking) + running flag
         if (anim != null)
         {
-            float speedParam = (!isMining) ? Mathf.Abs(v) : 0f;
+            // Use BOTH forward/back (v) and strafe (Q/R) for walking animation
+            float speedParam = (!isMining && !isOnLadder)
+                ? Mathf.Clamp01(new Vector2(v, strafe).magnitude)
+                : 0f;
+
             anim.SetFloat("Speed", speedParam);
             anim.SetBool("IsRunning", isRunning);
             anim.SetBool("IsClimbing", isOnLadder);
         }
+
 
         // ---------------- FALL DAMAGE ----------------
         // Track vertical speed
@@ -377,8 +449,13 @@ public class PlayerController : MonoBehaviour
         }
 
         // ----- FOOTSTEPS (looped source on/off) -----
-        float moveInput = Input.GetAxisRaw("Vertical");
-        bool isWalking = !isMining && Mathf.Abs(moveInput) > 0.1f && !isOnLadder;
+        float moveV = Input.GetAxisRaw("Vertical");
+        float moveStrafe = 0f;
+        if (Input.GetKey(KeyCode.Q)) moveStrafe -= 1f;
+        if (Input.GetKey(KeyCode.R)) moveStrafe += 1f;
+
+        bool isWalking = !isMining && !isOnLadder && (Mathf.Abs(moveV) > 0.1f || Mathf.Abs(moveStrafe) > 0.1f);
+
 
         if (footstepSource != null)
         {
@@ -444,6 +521,7 @@ public class PlayerController : MonoBehaviour
     // ---------------------- LADDER API (called by LadderZone) ----------------------
     public void SetOnLadder(bool onLadder, Transform ladderTransform)
     {
+
         if (onLadder)
         {
             isOnLadder = true;
@@ -452,22 +530,28 @@ public class PlayerController : MonoBehaviour
             // Cache the ladder's BoxCollider (on the same object as LadderZone)
             currentLadderCollider = ladderTransform.GetComponent<BoxCollider>();
 
+            // NEW: freeze rotation while on ladder to stop physics torque causing jitter/camera drift
+            _constraintsBeforeLadder = rb.constraints;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+
             // Snap player inside the ladder bounds once on entry to prevent jitter
             if (currentLadderCollider != null)
             {
                 Bounds b = currentLadderCollider.bounds;
-                float margin = 0.08f; // a bit bigger than your clamp margin (0.05)
+                float margin = 0.10f; // slightly safer margin to prevent trigger edge flicker
 
                 Vector3 pos = rb.position;
                 pos.x = Mathf.Clamp(pos.x, b.min.x + margin, b.max.x - margin);
                 pos.z = Mathf.Clamp(pos.z, b.min.z + margin, b.max.z - margin);
 
-                rb.position = pos;           // snap immediately
-                rb.linearVelocity = Vector3.zero; // kill any shove
+                rb.position = pos;                  // snap immediately
+                rb.linearVelocity = Vector3.zero;   // kill any shove
+                rb.angularVelocity = Vector3.zero;  // kill any spin
             }
 
             isRunning = false;
             rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
             rb.useGravity = false;   // stop falling while on ladder
         }
         else
@@ -477,10 +561,55 @@ public class PlayerController : MonoBehaviour
                 isOnLadder = false;
                 currentLadder = null;
                 currentLadderCollider = null;
-                rb.useGravity = true;    // re-enable gravity
+
+                rb.useGravity = true; // re-enable gravity
+
+                // NEW: restore whatever constraints we had before the ladder
+                rb.constraints = _constraintsBeforeLadder;
             }
         }
+
     }
+
+    public void FlashDamage()
+    {
+        if (_damageFlashCo != null)
+            StopCoroutine(_damageFlashCo);
+
+        _damageFlashCo = StartCoroutine(FlashDamageCo());
+    }
+
+    private System.Collections.IEnumerator FlashDamageCo()
+    {
+        // Set red
+        for (int i = 0; i < damageFlashRenderers.Length; i++)
+        {
+            var r = damageFlashRenderers[i];
+            if (r == null) continue;
+
+            r.GetPropertyBlock(_damageMpb);
+            _damageMpb.SetColor(_baseColorId, Color.red);
+            _damageMpb.SetColor(_colorId, Color.red);
+            r.SetPropertyBlock(_damageMpb);
+        }
+
+        yield return new WaitForSeconds(damageFlashDuration);
+
+        // Restore original
+        for (int i = 0; i < damageFlashRenderers.Length; i++)
+        {
+            var r = damageFlashRenderers[i];
+            if (r == null) continue;
+
+            r.GetPropertyBlock(_damageMpb);
+            _damageMpb.SetColor(_baseColorId, _damageOrigColors[i]);
+            _damageMpb.SetColor(_colorId, _damageOrigColors[i]);
+            r.SetPropertyBlock(_damageMpb);
+        }
+
+        _damageFlashCo = null;
+    }
+
 
     // ---------------------- LADDER MOVEMENT (Rigidbody) ----------------------
     private void HandleLadderMovement(float h, float v)
@@ -501,7 +630,8 @@ public class PlayerController : MonoBehaviour
         // 2) Side-to-side move along the ladder
         if (Mathf.Abs(h) > 0.01f)
         {
-            Vector3 sideDir = transform.right * -h;  // A/D
+            Vector3 sideDir = transform.right * h;  // A/D
+
             targetPos += sideDir * ladderSideMoveSpeed * Time.fixedDeltaTime;
         }
 
@@ -527,13 +657,16 @@ public class PlayerController : MonoBehaviour
             currentLadder = null;
             currentLadderCollider = null;
             rb.useGravity = true;
+            rb.constraints = _constraintsBeforeLadder; // IMPORTANT: unfreeze rotation after ladder jump
+
 
             // Stop any leftover ladder velocity before we launch
             rb.linearVelocity = Vector3.zero;
 
             // Upward + sideways push
             Vector3 jumpDir = Vector3.up * jumpForce;
-            Vector3 side = transform.right * -h * ladderSideJumpForce;
+            Vector3 side = transform.right * h * ladderSideJumpForce;
+
             rb.AddForce(jumpDir + side, ForceMode.VelocityChange);
 
             // NEW: mark that we're flying due to a ladder jump

@@ -3377,63 +3377,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 507789005408179156, guid: b7c7c450885fee846a819a448ca8b431, type: 3}
   m_PrefabInstance: {fileID: 167889656}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &179483547
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 69985a2cdd44b524f82c6eb2af174f73, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -239.45233
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 69985a2cdd44b524f82c6eb2af174f73, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 69985a2cdd44b524f82c6eb2af174f73, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -309.91074
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 69985a2cdd44b524f82c6eb2af174f73, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 69985a2cdd44b524f82c6eb2af174f73, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 69985a2cdd44b524f82c6eb2af174f73, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 69985a2cdd44b524f82c6eb2af174f73, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 69985a2cdd44b524f82c6eb2af174f73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 69985a2cdd44b524f82c6eb2af174f73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 69985a2cdd44b524f82c6eb2af174f73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 69985a2cdd44b524f82c6eb2af174f73, type: 3}
-      propertyPath: m_Name
-      value: Mines_Modu
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 69985a2cdd44b524f82c6eb2af174f73, type: 3}
 --- !u!1001 &183164011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8126,6 +8069,8 @@ MonoBehaviour:
   interval: 2
   randomizePoint: 1
   autoStart: 1
+  spawnAllPointsEachInterval: 0
+  sequentialPoints: 0
 --- !u!1001 &447463411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14126,6 +14071,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63979f3e6a58bce43b2ebe2c2e7c6550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LadderZone
+  ladderSpeedMultiplierOverride: 1
+  exitGraceTime: 0.12
 --- !u!1001 &859137871
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20892,6 +20839,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6517bdd916634448030e77f1b84c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  maxSlopeAngle: 55
+  stepHeight: 0.35
+  stepDown: 0.6
+  movementMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  stepUpPerFrame: 0.12
   walkSpeed: 6
   runSpeed: 7
   turnSpeed: 80
@@ -20900,11 +20854,15 @@ MonoBehaviour:
   anim: {fileID: 260470364}
   mineEnergyPerSecond: 4
   miningPromptUI: {fileID: 0}
+  damageFlashRenderers: []
+  damageFlashDuration: 0.15
   jumpForce: 6
+  forwardJumpForce: 4
   footstepSource: {fileID: 1205118705}
   ladderClimbSpeed: 3
   ladderSideJumpForce: 5
   ladderSideMoveSpeed: 2
+  ladderSpeedMultiplier: 1
   postLadderNoRotateTime: 0.3
   fatalFallSpeed: -18
 --- !u!54 &1205118707
@@ -25696,6 +25654,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63979f3e6a58bce43b2ebe2c2e7c6550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LadderZone
+  ladderSpeedMultiplierOverride: 1
+  exitGraceTime: 0.12
 --- !u!1001 &1392287072
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38264,6 +38224,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63979f3e6a58bce43b2ebe2c2e7c6550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LadderZone
+  ladderSpeedMultiplierOverride: 1
+  exitGraceTime: 0.12
 --- !u!1001 &1983401785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42793,5 +42755,4 @@ SceneRoots:
   - {fileID: 442517284}
   - {fileID: 796452048}
   - {fileID: 1769112236}
-  - {fileID: 179483547}
   - {fileID: 319061879}

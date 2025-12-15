@@ -69,6 +69,8 @@ MonoBehaviour:
   damage: 20
   instantDeath: 0
   singleHit: 1
+  hitPlayerClip: {fileID: 8300000, guid: eef19df938ffee54883b554e331cdb1c, type: 3}
+  hitPlayerVolume: 0.9
 --- !u!1 &4791064507947527714
 GameObject:
   m_ObjectHideFlags: 0
