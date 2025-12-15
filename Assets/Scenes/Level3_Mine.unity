@@ -855,6 +855,8 @@ MonoBehaviour:
   anim: {fileID: 947090225}
   mineEnergyPerSecond: 4
   miningPromptUI: {fileID: 2026638121}
+  damageFlashRenderers: []
+  damageFlashDuration: 0.15
   jumpForce: 2
   forwardJumpForce: 1
   footstepSource: {fileID: 145979201}
@@ -5401,6 +5403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LadderZone
   ladderSpeedMultiplierOverride: 0.3
+  exitGraceTime: 0.12
 --- !u!65 &1214075734
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5420,8 +5423,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.80000025, y: 4.0199785, z: 0.30118984}
-  m_Center: {x: -0.0000016257641, y: 2.009975, z: -0.090333715}
+  m_Size: {x: 0.80000025, y: 4.0199785, z: 1}
+  m_Center: {x: -0.0000016257641, y: 2.009975, z: -0.25273696}
 --- !u!1 &1214719304
 GameObject:
   m_ObjectHideFlags: 0

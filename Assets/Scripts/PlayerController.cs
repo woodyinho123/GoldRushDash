@@ -157,14 +157,14 @@ public class PlayerController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal"); // A/D + Arrow keys (used for turning on ground)
         float v = Input.GetAxisRaw("Vertical");   // W/S + Up/Down Arrow (forward/back)
 
-        // NEW: Q/R strafe (no mining conflict)
+        // Q/R strafe (swapped to match your expected directions)
         float strafe = 0f;
 
-        // Q = left
-        if (Input.GetKey(KeyCode.Q)) strafe -= 1f;
+        // Q = RIGHT (for your setup)
+        if (Input.GetKey(KeyCode.Q)) strafe += 1f;
 
-        // R = right
-        if (Input.GetKey(KeyCode.R)) strafe += 1f;
+        // R = LEFT (for your setup)
+        if (Input.GetKey(KeyCode.R)) strafe -= 1f;
 
         // NEW: prevent collision torque from spinning the player/camera
         rb.angularVelocity = Vector3.zero;
@@ -521,6 +521,9 @@ public class PlayerController : MonoBehaviour
     // ---------------------- LADDER API (called by LadderZone) ----------------------
     public void SetOnLadder(bool onLadder, Transform ladderTransform)
     {
+        // Prevent spam re-enter on the same ladder from re-snapping every frame
+        if (onLadder && isOnLadder && currentLadder == ladderTransform)
+            return;
 
         if (onLadder)
         {
@@ -630,7 +633,7 @@ public class PlayerController : MonoBehaviour
         // 2) Side-to-side move along the ladder
         if (Mathf.Abs(h) > 0.01f)
         {
-            Vector3 sideDir = transform.right * h;  // A/D
+            Vector3 sideDir = transform.right * -h;  // A/D
 
             targetPos += sideDir * ladderSideMoveSpeed * Time.fixedDeltaTime;
         }
@@ -665,7 +668,7 @@ public class PlayerController : MonoBehaviour
 
             // Upward + sideways push
             Vector3 jumpDir = Vector3.up * jumpForce;
-            Vector3 side = transform.right * h * ladderSideJumpForce;
+            Vector3 side = transform.right * -h * ladderSideJumpForce;
 
             rb.AddForce(jumpDir + side, ForceMode.VelocityChange);
 
