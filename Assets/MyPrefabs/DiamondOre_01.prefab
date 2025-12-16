@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0434, y: 0.0107, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1714870982746941286}
   - {fileID: 2457412351329356721}
@@ -5167,7 +5167,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.07, y: 1.46, z: 0.2}
-  m_LocalScale: {x: 0.1612745, y: 0.14823318, z: -0.07109934}
+  m_LocalScale: {x: 0.4650834, y: 0.37150198, z: -0.3620598}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7793756009882962738}
@@ -5362,7 +5362,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.010813437, g: 0.7349529, b: 0.764151, a: 1}
+      maxColor: {r: 0.011764705, g: 0.705235, b: 0.7647059, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5803,7 +5803,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 4
+    type: 0
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
