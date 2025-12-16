@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5660495981643590235}
   - component: {fileID: 7329923681602118430}
   - component: {fileID: 492737169892121067}
-  - component: {fileID: 5675139896752072987}
+  - component: {fileID: 7472998028622576234}
   m_Layer: 0
   m_Name: EmeraldLadder
   m_TagString: GoldOre
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0434, y: 0.0107, z: 0}
-  m_LocalScale: {x: 1.10457, y: 1.1, z: 0.8}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1714870982746941286}
@@ -113,9 +113,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5675139896752072987
+  m_Radius: 1.1
+  m_Center: {x: 0.24, y: 0.33, z: -0.17}
+--- !u!114 &7472998028622576234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,15 +124,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 162688346552673926}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd3bced1c2a00a446a6fcd4e439e9fc0, type: 3}
+  m_Script: {fileID: 11500000, guid: aea116a07cf33704f875c0417fa8881e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GoldOreMineable
-  miningTime: 1
-  mineEnergyCost: 10
-  mineVFX: {fileID: 7373180677875894809}
-  mineSfx: {fileID: 8300000, guid: 027381ab061fe534483645dc7c5fa128, type: 3}
-  mineSfxVolume: 0.7
-  miningProgressSlider: {fileID: 6912575499785972414}
+  m_EditorClassIdentifier: Assembly-CSharp::LadderOrePickup
+  scoreValue: 25
 --- !u!1 &289756367368310549
 GameObject:
   m_ObjectHideFlags: 0
@@ -5165,8 +5160,8 @@ Transform:
   m_GameObject: {fileID: 7537111464058948076}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 0.72, z: 0.2}
-  m_LocalScale: {x: 0.13126688, y: 0.11624563, z: -0.07109934}
+  m_LocalPosition: {x: -0.04, y: 0.3, z: -0.41}
+  m_LocalScale: {x: 12.167267, y: 10.603799, z: -9.9916}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7793756009882962738}
@@ -5361,7 +5356,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.8962264, g: 0.7512201, b: 0.15641688, a: 1}
+      maxColor: {r: 0.4129811, g: 0.8980392, b: 0.15686274, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5425,7 +5420,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.01
+      scalar: 0.005
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -6008,7 +6003,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 6
+      scalar: 30
       minScalar: 10
       maxCurve:
         serializedVersion: 2
