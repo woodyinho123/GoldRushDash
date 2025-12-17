@@ -10,6 +10,9 @@ public class RockDamage : MonoBehaviour
     [Header("Only damage the player once per fall")]
     public bool singleHit = true;
 
+    [Header("Hurt Feedback (Player)")]
+     public bool playHurtFeedback = true;
+
     [Header("Hit Feedback")]
     public AudioClip hitPlayerClip;
     [Range(0f, 1f)] public float hitPlayerVolume = 0.9f;
@@ -31,36 +34,33 @@ public class RockDamage : MonoBehaviour
         _hasHitPlayer = false;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (singleHit && _hasHitPlayer)
-            return;
+                 private void OnTriggerEnter(Collider other)
+      {
+          if (singleHit && _hasHitPlayer)
+              return;
+  
+          if (!other.CompareTag("Player"))
+              return;
+ 
+         if (GameManager.Instance == null)
+             return;
+ 
+         // Hurt feedback (sound + red flash) lives on the PLAYER
+         if (playHurtFeedback)
+         {
+              var feedback = other.GetComponentInParent<PlayerDamageFeedback>();
+              if (feedback != null)
+                  feedback.PlayHurtFeedback();
+          }
 
-        if (!other.CompareTag("Player"))
-            return;
+          if (instantDeath)
+                 GameManager.Instance.TakeDamage(GameManager.Instance.maxHealth);
+         else
+                GameManager.Instance.TakeDamage(damage);
 
-        if (GameManager.Instance == null)
-            return;
+          _hasHitPlayer = true;
+     }
 
-        if (instantDeath)
-        {
-            // Take enough damage to guarantee death
-            GameManager.Instance.TakeDamage(GameManager.Instance.maxHealth);
-
-            // NEW: hit feedback (flash + sound)
-            var pc = other.GetComponentInParent<PlayerController>();
-            if (pc != null)
-                pc.FlashDamage();
-
-            if (hitPlayerClip != null)
-                AudioSource.PlayClipAtPoint(hitPlayerClip, transform.position, hitPlayerVolume);
-
-        }
-        else
-        {
-            GameManager.Instance.TakeDamage(damage);
-        }
-
-        _hasHitPlayer = true;
     }
-}
+
+

@@ -19,6 +19,12 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
     public float damage = 20f;
     public float damageTickCooldown = 0.35f;  // prevents rapid drain if standing on spikes
 
+    [Header("Spike Raise SFX")]
+    public AudioSource spikeSfxSource;   // optional; if null we’ll try GetComponent<AudioSource>()
+    public AudioClip spikeRaiseClip;
+    [Range(0f, 1f)] public float spikeRaiseVolume = 1f;
+
+
     private bool _running = false;
     private float _cooldown = 0f;
 
@@ -27,6 +33,9 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
 
     private void Awake()
     {
+        if (spikeSfxSource == null)
+            spikeSfxSource = GetComponent<AudioSource>();
+
         if (spikesAnimator == null)
             spikesAnimator = GetComponentInChildren<Animator>();
 
@@ -59,11 +68,16 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
     // Called by DamageZone script
     public void OnDamageZoneTouch(Collider other)
     {
+       
         if (!_damageArmed) return;
         if (!other.CompareTag("Player")) return;
 
         if (Time.time < _nextDamageTime) return;
         _nextDamageTime = Time.time + damageTickCooldown;
+
+        var feedback = other.GetComponentInParent<PlayerDamageFeedback>();
+        if (feedback != null)
+            feedback.PlayHurtFeedback();
 
         if (GameManager.Instance != null)
             GameManager.Instance.TakeDamage(damage);
@@ -72,6 +86,9 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
     private IEnumerator TrapRoutine()
     {
         _running = true;
+
+        if (spikeSfxSource != null && spikeRaiseClip != null)
+            spikeSfxSource.PlayOneShot(spikeRaiseClip, spikeRaiseVolume);
 
         // EXTEND
         spikesAnimator.speed = 1f;
