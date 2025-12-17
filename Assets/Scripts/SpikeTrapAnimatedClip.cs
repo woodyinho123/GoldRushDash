@@ -4,9 +4,12 @@ using UnityEngine;
 public class SpikeTrapAnimatedClip : MonoBehaviour
 {
     [Header("References")]
-    public Animator spikesAnimator;         // drag the Animator from corridor_spike_trap
-    public Collider damageTrigger;          // drag Trigger BoxCollider here
-    public string raiseStateName = "Raise"; // state name in Animator Controller
+    public Animator spikesAnimator;         // Animator on SpikesVisual
+    public string raiseStateName = "Raise"; // Animator state name
+
+    [Header("Damage Zone")]
+    [Tooltip("The trigger volume that damages the player (DamageZone).")]
+    public Collider damageZone;
 
     [Header("Timing")]
     public float stayExtendedTime = 0.25f;
@@ -14,26 +17,28 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
 
     [Header("Damage")]
     public float damage = 20f;
-    public bool damageOncePerActivation = true;
+    public float damageTickCooldown = 0.35f;  // prevents rapid drain if standing on spikes
 
     private bool _running = false;
     private float _cooldown = 0f;
-    private bool _damagedThisCycle = false;
+
+    private bool _damageArmed = false;
+    private float _nextDamageTime = 0f;
 
     private void Awake()
     {
-        if (damageTrigger == null)
-            damageTrigger = GetComponentInChildren<Collider>();
-
         if (spikesAnimator == null)
             spikesAnimator = GetComponentInChildren<Animator>();
 
-        // Start retracted (first frame), paused
+        // Start retracted + paused
         if (spikesAnimator != null)
         {
             spikesAnimator.Play(raiseStateName, 0, 0f);
             spikesAnimator.speed = 0f;
         }
+
+        // Damage off by default
+        SetDamageArmed(false);
     }
 
     private void Update()
@@ -42,26 +47,23 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
             _cooldown -= Time.deltaTime;
     }
 
-    private void OnTriggerEnter(Collider other)
+    // Called by ActivationTrigger script
+    public void Activate()
     {
-        if (!other.CompareTag("Player")) return;
-
-        if (_running)
-        {
-            TryDamage();
-            return;
-        }
-
+        if (_running) return;
         if (_cooldown > 0f) return;
 
         StartCoroutine(TrapRoutine());
-        TryDamage();
     }
 
-    private void TryDamage()
+    // Called by DamageZone script
+    public void OnDamageZoneTouch(Collider other)
     {
-        if (damageOncePerActivation && _damagedThisCycle) return;
-        _damagedThisCycle = true;
+        if (!_damageArmed) return;
+        if (!other.CompareTag("Player")) return;
+
+        if (Time.time < _nextDamageTime) return;
+        _nextDamageTime = Time.time + damageTickCooldown;
 
         if (GameManager.Instance != null)
             GameManager.Instance.TakeDamage(damage);
@@ -70,20 +72,28 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
     private IEnumerator TrapRoutine()
     {
         _running = true;
-        _damagedThisCycle = false;
 
-        // Extend (forward)
+        // EXTEND
         spikesAnimator.speed = 1f;
         spikesAnimator.Play(raiseStateName, 0, 0f);
+
+        // Arm damage near the top (so player has a brief reaction window)
+        yield return WaitForNormalized(0.35f);
+        SetDamageArmed(true);
+
+        // Wait until the animation finishes
         yield return WaitForNormalized(0.98f);
 
-        // Hold
+        // HOLD at top
         spikesAnimator.speed = 0f;
         yield return new WaitForSeconds(stayExtendedTime);
 
-        // Retract (reverse)
+        // RETRACT
+        SetDamageArmed(false);
         spikesAnimator.speed = -1f;
         spikesAnimator.Play(raiseStateName, 0, 1f);
+
+        // Wait until it reaches start
         yield return WaitForNormalized(0.02f);
 
         // Freeze retracted
@@ -92,6 +102,15 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
 
         _running = false;
         _cooldown = cooldownTime;
+    }
+
+    private void SetDamageArmed(bool armed)
+    {
+        _damageArmed = armed;
+
+        // optional: enable/disable the collider itself (keeps things simple & cheap)
+        if (damageZone != null)
+            damageZone.enabled = armed;
     }
 
     private IEnumerator WaitForNormalized(float target)
