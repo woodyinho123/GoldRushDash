@@ -279,14 +279,19 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void AddScore(int amount)
-    {
-        score += amount;
-        if (score < 0) score = 0;
-        UpdateScoreUI();
-    }
+       public void AddScore(int amount)
+     {
+         score += amount;
+         if (score< 0) score = 0;
+         UpdateScoreUI();
 
-    private void UpdateScoreUI()
+        // NEW: also add to the total "run" score (across all levels)
+         if (amount > 0)
+            RunScoreManager.AddPoints(amount);
+     }
+
+
+private void UpdateScoreUI()
     {
         if (scoreText != null)
             scoreText.text = $"Score: {score}";
@@ -676,13 +681,24 @@ public class GameManager : MonoBehaviour
         if (fadeHoldDuration > 0f)
             yield return new WaitForSecondsRealtime(fadeHoldDuration);
 
-        // Load next scene in Build Settings
-        Time.timeScale = 1f;
+         // Load next scene in Build Settings
+         Time.timeScale = 1f;
+        
+         // END OF RUN: if we just finished Level 5, save to leaderboard and go to Scoreboard
+         string sceneName = SceneManager.GetActiveScene().name;
+                 if (sceneName == "Level5_Mine")
+                     {
+                         LeaderboardService.AddEntry(RunScoreManager.GetPlayerName(), RunScoreManager.GetRunScore());
+                         SceneManager.LoadScene("ScoreboardScene");
+                         yield break;
+                     }
+        
         int next = SceneManager.GetActiveScene().buildIndex + 1;
-        if (next >= SceneManager.sceneCountInBuildSettings)
-            next = 0;
+                 if (next >= SceneManager.sceneCountInBuildSettings)
+                        next = 0;
+        
+         SceneManager.LoadScene(next);
 
-        SceneManager.LoadScene(next);
     }
 
     private IEnumerator FadeCanvasGroup(CanvasGroup cg, float targetAlpha, float duration)
