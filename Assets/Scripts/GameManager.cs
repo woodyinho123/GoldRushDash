@@ -62,6 +62,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float energyRechargeDelay = 3f;   // wait before regen starts
     [SerializeField] private float energyRechargeRate = 15f;   // energy/second while regening
 
+    [Header("Collapse Sequence")]
+    [SerializeField] private float collapseOverlaySeconds = 1.2f;
+    [SerializeField] private float fadeToBlackSeconds = 0.6f; // uses fadeCanvasGroup
+
+
+    [Header("Collapse SFX")]
+    [SerializeField] private AudioSource collapseSfxSource;
+    [SerializeField] private AudioClip collapseSfxClip;
+    [Range(0f, 1f)][SerializeField] private float collapseSfxVolume = 1f;
+
+    private bool isCollapsing = false;
+
     private int totalOre;
     private int collectedOre;
 
@@ -119,6 +131,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (collapseRockfallOverlay != null)
+            collapseRockfallOverlay.SetActive(false);
+
+
         Time.timeScale = 1f;
         // CHECKPOINT INIT
         respawnHealth = maxHealth;
@@ -210,7 +226,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (isGameOver) return;
+        if (isGameOver || isCollapsing) return;
+
 
         // Timer countdown
         currentTime -= Time.deltaTime;
@@ -222,9 +239,10 @@ public class GameManager : MonoBehaviour
         if (timerLabel != null)
             timerLabel.text = Mathf.CeilToInt(currentTime) + " SECONDS UNTIL COLLAPSE!";
 
-        // NEW:
-        if (currentTime <= 0f)
-            LoseGame(COLLAPSE_TIMEOUT_MESSAGE);
+        if (currentTime <= 0f && !isCollapsing)
+            StartCoroutine(CollapseTimeoutRoutine());
+
+
 
 
 
@@ -692,4 +710,40 @@ public class GameManager : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.buildIndex);
     }
+    private IEnumerator CollapseTimeoutRoutine()
+    {
+        if (isCollapsing) yield break;
+        isCollapsing = true;
+
+        // Trigger your normal GameOver (shows message + plays rockfall overlay via GameOver)
+        LoseGame(COLLAPSE_TIMEOUT_MESSAGE);
+
+        // Optional: extra safety (doesn't break anything)
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            var pc = player.GetComponent<PlayerController>();
+            if (pc != null) pc.enabled = false;
+        }
+
+        // Play collapse SFX
+        if (collapseSfxSource != null && collapseSfxClip != null)
+            collapseSfxSource.PlayOneShot(collapseSfxClip, collapseSfxVolume);
+
+        // Let the rockfall overlay animation play first
+        yield return new WaitForSecondsRealtime(collapseOverlaySeconds);
+
+        // Fade to black using your existing fadeCanvasGroup (same one used by elevator)
+        if (fadeCanvasGroup != null)
+        {
+            fadeCanvasGroup.gameObject.SetActive(true);
+            fadeCanvasGroup.blocksRaycasts = false;
+            fadeCanvasGroup.interactable = false;
+            fadeCanvasGroup.alpha = 0f;
+
+            yield return FadeCanvasGroup(fadeCanvasGroup, 1f, fadeToBlackSeconds);
+        }
+    }
+
+
 }
