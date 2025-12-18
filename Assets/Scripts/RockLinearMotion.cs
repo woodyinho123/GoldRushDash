@@ -39,8 +39,10 @@ public class RockLinearMotion : MonoBehaviour
         if (fallDirection.sqrMagnitude < 1e-5f) fallDirection = Vector3.down;
         fallDirection.Normalize();
 
+        
         // sphere collider here
         var sc = GetComponent<SphereCollider>();
+        if (sc != null) sc.isTrigger = true;
         _radius = sc != null ? sc.radius * Mathf.Max(transform.localScale.x, Mathf.Max(transform.localScale.y, transform.localScale.z)) : 0.5f;
     }
 

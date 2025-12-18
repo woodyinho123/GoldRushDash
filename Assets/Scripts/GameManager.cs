@@ -18,6 +18,11 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI oreCounterText;
     public TextMeshProUGUI gameOverText;
 
+    
+    [Header("Collapse FX")]
+    public GameObject collapseRockfallOverlay;   // assign a full-screen UI overlay (disabled by default)
+
+
     [Header("HEALTH SYSTEM")]
     public float maxHealth = 100f;
     public Slider healthBar;
@@ -33,6 +38,13 @@ public class GameManager : MonoBehaviour
     public float maxTime = 120f;
     public Slider timerBar;
     public TextMeshProUGUI timerLabel;
+    
+    [SerializeField] private float collapseWarningSeconds = 20f;
+    [SerializeField] private float collapseWarningMessageDuration = 3f;
+    private bool collapseWarningShown = false;
+
+    private const string COLLAPSE_TIMEOUT_MESSAGE = "You ran out of time! The mine collapsed.";
+
 
     [Header("HUD messages / energy")]
     [SerializeField] private TMP_Text hudMessageText;      // drag TMP text here in Inspector
@@ -58,6 +70,14 @@ public class GameManager : MonoBehaviour
     private const float ENERGY_EMPTY_EPS = 0.01f;   // NEW: treat <= this as empty
 
     public bool HasEnergy => currentEnergy > ENERGY_EMPTY_EPS;
+
+   
+    public bool IsGameOver => isGameOver;
+    public bool IsCollapsed => currentTime <= 0f;
+
+    // helper for external triggers
+    public bool InstanceIsCollapsedOrGameOver() => isGameOver || currentTime <= 0f;
+
 
 
     // NEW: if you hit 0 energy, sprint stays locked until fully recharged
@@ -150,6 +170,12 @@ public class GameManager : MonoBehaviour
         if (hudMessageText != null)
             hudMessageText.gameObject.SetActive(false);
 
+        collapseWarningShown = false;
+
+        if (collapseRockfallOverlay != null)
+            collapseRockfallOverlay.SetActive(false);
+
+
         // MUSIC
         if (backgroundMusicSource != null)
         {
@@ -173,16 +199,24 @@ public class GameManager : MonoBehaviour
         if (timerLabel != null)
             timerLabel.text = Mathf.CeilToInt(currentTime) + " SECONDS UNTIL COLLAPSE!";
 
+        // NEW:
         if (currentTime <= 0f)
-            LoseGame("You ran out of time! The mine collapsed.");
+            LoseGame(COLLAPSE_TIMEOUT_MESSAGE);
 
-    
 
-        // DEBUG: test health damage with the H key
-        if (Input.GetKeyDown(KeyCode.H))
+
+        if (!collapseWarningShown && currentTime <= collapseWarningSeconds && currentTime > 0f)
         {
-            TakeDamage(10f);
+            ShowHudMessage("THE MINE IS COLLAPSING, GET TO THE ELEVATOR!", collapseWarningMessageDuration);
+            collapseWarningShown = true;
         }
+
+
+        //// DEBUG: test health damage with the H key
+        //if (Input.GetKeyDown(KeyCode.H))
+        //{
+        //    TakeDamage(10f);
+        //}
     }
 
     // ----------------------
@@ -500,6 +534,33 @@ public class GameManager : MonoBehaviour
 
         if (gameOverText != null)
             gameOverText.text = message;
+
+        // INSERT after line 502:
+        if (collapseRockfallOverlay != null)
+        {
+            bool showCollapseFx = (message == COLLAPSE_TIMEOUT_MESSAGE);
+            collapseRockfallOverlay.SetActive(showCollapseFx);
+
+            if (showCollapseFx)
+            {
+                // If you're using an Animator on the overlay (recommended)
+                var anim = collapseRockfallOverlay.GetComponent<Animator>();
+                if (anim != null)
+                {
+                    anim.updateMode = AnimatorUpdateMode.UnscaledTime; // keeps playing even when Time.timeScale = 0
+                    anim.Play(0, 0, 0f);
+                }
+
+                // If you're using ParticleSystems instead (optional)
+                foreach (var ps in collapseRockfallOverlay.GetComponentsInChildren<ParticleSystem>(true))
+                {
+                    var main = ps.main;
+                    main.useUnscaledTime = true;
+                    ps.Play(true);
+                }
+            }
+        }
+
 
         if (backgroundMusicSource != null)
             StartCoroutine(FadeOutMusic());
