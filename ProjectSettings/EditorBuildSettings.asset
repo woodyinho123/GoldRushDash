@@ -11,6 +11,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level1_Mine.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Level2_Mine.unity
+    guid: 7681c378ae2320544b7acca56257ce0c
+  - enabled: 1
+    path: Assets/Scenes/Level3_Mine.unity
+    guid: b3ec5353a5230ae4da43ecd5494f5950
+  - enabled: 1
+    path: Assets/Scenes/Level4_Mine.unity
+    guid: a2d7b2d2ddc32db45afc710ef2d7d7a5
+  - enabled: 1
+    path: Assets/Scenes/Level5_Mine.unity
+    guid: 06d4f097bf29c304c98184724bdb9031
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

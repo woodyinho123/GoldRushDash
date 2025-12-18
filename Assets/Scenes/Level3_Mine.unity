@@ -2582,6 +2582,7 @@ MonoBehaviour:
   anim: {fileID: 947090225}
   mineEnergyPerSecond: 4
   miningPromptUI: {fileID: 2026638121}
+  inputEnabled: 1
   damageFlashRenderers: []
   damageFlashDuration: 0.15
   jumpForce: 2.8
@@ -11499,6 +11500,13 @@ MonoBehaviour:
   gameOverPanel: {fileID: 365858345}
   oreCounterText: {fileID: 1975082165}
   gameOverText: {fileID: 320447609}
+  fadeCanvasGroup: {fileID: 0}
+  fadeOutDuration: 1
+  fadeHoldDuration: 0.15
+  elevatorSfxSource: {fileID: 0}
+  elevatorSfxClip: {fileID: 0}
+  elevatorSfxVolume: 1
+  collapseRockfallOverlay: {fileID: 0}
   maxHealth: 100
   healthBar: {fileID: 1186506654}
   currentHealth: 0
@@ -11508,6 +11516,8 @@ MonoBehaviour:
   maxTime: 120
   timerBar: {fileID: 356619567}
   timerLabel: {fileID: 1082068163}
+  collapseWarningSeconds: 20
+  collapseWarningMessageDuration: 3
   hudMessageText: {fileID: 410801579}
   energyRechargeDelay: 5
   energyRechargeRate: 15

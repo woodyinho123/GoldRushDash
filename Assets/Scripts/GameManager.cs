@@ -18,7 +18,18 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI oreCounterText;
     public TextMeshProUGUI gameOverText;
 
-    
+    // INSERT after line 19:
+    [Header("Fade / Level Exit")]
+    [SerializeField] private CanvasGroup fadeCanvasGroup;  // full-screen black image with CanvasGroup
+    [SerializeField] private float fadeOutDuration = 1.0f;
+    [SerializeField] private float fadeHoldDuration = 0.15f;
+
+    [Header("Elevator SFX")]
+    public AudioSource elevatorSfxSource;
+    public AudioClip elevatorSfxClip;
+    [Range(0f, 1f)] public float elevatorSfxVolume = 1f;
+
+
     [Header("Collapse FX")]
     public GameObject collapseRockfallOverlay;   // assign a full-screen UI overlay (disabled by default)
 
@@ -71,12 +82,11 @@ public class GameManager : MonoBehaviour
 
     public bool HasEnergy => currentEnergy > ENERGY_EMPTY_EPS;
 
-   
+
     public bool IsGameOver => isGameOver;
     public bool IsCollapsed => currentTime <= 0f;
+    public float TimeRemaining => currentTime;
 
-    // helper for external triggers
-    public bool InstanceIsCollapsedOrGameOver() => isGameOver || currentTime <= 0f;
 
 
 
@@ -174,6 +184,19 @@ public class GameManager : MonoBehaviour
 
         if (collapseRockfallOverlay != null)
             collapseRockfallOverlay.SetActive(false);
+
+
+        if (fadeCanvasGroup != null)
+        {
+            fadeCanvasGroup.alpha = 0f;
+            fadeCanvasGroup.blocksRaycasts = false;
+            fadeCanvasGroup.interactable = false;
+
+            // Keep it OFF until we need it
+            fadeCanvasGroup.gameObject.SetActive(false);
+        }
+
+
 
 
         // MUSIC
@@ -548,6 +571,10 @@ public class GameManager : MonoBehaviour
                 if (anim != null)
                 {
                     anim.updateMode = AnimatorUpdateMode.UnscaledTime; // keeps playing even when Time.timeScale = 0
+                                                                       // Reset CanvasGroup alpha before playing (prevents stuck white overlay)
+                    var cg = collapseRockfallOverlay.GetComponent<CanvasGroup>();
+                    if (cg != null) cg.alpha = 0f;
+
                     anim.Play(0, 0, 0f);
                 }
 
@@ -582,6 +609,78 @@ public class GameManager : MonoBehaviour
 
         backgroundMusicSource.Stop();
         backgroundMusicSource.volume = startVolume;
+    }
+
+    // INSERT after line 524:
+    public void ElevatorExitToNextScene()
+    {
+        if (isGameOver) return;
+        StartCoroutine(ElevatorExitRoutine());
+    }
+
+    private IEnumerator ElevatorExitRoutine()
+    {
+        // Lock player input
+        var playerObj = GameObject.FindGameObjectWithTag("Player");
+        var pc = playerObj != null ? playerObj.GetComponent<PlayerController>() : null;
+        if (pc == null && playerObj != null) pc = playerObj.GetComponentInParent<PlayerController>();
+        if (pc != null) pc.SetInputEnabled(false);
+
+        // Stop any leftover movement
+        var rb = playerObj != null ? playerObj.GetComponent<Rigidbody>() : null;
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        // Play elevator SFX
+        if (elevatorSfxClip != null)
+        {
+            if (elevatorSfxSource != null)
+                elevatorSfxSource.PlayOneShot(elevatorSfxClip, elevatorSfxVolume);
+            else if (playerObj != null)
+                AudioSource.PlayClipAtPoint(elevatorSfxClip, playerObj.transform.position, elevatorSfxVolume);
+        }
+
+        // Fade to black
+        if (fadeCanvasGroup != null)
+        {
+            fadeCanvasGroup.blocksRaycasts = true;
+            fadeCanvasGroup.gameObject.SetActive(true);
+            yield return FadeCanvasGroup(fadeCanvasGroup, 1f, fadeOutDuration);
+        }
+        else
+        {
+            yield return new WaitForSecondsRealtime(fadeOutDuration);
+        }
+
+        if (fadeHoldDuration > 0f)
+            yield return new WaitForSecondsRealtime(fadeHoldDuration);
+
+        // Load next scene in Build Settings
+        Time.timeScale = 1f;
+        int next = SceneManager.GetActiveScene().buildIndex + 1;
+        if (next >= SceneManager.sceneCountInBuildSettings)
+            next = 0;
+
+        SceneManager.LoadScene(next);
+    }
+
+    private IEnumerator FadeCanvasGroup(CanvasGroup cg, float targetAlpha, float duration)
+    {
+        float start = cg.alpha;
+        float t = 0f;
+        duration = Mathf.Max(0.01f, duration);
+
+        while (t < duration)
+        {
+            t += Time.unscaledDeltaTime;
+            cg.alpha = Mathf.Lerp(start, targetAlpha, t / duration);
+            yield return null;
+        }
+
+        cg.alpha = targetAlpha;
     }
 
     // ----------------------

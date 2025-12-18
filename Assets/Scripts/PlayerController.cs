@@ -22,6 +22,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject miningPromptUI;
 
+    
+    [Header("Input Lock")]
+    [SerializeField] private bool inputEnabled = true;
+    public bool InputEnabled => inputEnabled;
+
 
     private Rigidbody rb;
     // NEW: we temporarily freeze rotation on ladders to stop physics torque/jitter
@@ -151,9 +156,50 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void SetInputEnabled(bool enabled)
+    {
+        inputEnabled = enabled;
+
+        if (!enabled)
+        {
+            // Stop movement immediately
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+
+            isRunning = false;
+            isMining = false;
+
+            if (footstepSource != null && footstepSource.isPlaying)
+                footstepSource.Stop();
+
+            if (anim != null)
+            {
+                anim.SetFloat("Speed", 0f);
+                anim.SetBool("IsRunning", false);
+                anim.SetBool("IsClimbing", false);
+                anim.SetBool("IsMining", false);
+            }
+        }
+    }
+
     // ---------------------- PHYSICS MOVEMENT ----------------------
     void FixedUpdate()
     {
+       
+        if (!inputEnabled)
+        {
+            rb.angularVelocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
+
+            if (footstepSource != null && footstepSource.isPlaying)
+                footstepSource.Stop();
+
+            return;
+        }
+
         float h = Input.GetAxisRaw("Horizontal"); // A/D + Arrow keys (used for turning on ground)
         float v = Input.GetAxisRaw("Vertical");   // W/S + Up/Down Arrow (forward/back)
 
@@ -420,6 +466,16 @@ public class PlayerController : MonoBehaviour
     // ---------------------- NON-PHYSICS / INPUT ----------------------
     void Update()
     {
+
+        
+        if (!inputEnabled)
+        {
+            if (footstepSource != null && footstepSource.isPlaying)
+                footstepSource.Stop();
+
+            return;
+        }
+
         // ---------------- MINING ----------------
         bool wantsToMine = (currentOre != null && Input.GetKey(KeyCode.E));
 
