@@ -355,17 +355,28 @@ public class PlayerController : MonoBehaviour
         }
 
         // ANIMATION SPEED (walking) + running flag
+        // ANIMATION (walking + running + ladder)
         if (anim != null)
         {
-            // Use BOTH forward/back (v) and strafe (Q/R) for walking animation
-            float speedParam = (!isMining && !isOnLadder)
-                ? Mathf.Clamp01(new Vector2(v, strafe).magnitude)
-                : 0f;
+            float climbInput = Mathf.Abs(v);  // ladder up/down input
+            float groundInput = Mathf.Clamp01(new Vector2(v, strafe).magnitude);
+
+            // Speed drives whichever locomotion mode we’re in
+            float speedParam =
+                isMining ? 0f :
+                isOnLadder ? climbInput :
+                groundInput;
 
             anim.SetFloat("Speed", speedParam);
-            anim.SetBool("IsRunning", isRunning);
-            anim.SetBool("IsClimbing", isOnLadder);
+
+            // No running on ladders
+            anim.SetBool("IsRunning", isRunning && !isOnLadder && !isMining);
+
+            // Only “climbing” while actually moving on the ladder (prevents climb-in-place)
+            bool isActivelyClimbing = isOnLadder && climbInput > 0.1f;
+            anim.SetBool("IsClimbing", isActivelyClimbing);
         }
+
 
 
         // ---------------- FALL DAMAGE ----------------
@@ -622,6 +633,10 @@ public class PlayerController : MonoBehaviour
         // Start from current position
         Vector3 targetPos = rb.position;
 
+        // INSERT after line 634:
+        Vector3 ladderRight = (currentLadder != null) ? currentLadder.right : transform.right;
+
+
         // 1) Vertical climb
         if (Mathf.Abs(v) > 0.01f)
         {
@@ -633,7 +648,9 @@ public class PlayerController : MonoBehaviour
         // 2) Side-to-side move along the ladder
         if (Mathf.Abs(h) > 0.01f)
         {
-            Vector3 sideDir = transform.right * -h;  // A/D
+            // NEW:
+            Vector3 sideDir = ladderRight * -h;  // A/D (relative to ladder, not player rotation)
+
 
             targetPos += sideDir * ladderSideMoveSpeed * Time.fixedDeltaTime;
         }
@@ -652,38 +669,46 @@ public class PlayerController : MonoBehaviour
         rb.MovePosition(targetPos);
 
         // 4) Jump off the ladder (uses the flag we set in Update)
+        // 4) Jump off the ladder (uses the flag we set in Update)
         if (ladderJumpRequested)
         {
             ladderJumpRequested = false;
 
-            isOnLadder = false;
-            currentLadder = null;
-            currentLadderCollider = null;
-            rb.useGravity = true;
-            rb.constraints = _constraintsBeforeLadder; // IMPORTANT: unfreeze rotation after ladder jump
-
-
-            // Stop any leftover ladder velocity before we launch
-            rb.linearVelocity = Vector3.zero;
-
-            // Upward + sideways push
-            Vector3 jumpDir = Vector3.up * jumpForce;
-            Vector3 side = transform.right * -h * ladderSideJumpForce;
-
-            rb.AddForce(jumpDir + side, ForceMode.VelocityChange);
-
-            // NEW: mark that we're flying due to a ladder jump
-            _airborneFromLadder = true;
-
-            // Start the cooldown: no rotation allowed while this is > 0
-            _postLadderTimer = postLadderNoRotateTime;
-
-            if (anim != null)
+            // NEW: only jump off ladder if there IS a sideways direction held (A/D)
+            if (Mathf.Abs(h) > 0.01f)
             {
-                anim.SetBool("IsClimbing", false);
-                anim.SetTrigger("Jump");
+                isOnLadder = false;
+                currentLadder = null;
+                currentLadderCollider = null;
+                rb.useGravity = true;
+                rb.constraints = _constraintsBeforeLadder; // IMPORTANT: unfreeze rotation after ladder jump
+
+                // Stop any leftover ladder velocity before we launch
+                rb.linearVelocity = Vector3.zero;
+
+                // Upward + sideways push
+                Vector3 jumpDir = Vector3.up * jumpForce;
+                // NEW:
+                Vector3 side = ladderRight * -h * ladderSideJumpForce;
+
+
+                rb.AddForce(jumpDir + side, ForceMode.VelocityChange);
+
+                // NEW: mark that we're flying due to a ladder jump
+                _airborneFromLadder = true;
+
+                // Start the cooldown: no rotation allowed while this is > 0
+                _postLadderTimer = postLadderNoRotateTime;
+
+                if (anim != null)
+                {
+                    anim.SetBool("IsClimbing", false);
+                    anim.SetTrigger("Jump");
+                }
             }
+            // else: no sideways input -> ignore Space press and stay on ladder
         }
+
 
 
         // 5) Climb animation while on ladder

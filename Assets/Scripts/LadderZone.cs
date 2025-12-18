@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using System.Collections;
 
 public class LadderZone : MonoBehaviour
@@ -30,7 +30,7 @@ public class LadderZone : MonoBehaviour
             _pendingExit = null;
         }
 
-        // Only ìenter ladderî on the first collider entering
+        // Only ‚Äúenter ladder‚Äù on the first collider entering
         if (_overlapCount == 1)
         {
             pc.SetOnLadder(true, transform);
