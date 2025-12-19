@@ -24,7 +24,18 @@ public class RockLinearMotion : MonoBehaviour
     //get rid of rock after impact
     public float destroySecondsAfterImpact = 3f;
 
-  
+     
+     [Header("Warning Indicator")]
+     public bool showWarningCircle = true;
+     public GameObject warningCirclePrefab;     // Assign RockWarningCircle prefab
+     public float warningGroundOffset = 0.02f;  // Stops z-fighting
+     public float warningRayDistance = 50f;     // How far down to search for ground
+     public float warningRadiusMultiplier = 1f; // 1 = match spherecast radius
+
+     private GameObject _warningInstance;
+
+
+
     private Vector3 _startPos;
     private float _t;               // time since drop
     private bool _falling;          // variable of are we currently falling
@@ -32,6 +43,10 @@ public class RockLinearMotion : MonoBehaviour
     private float _radius;          // sphere radius for ground
 
     public float CurrentSpeed { get; private set; } // v = u + a t
+
+     [Header("Warning Fallback")]
+     public float fallbackGroundY = 0f; // used if raycast doesn't hit anything
+
 
     private void Awake()
     {
@@ -52,12 +67,23 @@ public class RockLinearMotion : MonoBehaviour
         if (startOnAwake) Drop();
     }
 
-    public void Drop()
-    {
-        if (_impacted) return;
-        _t = 0f;
-        _falling = true;
-    }
+        public void Drop()
+     {
+         if (_impacted) return;
+         _t = 0f;
+         _falling = true;
+
+         // Spawn warning circle once
+         if (showWarningCircle && warningCirclePrefab != null && _warningInstance == null)
+         {
+             _warningInstance = Instantiate(warningCirclePrefab);
+
+            // Scale to match radius (diameter = radius * 2)
+             float diameter = Mathf.Max(0.01f, (_radius * warningRadiusMultiplier) * 2f);
+             _warningInstance.transform.localScale = new Vector3(diameter, diameter, diameter);
+         }
+     }
+
 
     private void Update()
     {
@@ -75,6 +101,28 @@ public class RockLinearMotion : MonoBehaviour
 
         //  check if we hit ground between current and target
         Vector3 from = transform.position;
+                 // Keep warning circle pinned to the ground beneath the rock
+         if (_warningInstance != null)
+                     {
+            if (Physics.Raycast(from, Vector3.down, out RaycastHit groundHit, warningRayDistance, groundMask, QueryTriggerInteraction.Ignore))
+            {
+                _warningInstance.transform.position = groundHit.point + groundHit.normal * warningGroundOffset;
+                _warningInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, groundHit.normal);
+            }
+            else
+            {
+                // Fallback: still show it under the rock so it never "disappears"
+                Vector3 p = _warningInstance.transform.position;
+                p.x = from.x;
+                p.z = from.z;
+                p.y = fallbackGroundY + warningGroundOffset;
+                _warningInstance.transform.position = p;
+                _warningInstance.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+
+            }
+
+        }
+
         Vector3 to = targetPos;
         Vector3 dir = (to - from);
         float dist = dir.magnitude;
@@ -101,12 +149,26 @@ public class RockLinearMotion : MonoBehaviour
         if (_impacted) return;
         _impacted = true;
         _falling = false;
+                 // Remove warning circle
+         if (_warningInstance != null)
+                     {
+                         Destroy(_warningInstance);
+                         _warningInstance = null;
+                     }
 
-        
+
+
         SendMessage("OnRockImpact", SendMessageOptions.DontRequireReceiver);
 
         // clean up rock after impact
         if (destroySecondsAfterImpact > 0f)
             Destroy(gameObject, destroySecondsAfterImpact);
     }
+
+         private void OnDestroy()
+     {
+         if (_warningInstance != null)
+             Destroy(_warningInstance);
+     }
+
 }

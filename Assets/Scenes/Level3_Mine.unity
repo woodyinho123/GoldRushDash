@@ -17616,6 +17616,8 @@ MonoBehaviour:
   autoStart: 1
   spawnAllPointsEachInterval: 0
   sequentialPoints: 0
+  autoDestroySpawnedRocks: 1
+  destroyAfterSeconds: 20
 --- !u!1 &445627918 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7224731336295967792, guid: f4c80399094431742b45fb79e91393af, type: 3}
@@ -30584,7 +30586,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.4120007, y: 148.00328, z: 0.23947525}
+  m_Size: {x: 4.4120007, y: 148.00328, z: 1.16}
   m_Center: {x: -4.4316998, y: -63.632057, z: 0.21737576}
 --- !u!114 &855558007
 MonoBehaviour:
@@ -52060,7 +52062,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.630001, y: 148.00328, z: 0.12052345}
+  m_Size: {x: 2.630001, y: 148.00328, z: 1.16}
   m_Center: {x: 2.0292997, y: -63.632057, z: 0.15789986}
 --- !u!114 &1384735112
 MonoBehaviour:
@@ -76445,7 +76447,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.5700004, y: 143.99998, z: 0.19252396}
+  m_Size: {x: 2.5700004, y: 143.99998, z: 1.16}
   m_Center: {x: -10.6587, y: -61.63041, z: 0.27185154}
 --- !u!114 &1981825054
 MonoBehaviour:

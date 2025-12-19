@@ -44,7 +44,7 @@ public class CameraZoom : MonoBehaviour
     // internal
     private float _targetDistance;
     private float _currentDistance;
-
+    private Vector3 _baseLocalPos;
     void Awake()
     {
         if (pivot == null)
@@ -56,8 +56,10 @@ public class CameraZoom : MonoBehaviour
 
         // distance is how far camera is behind pivot (local -Z usually)
         // SAFER: assumes camera is a child of pivot and uses localPosition
-        _currentDistance = Mathf.Clamp(Mathf.Abs(transform.localPosition.z), minZoomDistance, maxZoomDistance);
-        _targetDistance = _currentDistance;
+               _currentDistance = Mathf.Clamp(Mathf.Abs(transform.localPosition.z), minZoomDistance, maxZoomDistance);
+               _baseLocalPos = transform.localPosition; // <-- ADD THIS
+                _targetDistance = _currentDistance;
+
 
 
         // Start from whatever the camera is currently set to
@@ -98,7 +100,7 @@ public class CameraZoom : MonoBehaviour
         // 0 = zoomed in, 1 = zoomed out
         float t = Mathf.InverseLerp(minZoomDistance, maxZoomDistance, _currentDistance);
 
-        Vector3 localPos = transform.localPosition;
+        Vector3 localPos = _baseLocalPos;
 
         // distance (behind pivot)
         localPos.z = -_currentDistance;

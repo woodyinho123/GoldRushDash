@@ -13,6 +13,13 @@ public class RockSpawner : MonoBehaviour
     // NEW (defaults OFF): if randomizePoint is false, you can cycle through points instead of always using [0]
     public bool sequentialPoints = false;
 
+    // RockSpawner.cs
+
+     [Header("Cleanup")]
+     public bool autoDestroySpawnedRocks = true;
+     public float destroyAfterSeconds = 20f;
+
+
     private int _nextIndex = 0; // used only when sequentialPoints = true
 
     private float _timer;
@@ -41,12 +48,16 @@ public class RockSpawner : MonoBehaviour
         // NEW: constant rockfall mode (drops from ALL points every interval)
         if (spawnAllPointsEachInterval)
         {
-            for (int i = 0; i < dropPoints.Length; i++)
-            {
-                Transform tp = dropPoints[i];
-                RockLinearMotion r = Instantiate(rockPrefab, tp.position, tp.rotation);
-                r.Drop();
-            }
+                        for (int i = 0; i < dropPoints.Length; i++)
+                             {
+                                 Transform tp = dropPoints[i];
+                                RockLinearMotion r = Instantiate(rockPrefab, tp.position, tp.rotation);
+                                r.Drop();
+                
+                 if (autoDestroySpawnedRocks && destroyAfterSeconds > 0f)
+                                         Destroy(r.gameObject, destroyAfterSeconds);
+                             }
+
             return;
         }
 
@@ -68,9 +79,12 @@ public class RockSpawner : MonoBehaviour
         {
             t = dropPoints[0];
         }
+                 RockLinearMotion rock = Instantiate(rockPrefab, t.position, t.rotation);
+                 rock.Drop();
+        
+         if (autoDestroySpawnedRocks && destroyAfterSeconds > 0f)
+                         Destroy(rock.gameObject, destroyAfterSeconds);
 
-        RockLinearMotion rock = Instantiate(rockPrefab, t.position, t.rotation);
-        rock.Drop();
 
     }
 }

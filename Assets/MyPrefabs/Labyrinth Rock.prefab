@@ -69,6 +69,9 @@ MonoBehaviour:
   damage: 20
   instantDeath: 0
   singleHit: 1
+  playHurtFeedback: 1
+  hitPlayerClip: {fileID: 0}
+  hitPlayerVolume: 0.9
 --- !u!1 &4791064507947527714
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +203,11 @@ MonoBehaviour:
   startOnAwake: 0
   groundMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 3072
   groundSkin: 0.02
   destroySecondsAfterImpact: 0.001
+  showWarningCircle: 1
+  warningCirclePrefab: {fileID: 5123690892471883832, guid: b47619004608d1e4abff1c6fc349cb09, type: 3}
+  warningGroundOffset: 0.02
+  warningRayDistance: 50
+  warningRadiusMultiplier: 1
