@@ -10,6 +10,8 @@ public class ScoreboardUI : MonoBehaviour
 
     private void Start()
     {
+        LeaderboardService.AddEntry("Test Player", 123);
+
         Refresh();
     }
 
