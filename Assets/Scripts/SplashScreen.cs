@@ -13,13 +13,8 @@ public class SplashScreen : MonoBehaviour
     // SplashScreen.cs 
     void LoadMainGameScene()
     {
-        int next = SceneManager.GetActiveScene().buildIndex + 1;
-
-        // If splash is last for some reason, loop back to 0
-        if (next >= SceneManager.sceneCountInBuildSettings)
-            next = 0;
-
-        SceneManager.LoadScene(next);
+        SceneManager.LoadScene("MainMenuScene");
     }
+
 
 }
