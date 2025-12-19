@@ -2469,14 +2469,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112775976}
   serializedVersion: 2
-  m_LocalRotation: {x: 3.6379792e-12, y: 0.99999505, z: -0.003155416, w: 0}
-  m_LocalPosition: {x: -0.089, y: -0.041, z: -1.289}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1567543535}
   m_Father: {fileID: 145979205}
-  m_LocalEulerAnglesHint: {x: 0.362, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &121823836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28673,13 +28673,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1567543534}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.04133948, y: 0.0030253734, z: 0.0026662427, w: 0.99913704}
-  m_LocalPosition: {x: -0.087, y: 0.095, z: -1.61}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 112775977}
-  m_LocalEulerAnglesHint: {x: 4.738, y: 0.36, z: 0.321}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1567543537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28797,10 +28797,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraZoom
   pivot: {fileID: 112775977}
   zoomSpeed: 0.35
-  minZoomDistance: 1.45
-  maxZoomDistance: 1.6
-  nearHeight: 0.07
-  farHeight: 0.095
+  minZoomDistance: 2.5
+  maxZoomDistance: 6
+  nearHeight: 1.2
+  farHeight: 1.7
+  enableOverShoulder: 1
+  switchShoulderKey: 99
+  nearShoulderOffset: 0.55
+  farShoulderOffset: 0.2
+  nearPitchDown: 14
+  farPitchDown: 6
   smooth: 14
 --- !u!1001 &1569957234
 PrefabInstance:
