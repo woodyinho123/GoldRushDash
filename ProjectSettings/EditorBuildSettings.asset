@@ -19,10 +19,10 @@ EditorBuildSettings:
     guid: 7681c378ae2320544b7acca56257ce0c
   - enabled: 1
     path: Assets/Scenes/Level3_Mine.unity
-    guid: b3ec5353a5230ae4da43ecd5494f5950
+    guid: a2d7b2d2ddc32db45afc710ef2d7d7a5
   - enabled: 1
     path: Assets/Scenes/Level4_Mine.unity
-    guid: a2d7b2d2ddc32db45afc710ef2d7d7a5
+    guid: b3ec5353a5230ae4da43ecd5494f5950
   - enabled: 1
     path: Assets/Scenes/Level5_Mine.unity
     guid: 06d4f097bf29c304c98184724bdb9031
