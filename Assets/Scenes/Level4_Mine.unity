@@ -14378,6 +14378,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200c21b5f38451e47a62f3c270651fd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenuUITK
+  doc: {fileID: 0}
+  mainMenuSceneName: MainMenuScene
 --- !u!114 &661512498
 MonoBehaviour:
   m_ObjectHideFlags: 0
