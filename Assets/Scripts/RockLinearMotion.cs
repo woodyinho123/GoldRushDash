@@ -24,8 +24,15 @@ public class RockLinearMotion : MonoBehaviour
     //get rid of rock after impact
     public float destroySecondsAfterImpact = 3f;
 
-     
-     [Header("Warning Indicator")]
+         [Header("Impact VFX")]
+     public ParticleSystem smokePoofPrefab;      // assign RockSmokePoof prefab
+    public float smokePoofExtraLifetime = 0.5f; // safety buffer before destroying the VFX object
+
+     private Coroutine _destroyRoutine;
+
+
+
+    [Header("Warning Indicator")]
      public bool showWarningCircle = true;
      public GameObject warningCirclePrefab;     // Assign RockWarningCircle prefab
      public float warningGroundOffset = 0.02f;  // Stops z-fighting
@@ -104,11 +111,13 @@ public class RockLinearMotion : MonoBehaviour
                  // Keep warning circle pinned to the ground beneath the rock
          if (_warningInstance != null)
                      {
-            if (Physics.Raycast(from, Vector3.down, out RaycastHit groundHit, warningRayDistance, groundMask, QueryTriggerInteraction.Ignore))
-            {
-                _warningInstance.transform.position = groundHit.point + groundHit.normal * warningGroundOffset;
-                _warningInstance.transform.rotation = Quaternion.FromToRotation(Vector3.up, groundHit.normal);
-            }
+                         if (Physics.Raycast(from, Vector3.down, out RaycastHit groundHit, warningRayDistance, groundMask, QueryTriggerInteraction.Ignore))
+                             {
+                                 // Always place under the rock and keep perfectly flat
+                 _warningInstance.transform.position = new Vector3(from.x, groundHit.point.y + warningGroundOffset, from.z);
+                                _warningInstance.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+                             }
+
             else
             {
                 // Fallback: still show it under the rock so it never "disappears"
@@ -149,23 +158,54 @@ public class RockLinearMotion : MonoBehaviour
         if (_impacted) return;
         _impacted = true;
         _falling = false;
-                 // Remove warning circle
-         if (_warningInstance != null)
-                     {
-                         Destroy(_warningInstance);
-                         _warningInstance = null;
-                     }
+        // Remove warning circle
+        if (_warningInstance != null)
+        {
+            Destroy(_warningInstance);
+            _warningInstance = null;
+        }
 
 
 
         SendMessage("OnRockImpact", SendMessageOptions.DontRequireReceiver);
 
-        // clean up rock after impact
+        // clean up rock after impact (spawn smoke when it disappears)
+        if (_destroyRoutine != null) StopCoroutine(_destroyRoutine);
+
         if (destroySecondsAfterImpact > 0f)
-            Destroy(gameObject, destroySecondsAfterImpact);
+        {
+            _destroyRoutine = StartCoroutine(DestroyAfterDelayWithSmoke(destroySecondsAfterImpact));
+        }
+        else
+        {
+            SpawnSmokePoof();
+            Destroy(gameObject);
+        }
+    }
+    private System.Collections.IEnumerator DestroyAfterDelayWithSmoke(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SpawnSmokePoof();
+        Destroy(gameObject);
     }
 
-         private void OnDestroy()
+    private void SpawnSmokePoof()
+    {
+        if (smokePoofPrefab == null) return;
+
+        ParticleSystem ps = Instantiate(smokePoofPrefab, transform.position, Quaternion.identity);
+
+        // destroy the spawned VFX after it finishes
+        float lifetime = ps.main.duration;
+
+        // add the max start lifetime if available (covers most particle setups)
+        lifetime += ps.main.startLifetime.constantMax;
+
+        Destroy(ps.gameObject, lifetime + smokePoofExtraLifetime);
+    }
+
+
+    private void OnDestroy()
      {
          if (_warningInstance != null)
              Destroy(_warningInstance);

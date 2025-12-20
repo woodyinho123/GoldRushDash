@@ -10,6 +10,15 @@ public class MainMenuUI : MonoBehaviour
 
     [Header("Optional name input")]
     [SerializeField] private TMP_InputField nameInput;
+    [Header("Optional UI Lock (Timeline Intro)")]
+    [SerializeField] private CanvasGroup menuCanvasGroup;
+    public void SetMenuInteractable(bool canInteract)
+    {
+        if (menuCanvasGroup == null) return;
+
+        menuCanvasGroup.interactable = canInteract;
+        menuCanvasGroup.blocksRaycasts = canInteract;
+    }
 
     public void StartGoldRush()
     {

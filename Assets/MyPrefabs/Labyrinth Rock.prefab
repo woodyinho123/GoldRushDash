@@ -205,9 +205,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 3072
   groundSkin: 0.02
-  destroySecondsAfterImpact: 0.001
+  destroySecondsAfterImpact: 0.2
+  smokePoofPrefab: {fileID: 5352779345138269298, guid: 4d9bbff9dc1c1284595f956905379dcd, type: 3}
+  smokePoofExtraLifetime: 0.5
   showWarningCircle: 1
   warningCirclePrefab: {fileID: 5123690892471883832, guid: b47619004608d1e4abff1c6fc349cb09, type: 3}
   warningGroundOffset: 0.02
   warningRayDistance: 50
   warningRadiusMultiplier: 1
+  fallbackGroundY: 0
