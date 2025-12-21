@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LadderOrePickup
   scoreValue: 10
+  pickupSfx: {fileID: 8300000, guid: 320448e9281fda242b02bb2f7ef5f62d, type: 3}
+  pickupSfxVolume: 1
 --- !u!1 &7537111464058948076
 GameObject:
   m_ObjectHideFlags: 0

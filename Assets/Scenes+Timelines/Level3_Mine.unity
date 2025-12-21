@@ -10595,7 +10595,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You collected all the gold!
+  m_text: You collected all the ore!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9a5b81ec58c7ec7499df2421ea4f374b, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -28597,7 +28597,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You ran out of energy!
+  m_text: You ran out of energy! Sprint And Mining disabled!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9a5b81ec58c7ec7499df2421ea4f374b, type: 2}
   m_sharedMaterial: {fileID: 4054804710224729709, guid: 9a5b81ec58c7ec7499df2421ea4f374b, type: 2}
@@ -83166,6 +83166,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 2.1761
       objectReference: {fileID: 0}
+    - target: {fileID: 3823731449324037402, guid: 34db271b8eb09f745b760a1d32710096, type: 3}
+      propertyPath: damage
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6038614834109860460, guid: 34db271b8eb09f745b760a1d32710096, type: 3}
       propertyPath: m_Name
       value: SpikeTrapLadders
@@ -83173,8 +83177,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6038614834109860460, guid: 34db271b8eb09f745b760a1d32710096, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5394857328072092669}
   m_SourcePrefab: {fileID: 100100000, guid: 34db271b8eb09f745b760a1d32710096, type: 3}
+--- !u!1 &5394857328072092668 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6038614834109860460, guid: 34db271b8eb09f745b760a1d32710096, type: 3}
+  m_PrefabInstance: {fileID: 5394857328072092667}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5394857328072092669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5394857328072092668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b853bac555a09c743bf1056eb8e9042d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDamageZone
+  hitCooldown: 10
 --- !u!1 &5399990890638432058
 GameObject:
   m_ObjectHideFlags: 0

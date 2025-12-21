@@ -10012,7 +10012,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You ran out of energy!
+  m_text: You ran out of energy! Sprint And Mining disabled!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9a5b81ec58c7ec7499df2421ea4f374b, type: 2}
   m_sharedMaterial: {fileID: 4054804710224729709, guid: 9a5b81ec58c7ec7499df2421ea4f374b, type: 2}
@@ -22108,7 +22108,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You collected all the gold!
+  m_text: You collected all the ore!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9a5b81ec58c7ec7499df2421ea4f374b, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -35541,7 +35541,7 @@ GameObject:
   - component: {fileID: 1894379123}
   - component: {fileID: 1894379122}
   - component: {fileID: 1894379121}
-  - component: {fileID: 1894379120}
+  - component: {fileID: 1894379124}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -35564,28 +35564,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 165819005}
   m_LocalEulerAnglesHint: {x: 4.738, y: 0.36, z: 0.321}
---- !u!114 &1894379120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894379118}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f841e871ea96d104290c8ba662dd1774, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SimpleCameraFollow
-  target: {fileID: 1205118709}
-  playerController: {fileID: 0}
-  groundOffset: {x: 0, y: 0, z: 0}
-  ladderOffset: {x: 0, y: 5, z: -7}
-  groundLookUp: 0
-  ladderLookUp: 4
-  groundFOV: 60
-  ladderFOV: 80
-  fovLerpSpeed: 5
-  positionLerpSpeed: 5
 --- !u!114 &1894379121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35689,6 +35667,24 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &1894379124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894379118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eecf93b75fff004987d540b5808101e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShoulderZoomCamera
+  zoomForwardLocal: 0.13
+  shoulderOffsetLocal: 0
+  tiltDownDegrees: 2.17
+  moveLerpSpeed: 12
+  rotLerpSpeed: 12
+  switchShoulderKey: 99
 --- !u!1 &1906442372
 GameObject:
   m_ObjectHideFlags: 0

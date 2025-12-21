@@ -871,6 +871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b853bac555a09c743bf1056eb8e9042d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDamageZone
+  hitCooldown: 5
 --- !u!4 &36467825
 Transform:
   m_ObjectHideFlags: 0
@@ -1931,7 +1932,7 @@ MonoBehaviour:
   damageZone: {fileID: 1578793174}
   stayExtendedTime: 0.25
   cooldownTime: 0.75
-  damage: 20
+  damage: 15
   damageTickCooldown: 0.35
   spikeSfxSource: {fileID: 95334134}
   spikeRaiseClip: {fileID: 8300000, guid: f7335af84dfb66a45a83e8e4e8c97314, type: 3}
@@ -3343,15 +3344,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 145979200}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.6436116, z: -0, w: -0.7653523}
-  m_LocalPosition: {x: -9.819, y: 10.0653, z: 10.7235}
+  m_LocalRotation: {x: -0.016926084, y: -0.7681501, z: 0.0044130296, w: 0.6400309}
+  m_LocalPosition: {x: -1.1306769, y: 0.272, z: 16.149}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 947090226}
   - {fileID: 1724563441}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -279.877, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.853, y: -100.411, z: 1.814}
 --- !u!114 &145979206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6729,7 +6730,7 @@ MonoBehaviour:
   damageZone: {fileID: 1076519144}
   stayExtendedTime: 0.25
   cooldownTime: 0.75
-  damage: 20
+  damage: 15
   damageTickCooldown: 0.35
   spikeSfxSource: {fileID: 301924380}
   spikeRaiseClip: {fileID: 8300000, guid: f7335af84dfb66a45a83e8e4e8c97314, type: 3}
@@ -7368,6 +7369,7 @@ Transform:
   - {fileID: 95334136}
   - {fileID: 1667346883}
   - {fileID: 2146815528}
+  - {fileID: 806082942}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &320447607
@@ -7427,7 +7429,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You collected all the gold!
+  m_text: You collected all the ore!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9a5b81ec58c7ec7499df2421ea4f374b, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9153,7 +9155,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You ran out of energy!
+  m_text: You ran out of energy! Sprint And Mining disabled!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9a5b81ec58c7ec7499df2421ea4f374b, type: 2}
   m_sharedMaterial: {fileID: 4054804710224729709, guid: 9a5b81ec58c7ec7499df2421ea4f374b, type: 2}
@@ -9785,6 +9787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b853bac555a09c743bf1056eb8e9042d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDamageZone
+  hitCooldown: 5
 --- !u!4 &416363789
 Transform:
   m_ObjectHideFlags: 0
@@ -15112,6 +15115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b853bac555a09c743bf1056eb8e9042d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDamageZone
+  hitCooldown: 5
 --- !u!4 &686158481
 Transform:
   m_ObjectHideFlags: 0
@@ -16260,6 +16264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b853bac555a09c743bf1056eb8e9042d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDamageZone
+  hitCooldown: 5
 --- !u!4 &771977582
 Transform:
   m_ObjectHideFlags: 0
@@ -16780,6 +16785,161 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800705568}
   m_Mesh: {fileID: -148772357011511586, guid: 27c061e01c69a6d45b93e68bac979c54, type: 3}
+--- !u!1 &806082941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 806082942}
+  - component: {fileID: 806082944}
+  - component: {fileID: 806082943}
+  m_Layer: 0
+  m_Name: SpikeTrapRoot (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &806082942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806082941}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0059404904, y: -0.99984324, z: -0.01468608, w: -0.00790895}
+  m_LocalPosition: {x: 1.101, y: -1.4592984, z: 2.7926683}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1567198704}
+  - {fileID: 1479094809}
+  - {fileID: 1534832540}
+  m_Father: {fileID: 317260417}
+  m_LocalEulerAnglesHint: {x: -1.677, y: -180.917, z: 0.694}
+--- !u!82 &806082943
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806082941}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: f7335af84dfb66a45a83e8e4e8c97314, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &806082944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806082941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f33fdcbba6b56054fa61fcc5221adf22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapAnimatedClip
+  spikesAnimator: {fileID: 1479094811}
+  raiseStateName: Raise
+  damageZone: {fileID: 1534832542}
+  stayExtendedTime: 0.25
+  cooldownTime: 0.75
+  damage: 20
+  damageTickCooldown: 0.35
+  spikeSfxSource: {fileID: 806082943}
+  spikeRaiseClip: {fileID: 8300000, guid: f7335af84dfb66a45a83e8e4e8c97314, type: 3}
+  spikeRaiseVolume: 0.577
 --- !u!1 &806630197
 GameObject:
   m_ObjectHideFlags: 0
@@ -20988,6 +21148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b853bac555a09c743bf1056eb8e9042d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDamageZone
+  hitCooldown: 5
 --- !u!4 &1076519146
 Transform:
   m_ObjectHideFlags: 0
@@ -21763,7 +21924,7 @@ MonoBehaviour:
   damageZone: {fileID: 416363787}
   stayExtendedTime: 0.25
   cooldownTime: 0.75
-  damage: 20
+  damage: 15
   damageTickCooldown: 0.35
   spikeSfxSource: {fileID: 1100813929}
   spikeRaiseClip: {fileID: 8300000, guid: f7335af84dfb66a45a83e8e4e8c97314, type: 3}
@@ -27852,6 +28013,136 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471498253}
   m_CullTransparentMesh: 1
+--- !u!1001 &1479094808
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 806082942}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.015430423
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.038125966
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.015430423
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.46531
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.912
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.1576
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70474577
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70945996
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90.382
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3a231c11725d8834d9c8521557f65ecd, type: 2}
+    - target: {fileID: -1461304994638716399, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3a231c11725d8834d9c8521557f65ecd, type: 2}
+    - target: {fileID: -804731622281664130, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3a231c11725d8834d9c8521557f65ecd, type: 2}
+    - target: {fileID: -678588488315902003, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3a231c11725d8834d9c8521557f65ecd, type: 2}
+    - target: {fileID: 188058655708357034, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3a231c11725d8834d9c8521557f65ecd, type: 2}
+    - target: {fileID: 919132149155446097, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      propertyPath: m_Name
+      value: SpikesVisual
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: -444742160808512102, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+    - {fileID: 2418137116623094498, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1479094811}
+  m_SourcePrefab: {fileID: 100100000, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+--- !u!4 &1479094809 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+  m_PrefabInstance: {fileID: 1479094808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1479094810 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f6d5402f9ae509c43b24dff69905325c, type: 3}
+  m_PrefabInstance: {fileID: 1479094808}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1479094811
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479094810}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 529f1b1762400ab45a29b162ca74b7dc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1481389684
 GameObject:
   m_ObjectHideFlags: 0
@@ -27984,7 +28275,7 @@ MonoBehaviour:
   damageZone: {fileID: 686158479}
   stayExtendedTime: 0.25
   cooldownTime: 0.75
-  damage: 20
+  damage: 15
   damageTickCooldown: 0.35
   spikeSfxSource: {fileID: 1481389685}
   spikeRaiseClip: {fileID: 8300000, guid: f7335af84dfb66a45a83e8e4e8c97314, type: 3}
@@ -29255,6 +29546,73 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1534737399}
   m_Mesh: {fileID: 7607815808778787683, guid: 27c061e01c69a6d45b93e68bac979c54, type: 3}
+--- !u!1 &1534832539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1534832540}
+  - component: {fileID: 1534832542}
+  - component: {fileID: 1534832541}
+  m_Layer: 0
+  m_Name: DamageZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1534832540
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534832539}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3487, y: 2.219, z: 2.5256}
+  m_LocalScale: {x: 1, y: 2.470831, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 806082942}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1534832541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534832539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b853bac555a09c743bf1056eb8e9042d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDamageZone
+  hitCooldown: 5
+--- !u!65 &1534832542
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534832539}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3070645, y: 0.16018772, z: 0.18374577}
+  m_Center: {x: 0.20270374, y: -0.41990614, z: -0.3689564}
 --- !u!1001 &1535658275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29550,6 +29908,72 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 22478134850064998, guid: 49af97c8f9ce2cd4583c1ed98d2a312d, type: 3}
   m_PrefabInstance: {fileID: 1561999565}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1567198703
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1567198704}
+  - component: {fileID: 1567198706}
+  - component: {fileID: 1567198705}
+  m_Layer: 0
+  m_Name: ActivationTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1567198704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567198703}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.1812, y: 1.009, z: 2.1583}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 806082942}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1567198705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567198703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e6e3df8c24028040ab5098e9cb7043b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapActivator
+--- !u!65 &1567198706
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567198703}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.004255662, y: 0.1, z: 0.2}
+  m_Center: {x: -0.0028721704, y: 0, z: -1.8550474e-12}
 --- !u!1 &1567390392
 GameObject:
   m_ObjectHideFlags: 0
@@ -29837,6 +30261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b853bac555a09c743bf1056eb8e9042d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDamageZone
+  hitCooldown: 5
 --- !u!4 &1578793176
 Transform:
   m_ObjectHideFlags: 0
@@ -31308,7 +31733,7 @@ MonoBehaviour:
   damageZone: {fileID: 771977580}
   stayExtendedTime: 0.25
   cooldownTime: 0.75
-  damage: 20
+  damage: 15
   damageTickCooldown: 0.35
   spikeSfxSource: {fileID: 1667346881}
   spikeRaiseClip: {fileID: 8300000, guid: f7335af84dfb66a45a83e8e4e8c97314, type: 3}
@@ -33249,7 +33674,7 @@ MonoBehaviour:
   damageZone: {fileID: 1977378194}
   stayExtendedTime: 0.25
   cooldownTime: 0.75
-  damage: 20
+  damage: 15
   damageTickCooldown: 0.35
   spikeSfxSource: {fileID: 1823041818}
   spikeRaiseClip: {fileID: 8300000, guid: f7335af84dfb66a45a83e8e4e8c97314, type: 3}
@@ -35471,6 +35896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b853bac555a09c743bf1056eb8e9042d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDamageZone
+  hitCooldown: 5
 --- !u!4 &1977378196
 Transform:
   m_ObjectHideFlags: 0
@@ -38912,7 +39338,7 @@ MonoBehaviour:
   damageZone: {fileID: 36467823}
   stayExtendedTime: 0.25
   cooldownTime: 0.75
-  damage: 20
+  damage: 15
   damageTickCooldown: 0.35
   spikeSfxSource: {fileID: 2146815526}
   spikeRaiseClip: {fileID: 8300000, guid: f7335af84dfb66a45a83e8e4e8c97314, type: 3}
@@ -39162,6 +39588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b853bac555a09c743bf1056eb8e9042d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDamageZone
+  hitCooldown: 5
 --- !u!65 &2935516799390464752
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39215,7 +39642,7 @@ MonoBehaviour:
   damageZone: {fileID: 2935516799390464752}
   stayExtendedTime: 0.25
   cooldownTime: 0.75
-  damage: 20
+  damage: 15
   damageTickCooldown: 0.35
   spikeSfxSource: {fileID: 6414002585230503331}
   spikeRaiseClip: {fileID: 8300000, guid: f7335af84dfb66a45a83e8e4e8c97314, type: 3}

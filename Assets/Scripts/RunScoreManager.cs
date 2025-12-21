@@ -2,36 +2,38 @@ using UnityEngine;
 
 public static class RunScoreManager
 {
-    public const string RunScoreKey = "GRD_RunScore";
-    public const string PlayerNameKey = "GRD_PlayerName";
+    private const string ScoreKey = "RunScore";
+    private const string NameKey = "PlayerName";
 
     public static void ResetRun()
     {
-        PlayerPrefs.SetInt(RunScoreKey, 0);
+        PlayerPrefs.SetInt(ScoreKey, 0);
         PlayerPrefs.Save();
     }
 
     public static int GetRunScore()
     {
-        return PlayerPrefs.GetInt(RunScoreKey, 0);
+        return PlayerPrefs.GetInt(ScoreKey, 0);
     }
 
     public static void AddPoints(int amount)
     {
-        if (amount <= 0) return;
-        int total = GetRunScore() + amount;
-        PlayerPrefs.SetInt(RunScoreKey, total);
+        int newScore = Mathf.Max(0, GetRunScore() + amount);
+        PlayerPrefs.SetInt(ScoreKey, newScore);
         PlayerPrefs.Save();
     }
 
-    public static void SetPlayerName(string name)
+    public static void SetPlayerName(string playerName)
     {
-        PlayerPrefs.SetString(PlayerNameKey, name ?? "");
+        if (string.IsNullOrWhiteSpace(playerName))
+            playerName = "Player";
+
+        PlayerPrefs.SetString(NameKey, playerName.Trim());
         PlayerPrefs.Save();
     }
 
     public static string GetPlayerName()
     {
-        return PlayerPrefs.GetString(PlayerNameKey, "");
+        return PlayerPrefs.GetString(NameKey, "");
     }
 }

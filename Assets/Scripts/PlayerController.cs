@@ -477,7 +477,9 @@ public class PlayerController : MonoBehaviour
         }
 
         // ---------------- MINING ----------------
-        bool wantsToMine = (currentOre != null && Input.GetKey(KeyCode.E));
+        // Mining is NOT allowed if energy hit 0 and is still recharging (same lock as sprint)
+        bool canMine = (GameManager.Instance == null) || GameManager.Instance.CanMine;
+        bool wantsToMine = (currentOre != null && Input.GetKey(KeyCode.E) && canMine);
 
         if (currentOre != null)
         {
@@ -485,17 +487,19 @@ public class PlayerController : MonoBehaviour
             {
                 currentOre.Mine(Time.deltaTime);
 
-                // ONLY drain energy while actively mining (holding E)
+                // ONLY drain energy while actively mining
                 if (GameManager.Instance != null)
                     GameManager.Instance.SpendEnergy(mineEnergyPerSecond * Time.deltaTime);
             }
             else
             {
+                // If player stops mining OR mining is locked, reset/hide the progress bar
                 currentOre.ResetMining();
             }
         }
 
         isMining = wantsToMine;
+
 
 
         if (anim != null && isMining)

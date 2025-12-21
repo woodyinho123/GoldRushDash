@@ -106,6 +106,9 @@ public class GameManager : MonoBehaviour
     private bool sprintLocked = false;
     public bool CanSprint => !sprintLocked && HasEnergy;  // HasEnergy just avoids weird edge cases
 
+    // NEW: mining uses the same lock rules as sprint (locked at 0 until fully recharged)
+    public bool CanMine => !sprintLocked && HasEnergy;
+
     [Header("Score")]
     public int score = 0;
     [SerializeField] private TMP_Text scoreText;   // drag a TMP text here
@@ -390,7 +393,7 @@ private void UpdateScoreUI()
             if (sprintLocked)
             {
                 sprintLocked = false;
-                ShowHudMessage("SPRINT READY!");
+                ShowHudMessage("ENERGY RECHARGED!");
             }
         }
 
@@ -540,7 +543,7 @@ private void UpdateScoreUI()
         if (healthBar != null)
             healthBar.value = currentHealth;
 
-        Debug.Log($"[Health] damage={amount}, currentHealth={currentHealth}, sliderValue={(healthBar != null ? healthBar.value : -1)}");
+        Debug.Log($"[Health] damage={amount}, currentHprivate bool sprintLocked = false;\r\npublic bool CanSprint => !sprintLocked && HasEnergy;  // HasEnergy just avoids weird edge cases\r\nealth={currentHealth}, sliderValue={(healthBar != null ? healthBar.value : -1)}");
 
         if (currentHealth <= 0f)
         {
