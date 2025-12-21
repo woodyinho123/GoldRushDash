@@ -12947,7 +12947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   backgroundMusicSource: {fileID: 235349819}
-  musicVolume: 0.4
+  musicVolume: 0.04
   musicFadeDuration: 2
   gameOverPanel: {fileID: 365858345}
   oreCounterText: {fileID: 1975082165}
