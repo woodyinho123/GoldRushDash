@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
     private int collectedOre;
 
     private float currentTime;
+    private int lastTimerSeconds = int.MinValue; //  prevents rebuilding timer string every frame
     private bool isGameOver = false;
 
     
@@ -184,8 +185,12 @@ public class GameManager : MonoBehaviour
             timerBar.maxValue = maxTime;
             timerBar.value = currentTime;
         }
+        int seconds = Mathf.CeilToInt(currentTime);
+        lastTimerSeconds = seconds;
+
         if (timerLabel != null)
-            timerLabel.text = Mathf.CeilToInt(currentTime) + " SECONDS UNTIL COLLAPSE!";
+            timerLabel.text = seconds + " SECONDS UNTIL COLLAPSE!";
+
 
         // SCORE
         score = 0;
@@ -239,8 +244,15 @@ public class GameManager : MonoBehaviour
         if (timerBar != null)
             timerBar.value = currentTime;
 
-        if (timerLabel != null)
-            timerLabel.text = Mathf.CeilToInt(currentTime) + " SECONDS UNTIL COLLAPSE!";
+        int seconds = Mathf.CeilToInt(currentTime);
+        if (seconds != lastTimerSeconds)
+        {
+            lastTimerSeconds = seconds;
+
+            if (timerLabel != null)
+                timerLabel.text = seconds + " SECONDS UNTIL COLLAPSE!";
+        }
+
 
         if (currentTime <= 0f && !isCollapsing)
             StartCoroutine(CollapseTimeoutRoutine());
