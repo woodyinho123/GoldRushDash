@@ -15,31 +15,29 @@ public class SplashTimelineLoader : MonoBehaviour
         Time.timeScale = 1f;
 
         if (director == null)
+            director = GetComponent<PlayableDirector>();
+
+        if (director != null && director.playableAsset != null)
         {
-            yield return new WaitForSecondsRealtime(fallbackDuration);
-            SceneManager.LoadScene(mainMenuSceneName);
-            yield break;
+            Debug.Log($"SplashTimelineLoader: Timeline='{director.playableAsset.name}', duration={director.duration:0.00}s, updateMode={director.timeUpdateMode}");
+
+            director.extrapolationMode = DirectorWrapMode.Hold;
+            director.time = 0;
+
+            // Apply the first frame immediately (important for fade-from-black / alpha 0 start)
+            director.Evaluate();
+            director.Play();
+
+            // Wait until the timeline actually finishes
+            yield return new WaitUntil(() => director.state != PlayState.Playing);
         }
-
-        // Force the director to run in real seconds (ignores any timescale weirdness)
-        director.timeUpdateMode = DirectorUpdateMode.UnscaledGameTime;
-
-        // Restart cleanly from time 0
-        director.Stop();
-        director.time = 0;
-        director.Evaluate(); // applies the first keyframe (start state)
-        director.Play();
-
-        float dur = fallbackDuration;
-
-        // Prefer TimelineAsset.duration (more reliable than director.duration)
-        if (director.playableAsset is TimelineAsset ta && ta.duration > 0.01)
-            dur = (float)ta.duration;
-
-        Debug.Log($"SplashTimelineLoader: waiting {dur:0.00}s then loading {mainMenuSceneName}");
-
-        yield return new WaitForSecondsRealtime(dur);
+        else
+        {
+            Debug.LogWarning("SplashTimelineLoader: No PlayableDirector or Timeline asset assigned. Falling back to 4 seconds.");
+            yield return new WaitForSecondsRealtime(4f);
+        }
 
         SceneManager.LoadScene(mainMenuSceneName);
     }
+
 }

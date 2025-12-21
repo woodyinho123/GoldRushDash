@@ -24,9 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes+Timelines/Level4_Mine.unity
     guid: b3ec5353a5230ae4da43ecd5494f5950
   - enabled: 1
-    path: Assets/Scenes+Timelines/Level5_Mine.unity
-    guid: 06d4f097bf29c304c98184724bdb9031
-  - enabled: 1
     path: Assets/Scenes+Timelines/ScoreboardScene.unity
     guid: e8c220ef77581544d94d4058f3c2c760
   m_configObjects:
