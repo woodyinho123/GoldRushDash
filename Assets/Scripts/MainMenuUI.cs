@@ -63,6 +63,7 @@ public class MainMenuUI : MonoBehaviour
 
         RunScoreManager.SetPlayerName(chosenName);
         RunScoreManager.ResetRun();
+        MenuMusicController.Instance?.StopAndDestroy();
 
         SceneManager.LoadScene(firstLevelSceneName);
     }
