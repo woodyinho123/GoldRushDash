@@ -5,7 +5,7 @@ public class RockImpactLevel4 : MonoBehaviour
     [Header("Impact Sound")]
     [SerializeField] private AudioClip impactClip;
     [Range(0f, 1f)]
-    [SerializeField] private float impactVolume = 0.35f;
+    [SerializeField] private float impactVolume = 0.15f;
 
     
     [SerializeField] private bool randomizePitch = true;

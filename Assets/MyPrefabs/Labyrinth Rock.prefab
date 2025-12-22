@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 7919482725518357596}
   - component: {fileID: 2019969908095526745}
   - component: {fileID: 6120588851101572194}
+  - component: {fileID: 5103663772554840071}
   m_Layer: 0
   m_Name: Labyrinth Rock
   m_TagString: Untagged
@@ -204,9 +205,9 @@ MonoBehaviour:
   startOnAwake: 0
   groundMask:
     serializedVersion: 2
-    m_Bits: 3072
+    m_Bits: 11264
   groundSkin: 0.02
-  destroySecondsAfterImpact: 0
+  destroySecondsAfterImpact: 0.5
   smokePoofPrefab: {fileID: 5352779345138269298, guid: 4d9bbff9dc1c1284595f956905379dcd, type: 3}
   smokePoofExtraLifetime: 0.5
   showWarningCircle: 0
@@ -231,3 +232,18 @@ MonoBehaviour:
   impactVolume: 0.162
   randomizePitch: 1
   pitchRange: {x: 0.95, y: 1.05}
+--- !u!114 &5103663772554840071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4791064507947527714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0466ff62231014984304d9b1b53214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RockImpactLevel4Smoke
+  smokePoofPrefab: {fileID: 5352779345138269298, guid: 4d9bbff9dc1c1284595f956905379dcd, type: 3}
+  extraLifetime: 0.5
+  spawnOffset: {x: 0, y: 0, z: 0}
