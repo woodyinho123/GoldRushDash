@@ -4,7 +4,7 @@ using UnityEngine;
 public class RockDamage : MonoBehaviour
 {
     [Header("Damage")]
-    public float damage = 25f;         // how much HEALTH to remove
+    public float damage = 25f;         // how much health to remove
     public bool instantDeath = false;  // true for lethal rocks
 
     [Header("Only damage the player once per fall")]
@@ -22,7 +22,7 @@ public class RockDamage : MonoBehaviour
 
     private void Reset()
     {
-        // Make sure collider is a trigger
+        //   collider is a trigger?
         var col = GetComponent<Collider>();
         if (col != null)
             col.isTrigger = true;
@@ -45,7 +45,7 @@ public class RockDamage : MonoBehaviour
          if (GameManager.Instance == null)
              return;
  
-         // Hurt feedback (sound + red flash) lives on the PLAYER
+         // hurt feedback
          if (playHurtFeedback)
          {
               var feedback = other.GetComponentInParent<PlayerDamageFeedback>();

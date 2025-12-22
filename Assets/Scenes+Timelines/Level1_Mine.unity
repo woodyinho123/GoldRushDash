@@ -4113,23 +4113,23 @@ MonoBehaviour:
   walkSpeed: 0.5
   runSpeed: 0.8
   turnSpeed: 140
-  moveEnergyPerSecond: 15
+  moveEnergyPerSecond: 10
   oreCount: 0
   anim: {fileID: 1900779150}
-  mineEnergyPerSecond: 15
+  mineEnergyPerSecond: 5
   miningPromptUI: {fileID: 1404333601}
   inputEnabled: 1
   damageFlashRenderers: []
   damageFlashDuration: 0.15
-  jumpForce: 6
-  forwardJumpForce: 4
+  jumpForce: 0
+  forwardJumpForce: 0
   footstepSource: {fileID: 321215073}
   ladderClimbSpeed: 3
   ladderSideJumpForce: 5
   ladderSideMoveSpeed: 2
   ladderSpeedMultiplier: 1
   postLadderNoRotateTime: 0.3
-  fatalFallSpeed: -8
+  fatalFallSpeed: -10
 --- !u!54 &321215070
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4872,7 +4872,7 @@ MonoBehaviour:
   collapseWarningSeconds: 20
   collapseWarningMessageDuration: 3
   hudMessageText: {fileID: 1204547504}
-  energyRechargeDelay: 5
+  energyRechargeDelay: 2
   energyRechargeRate: 15
   collapseOverlaySeconds: 1.2
   fadeToBlackSeconds: 0.6

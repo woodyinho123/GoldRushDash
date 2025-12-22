@@ -5,7 +5,7 @@ public class LavaKillZone : MonoBehaviour
 {
     private void Reset()
     {
-        // Ensure this collider is a trigger
+        // this collider is a trigger
         var col = GetComponent<Collider>();
         col.isTrigger = true;
     }

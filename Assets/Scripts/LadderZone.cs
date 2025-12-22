@@ -9,7 +9,7 @@ public class LadderZone : MonoBehaviour
     private Coroutine _pendingExit;
     private PlayerController _currentPc;
 
-    // NEW: how many colliders belonging to the player are inside this trigger
+    // how many colliders belonging to the player are inside this trigger
     private int _overlapCount = 0;
 
     private void OnTriggerEnter(Collider other)
@@ -17,27 +17,27 @@ public class LadderZone : MonoBehaviour
         var pc = other.GetComponentInParent<PlayerController>();
         if (pc == null) return;
 
-        // If a different player ever enters, ignore (single-player game)
+        // if a different player ever enters, ignore
         if (_currentPc != null && pc != _currentPc) return;
 
         _currentPc = pc;
         _overlapCount++;
 
-        // cancel pending exit so we don't flicker
+        // cancel pending exit so we dont flicker
         if (_pendingExit != null)
         {
             StopCoroutine(_pendingExit);
             _pendingExit = null;
         }
 
-        // Only “enter ladder” on the first collider entering
+        // only enter ladder on the first collider enter
         if (_overlapCount == 1)
         {
             pc.SetOnLadder(true, transform);
             pc.ladderSpeedMultiplier = ladderSpeedMultiplierOverride;
         }
     }
-
+    //MATHS CONTENT PRESENT HERE
     private void OnTriggerExit(Collider other)
     {
         var pc = other.GetComponentInParent<PlayerController>();
@@ -46,7 +46,7 @@ public class LadderZone : MonoBehaviour
 
         _overlapCount = Mathf.Max(0, _overlapCount - 1);
 
-        // If any collider is still inside, don't exit ladder
+        // if any collider is still inside dont exit ladder
         if (_overlapCount > 0) return;
 
         if (_pendingExit != null)
@@ -59,7 +59,7 @@ public class LadderZone : MonoBehaviour
     {
         yield return new WaitForSeconds(exitGraceTime);
 
-        // If re-entered during grace time, do nothing
+        // if reentered during  time do nothing
         if (_overlapCount > 0)
         {
             _pendingExit = null;

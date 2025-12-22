@@ -3,7 +3,7 @@ using UnityEngine;
 public class LadderOrePickup : MonoBehaviour
 {
     [Header("Score value for this ore")]
-    public int scoreValue = 10;   // set per prefab (e.g. gold=10, emerald=20, diamond=30)
+    public int scoreValue = 10;   //gold=10 emerald=20 diamond=30
 
     [Header("Pickup SFX")]
     public AudioClip pickupSfx;
@@ -15,14 +15,14 @@ public class LadderOrePickup : MonoBehaviour
 
         if (GameManager.Instance != null)
         {
-            // counts towards "Ore: X / Y"
+            // counts towards ore
             GameManager.Instance.OreCollected();
 
             // adds to overall score
             GameManager.Instance.AddScore(scoreValue);
         }
 
-        // Play SFX at this position (safe even though we destroy the ore right after)
+        // play sound at this position
         if (pickupSfx != null)
             AudioSource.PlayClipAtPoint(pickupSfx, transform.position, pickupSfxVolume);
 

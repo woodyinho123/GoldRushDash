@@ -7,28 +7,28 @@ public class RockSpawner : MonoBehaviour
     public float interval = 4f;
     public bool randomizePoint = true;
     public bool autoStart = true;
-    // NEW (defaults OFF): if true, drop from EVERY point each interval (constant rockfall wall)
+    //if true drop from  point each interval (constant rockfall wall)
     public bool spawnAllPointsEachInterval = false;
 
-    // NEW (defaults OFF): if randomizePoint is false, you can cycle through points instead of always using [0]
+    //  if randomizeoint is false you can cycle through points instead of always using 0
     public bool sequentialPoints = false;
 
-    // RockSpawner.cs
+    
 
      [Header("Cleanup")]
      public bool autoDestroySpawnedRocks = true;
      public float destroyAfterSeconds = 20f;
 
 
-    private int _nextIndex = 0; // used only when sequentialPoints = true
+    private int _nextIndex = 0; 
 
     private float _timer;
-
+    //MATHS CONTENT PRESENT HERE
     private void Start()
     {
         _timer = autoStart ? interval : Mathf.Infinity;
     }
-
+    //MATHS CONTENT PRESENT HERE
     private void Update()
     {
         if (_timer == Mathf.Infinity) return;
@@ -41,11 +41,11 @@ public class RockSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnOne()
+    public void SpawnOne() //MATHS CONTENT PRESENT HERE
     {
         if (rockPrefab == null || dropPoints == null || dropPoints.Length == 0) return;
 
-        // NEW: constant rockfall mode (drops from ALL points every interval)
+        //  constant rockfall drops from all points 
         if (spawnAllPointsEachInterval)
         {
                         for (int i = 0; i < dropPoints.Length; i++)
@@ -63,18 +63,18 @@ public class RockSpawner : MonoBehaviour
 
         Transform t;
 
-        // Existing behavior (unchanged): randomized point
+        // randomized point
         if (randomizePoint)
         {
             t = dropPoints[Random.Range(0, dropPoints.Length)];
         }
-        // NEW: non-random but sequential through points
+        // non-random
         else if (sequentialPoints)
         {
             t = dropPoints[_nextIndex];
             _nextIndex = (_nextIndex + 1) % dropPoints.Length;
         }
-        // Existing behavior (unchanged): non-random always uses point 0
+        //  non-random  0
         else
         {
             t = dropPoints[0];

@@ -4,8 +4,8 @@ using UnityEngine;
 public class SpikeTrapAnimatedClip : MonoBehaviour
 {
     [Header("References")]
-    public Animator spikesAnimator;         // Animator on SpikesVisual
-    public string raiseStateName = "Raise"; // Animator state name
+    public Animator spikesAnimator;         // animator spikes
+    public string raiseStateName = "Raise"; // animator state 
 
     [Header("Damage Zone")]
     [Tooltip("The trigger volume that damages the player (DamageZone).")]
@@ -20,7 +20,7 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
     public float damageTickCooldown = 0.35f;  // prevents rapid drain if standing on spikes
 
     [Header("Spike Raise SFX")]
-    public AudioSource spikeSfxSource;   // optional; if null we’ll try GetComponent<AudioSource>()
+    public AudioSource spikeSfxSource;   // optional
     public AudioClip spikeRaiseClip;
     [Range(0f, 1f)] public float spikeRaiseVolume = 1f;
 
@@ -39,14 +39,14 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
         if (spikesAnimator == null)
             spikesAnimator = GetComponentInChildren<Animator>();
 
-        // Start retracted + paused
+        // start  paused
         if (spikesAnimator != null)
         {
             spikesAnimator.Play(raiseStateName, 0, 0f);
             spikesAnimator.speed = 0f;
         }
 
-        // Damage off by default
+        // damage off by default**
         SetDamageArmed(false);
     }
 
@@ -56,7 +56,7 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
             _cooldown -= Time.deltaTime;
     }
 
-    // Called by ActivationTrigger script
+    // calls activationtrigger script
     public void Activate()
     {
         if (_running) return;
@@ -65,7 +65,7 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
         StartCoroutine(TrapRoutine());
     }
 
-    // Called by DamageZone script
+    // call damagezone script
     public void OnDamageZoneTouch(Collider other)
     {
        
@@ -82,7 +82,7 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.TakeDamage(damage);
     }
-
+    //MATHS CONTENT PRESENT HERE
     private IEnumerator TrapRoutine()
     {
         _running = true;
@@ -94,14 +94,14 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
         spikesAnimator.speed = 1f;
         spikesAnimator.Play(raiseStateName, 0, 0f);
 
-        // Arm damage near the top (so player has a brief reaction window)
+        // arm damage near the top 
         yield return WaitForNormalized(0.35f);
         SetDamageArmed(true);
 
-        // Wait until the animation finishes
+        // wait until the animation finishes
         yield return WaitForNormalized(0.98f);
 
-        // HOLD at top
+        // hold at top
         spikesAnimator.speed = 0f;
         yield return new WaitForSeconds(stayExtendedTime);
 
@@ -110,10 +110,10 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
         spikesAnimator.speed = -1f;
         spikesAnimator.Play(raiseStateName, 0, 1f);
 
-        // Wait until it reaches start
+        // wait until it reaches start
         yield return WaitForNormalized(0.02f);
 
-        // Freeze retracted
+        // freeze retracted
         spikesAnimator.speed = 0f;
         spikesAnimator.Play(raiseStateName, 0, 0f);
 
@@ -125,11 +125,11 @@ public class SpikeTrapAnimatedClip : MonoBehaviour
     {
         _damageArmed = armed;
 
-        // optional: enable/disable the collider itself (keeps things simple & cheap)
+        //enable/disable  collider
         if (damageZone != null)
             damageZone.enabled = armed;
     }
-
+    //MATHS CONTENT PRESENT HERE
     private IEnumerator WaitForNormalized(float target)
     {
         while (true)

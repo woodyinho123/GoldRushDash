@@ -18,9 +18,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI oreCounterText;
     public TextMeshProUGUI gameOverText;
 
-    // INSERT after line 19:
+    // 
     [Header("Fade / Level Exit")]
-    [SerializeField] private CanvasGroup fadeCanvasGroup;  // full-screen black image with CanvasGroup
+    [SerializeField] private CanvasGroup fadeCanvasGroup;  // fullscreen black image with canvasgroup
     [SerializeField] private float fadeOutDuration = 1.0f;
     [SerializeField] private float fadeHoldDuration = 0.15f;
 
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Collapse FX")]
-    public GameObject collapseRockfallOverlay;   // assign a full-screen UI overlay (disabled by default)
+    public GameObject collapseRockfallOverlay;   // assign a full screen ui overlay 
 
 
     [Header("HEALTH SYSTEM")]
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     public float maxEnergy = 100f;
     public Slider energyBar;
     [SerializeField] private float currentEnergy;
-    private float lastEnergyUseTime = -999f; // NEW: tracks when we last spent energy
+    private float lastEnergyUseTime = -999f; //tracks when we last spent energy
 
     [Header("Timer settings")]
     public float maxTime = 120f;
@@ -58,13 +58,13 @@ public class GameManager : MonoBehaviour
 
 
     [Header("HUD messages / energy")]
-    [SerializeField] private TMP_Text hudMessageText;      // drag TMP text here in Inspector
+    [SerializeField] private TMP_Text hudMessageText;      // drag tmp text here
     [SerializeField] private float energyRechargeDelay = 3f;   // wait before regen starts
     [SerializeField] private float energyRechargeRate = 15f;   // energy/second while regening
 
     [Header("Collapse Sequence")]
     [SerializeField] private float collapseOverlaySeconds = 1.2f;
-    [SerializeField] private float fadeToBlackSeconds = 0.6f; // uses fadeCanvasGroup
+    [SerializeField] private float fadeToBlackSeconds = 0.6f; // use fadecanvasgroup*
 
 
     [Header("Collapse SFX")]
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
     private int collectedOre;
 
     private float currentTime;
-    private int lastTimerSeconds = int.MinValue; //  prevents rebuilding timer string every frame
+    private int lastTimerSeconds = int.MinValue; //  prevents rebuilding timer  every frame
     private bool isGameOver = false;
 
     
@@ -90,8 +90,8 @@ public class GameManager : MonoBehaviour
     private bool isRechargingEnergy = false;
     private Coroutine hudMessageCoroutine;
 
-    // For PlayerController: true if we have any usable energy
-    private const float ENERGY_EMPTY_EPS = 0.01f;   // NEW: treat <= this as empty
+    // for clayercontroller true if we have any usable energy
+    private const float ENERGY_EMPTY_EPS = 0.01f;   //  treat < this as empty
 
     public bool HasEnergy => currentEnergy > ENERGY_EMPTY_EPS;
 
@@ -103,22 +103,22 @@ public class GameManager : MonoBehaviour
 
 
 
-    // NEW: if you hit 0 energy, sprint stays locked until fully recharged
+    // if you hit 0 energy, sprint stays locked until fully recharged
     private bool sprintLocked = false;
-    public bool CanSprint => !sprintLocked && HasEnergy;  // HasEnergy just avoids weird edge cases
+    public bool CanSprint => !sprintLocked && HasEnergy;  // Hasenergy just avoids weird edge cases
 
-    // NEW: mining uses the same lock rules as sprint (locked at 0 until fully recharged)
+    // mining uses the same lock rules as sprint locked at 0 until fully recharged
     public bool CanMine => !sprintLocked && HasEnergy;
 
     [Header("Score")]
     public int score = 0;
-    [SerializeField] private TMP_Text scoreText;   // drag a TMP text here
+    [SerializeField] private TMP_Text scoreText;   // drag tmp here***
 
     [Header("CHECKPOINTS")]
-    [SerializeField] private bool checkpointsEnabled = false;     // TURN ON in Level 3 only
-    [SerializeField] private float respawnHealth = 100f;          // health after respawn (set to maxHealth in Start)
-    [SerializeField] private float deathRespawnDamage = 15f;      // damage applied after respawn (rocks)
-    [SerializeField] private float lavaRespawnDamage = 25f;       // damage applied after respawn (lava)
+    [SerializeField] private bool checkpointsEnabled = false;     // on* in Level 3 only!
+    [SerializeField] private float respawnHealth = 100f;          // health after respawn 
+    [SerializeField] private float deathRespawnDamage = 15f;      // damage applied  (rocks)
+    [SerializeField] private float lavaRespawnDamage = 25f;       // damage applied n (lava)
 
     private Vector3 _checkpointPos;
     private Quaternion _checkpointRot;
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
         else
             Destroy(gameObject);
     }
-
+    //MATHS CONTENT PRESENT HERE
     private void Start()
     {
         if (collapseRockfallOverlay != null)
@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
 
 
         Time.timeScale = 1f;
-        // CHECKPOINT INIT
+        // CHECKPOINT 
         respawnHealth = maxHealth;
 
         var playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -154,12 +154,12 @@ public class GameManager : MonoBehaviour
        
 
 
-        // Count ore at start
+        // counts ore at start
         totalOre = GameObject.FindGameObjectsWithTag("GoldOre").Length;
         collectedOre = 0;
         UpdateOreUI();
 
-        // --- HEALTH ---
+        //    HEALTH 
         currentHealth = maxHealth;
         if (healthBar != null)
         {
@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
             healthBar.value = currentHealth;
         }
 
-        // --- ENERGY ---
+        //        ENERGY 
         currentEnergy = maxEnergy;
         if (energyBar != null)
         {
@@ -177,7 +177,7 @@ public class GameManager : MonoBehaviour
             energyBar.value = currentEnergy;
         }
 
-        // --- TIMER ---
+        // TIMER
         currentTime = maxTime;
         if (timerBar != null)
         {
@@ -196,11 +196,11 @@ public class GameManager : MonoBehaviour
         score = 0;
         UpdateScoreUI();
 
-        // Hide game over panel at start
+        // hide game over panel at start
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
-        // Hide HUD message at start
+        // hide huD message at start
         if (hudMessageText != null)
             hudMessageText.gameObject.SetActive(false);
 
@@ -216,7 +216,7 @@ public class GameManager : MonoBehaviour
             fadeCanvasGroup.blocksRaycasts = false;
             fadeCanvasGroup.interactable = false;
 
-            // Keep it OFF until we need it
+            // keep it offF until we need i*t
             fadeCanvasGroup.gameObject.SetActive(false);
         }
 
@@ -231,13 +231,13 @@ public class GameManager : MonoBehaviour
             backgroundMusicSource.Play();
         }
     }
-
+    //MATHS CONTENT PRESENT HERE
     private void Update()
     {
         if (isGameOver || isCollapsing) return;
 
 
-        // Timer countdown
+        // timer countdown
         currentTime -= Time.deltaTime;
         currentTime = Mathf.Clamp(currentTime, 0f, maxTime);
 
@@ -268,16 +268,16 @@ public class GameManager : MonoBehaviour
         }
 
 
-        //// DEBUG: test health damage with the H key
+        //// DEBUG- testing health damage with the h key, rocks not damaging player
         //if (Input.GetKeyDown(KeyCode.H))
         //{
         //    TakeDamage(10f);
         //}
     }
 
-    // ----------------------
+    // 
     // GOLD COLLECTION
-    // ----------------------
+    // 
     public void OreCollected()
     {
         collectedOre++;
@@ -300,7 +300,7 @@ public class GameManager : MonoBehaviour
          if (score< 0) score = 0;
          UpdateScoreUI();
 
-        // NEW: also add to the total "run" score (across all levels)
+        //also add to the total score (across all levels)
          if (amount > 0)
             RunScoreManager.AddPoints(amount);
      }
@@ -319,26 +319,26 @@ private void UpdateScoreUI()
         GameOver(msg);
     }
 
-    // ----------------------
-    // ENERGY (stamina style)
-    // ----------------------
+    // 
+    // ENERGY //MATHS CONTENT PRESENT HERE
+    
     public void SpendEnergy(float amount)
     {
         if (isGameOver) return;
         if (amount <= 0f) return;
 
-        // Mark the last time energy was used (unscaled so pausing doesn't break logic)
+        // mark the last time energy was used
         lastEnergyUseTime = Time.unscaledTime;
 
-        // Stop any recharge currently happening or waiting
+        // stop any recharge currently happening or waiting
         StopEnergyRechargeCoroutines();
 
-        // Spend energy
+        // spend energy
         currentEnergy -= amount;
         currentEnergy = Mathf.Clamp(currentEnergy, 0f, maxEnergy);
         UpdateEnergyUI();
 
-        // If we hit "empty", lock sprint until full
+        // if we hit empty lock sprint until full
         if (currentEnergy <= ENERGY_EMPTY_EPS)
         {
             currentEnergy = 0f;
@@ -348,7 +348,7 @@ private void UpdateScoreUI()
             ShowHudMessage("YOU RAN OUT OF ENERGY!");
         }
 
-        // Start countdown to recharge AFTER delay (even if not empty)
+        // start countdown to recharge after delay even if not empty   
         rechargeDelayCoroutine = StartCoroutine(EnergyRechargeAfterDelay());
     }
 
@@ -370,11 +370,11 @@ private void UpdateScoreUI()
     }
     private IEnumerator EnergyRechargeAfterDelay()
     {
-        // Wait until we've gone energyRechargeDelay seconds with NO energy use
+        // wait until weve gone energyrechargedelay seconds with no energy use
         while (!isGameOver && (Time.unscaledTime - lastEnergyUseTime) < energyRechargeDelay)
             yield return null;
 
-        // Only start recharging if we actually need it
+        // only start recharging if we actually need it
         if (!isGameOver && currentEnergy < maxEnergy)
         {
             rechargeCoroutine = StartCoroutine(EnergyRechargeRoutine());
@@ -382,7 +382,7 @@ private void UpdateScoreUI()
 
         rechargeDelayCoroutine = null;
     }
-
+    //MATHS CONTENT PRESENT HERE
     private IEnumerator EnergyRechargeRoutine()
     {
         if (isRechargingEnergy) yield break;
@@ -396,7 +396,7 @@ private void UpdateScoreUI()
             yield return null;
         }
 
-        // If full, unlock sprint and show message once
+        // If full unlock sprint and show message once
         if (!isGameOver && currentEnergy >= maxEnergy - 0.01f)
         {
             currentEnergy = maxEnergy;
@@ -458,7 +458,7 @@ private void UpdateScoreUI()
 
         ShowHudMessage(message, 2f);
     }
-
+    //MATHS CONTENT PRESENT HERE
     public void RespawnToCheckpoint(string message = "RESPAWNING...")
     {
         if (!checkpointsEnabled || !_hasCheckpoint) return;
@@ -467,7 +467,7 @@ private void UpdateScoreUI()
         var playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj == null) return;
 
-        // Teleport player safely
+        // teleport player safely
         var rb = playerObj.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -481,7 +481,7 @@ private void UpdateScoreUI()
             playerObj.transform.SetPositionAndRotation(_checkpointPos, _checkpointRot);
         }
 
-        // Optional: small damage + brief invulnerability so you don't instantly die again
+        // added small damage + brief invulnerability so i dont instantly die again
         if (lavaRespawnDamage > 0f)
             TakeDamage(lavaRespawnDamage);
 
@@ -491,8 +491,8 @@ private void UpdateScoreUI()
         ShowHudMessage(message, 1.5f);
     }
 
-    
 
+    //MATHS CONTENT PRESENT HERE
     private void RespawnInternal(string message, float postRespawnDamage)
     {
         if (!_hasCheckpoint) return;
@@ -501,11 +501,11 @@ private void UpdateScoreUI()
         var playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj == null) return;
 
-        // Restore health first
+        // restore health first
         currentHealth = Mathf.Clamp(respawnHealth, 1f, maxHealth);
         if (healthBar != null) healthBar.value = currentHealth;
 
-        // Teleport player
+        // teleport player
         var rb = playerObj.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -519,7 +519,7 @@ private void UpdateScoreUI()
             playerObj.transform.SetPositionAndRotation(_checkpointPos, _checkpointRot);
         }
 
-        // Apply penalty damage AFTER moving (without triggering death loop)
+        // apply penalty damage after moving without triggering death loop
         if (postRespawnDamage > 0f)
         {
             currentHealth -= postRespawnDamage;
@@ -542,9 +542,9 @@ private void UpdateScoreUI()
         RespawnInternal("YOU FELL IN LAVA! (RESPAWN)", lavaRespawnDamage);
     }
 
-    // ----------------------
-    // HEALTH
-    // ----------------------
+    
+    // HEALTH          //MATHS CONTENT PRESENT HERE
+    
     public void TakeDamage(float amount)
     {
         if (isGameOver) return;
@@ -567,7 +567,7 @@ private void UpdateScoreUI()
 
     }
 
-    // Called by lava trigger
+    // called by lava trigger
     public void LavaDeath()
     {
         if (checkpointsEnabled)
@@ -577,9 +577,9 @@ private void UpdateScoreUI()
     }
 
 
-    // ----------------------
+    
     // GAME OVER
-    // ----------------------
+    
     private void LoseGame(string reason)
     {
         GameOver(reason);
@@ -596,7 +596,7 @@ private void UpdateScoreUI()
         if (gameOverText != null)
             gameOverText.text = message;
 
-        // INSERT after line 502:
+        
         if (collapseRockfallOverlay != null)
         {
             bool showCollapseFx = (message == COLLAPSE_TIMEOUT_MESSAGE);
@@ -604,19 +604,19 @@ private void UpdateScoreUI()
 
             if (showCollapseFx)
             {
-                // If you're using an Animator on the overlay (recommended)
+               
                 var anim = collapseRockfallOverlay.GetComponent<Animator>();
                 if (anim != null)
                 {
-                    anim.updateMode = AnimatorUpdateMode.UnscaledTime; // keeps playing even when Time.timeScale = 0
-                                                                       // Reset CanvasGroup alpha before playing (prevents stuck white overlay)
+                    anim.updateMode = AnimatorUpdateMode.UnscaledTime; // keeps playing 
+                                                                      
                     var cg = collapseRockfallOverlay.GetComponent<CanvasGroup>();
                     if (cg != null) cg.alpha = 0f;
 
                     anim.Play(0, 0, 0f);
                 }
 
-                // If you're using ParticleSystems instead (optional)
+                
                 foreach (var ps in collapseRockfallOverlay.GetComponentsInChildren<ParticleSystem>(true))
                 {
                     var main = ps.main;
@@ -632,7 +632,7 @@ private void UpdateScoreUI()
 
         Time.timeScale = 0f;
     }
-
+    //MATHS CONTENT PRESENT HERE
     private IEnumerator FadeOutMusic()
     {
         float startVolume = backgroundMusicSource.volume;
@@ -649,22 +649,22 @@ private void UpdateScoreUI()
         backgroundMusicSource.volume = startVolume;
     }
 
-    // INSERT after line 524:
+    
     public void ElevatorExitToNextScene()
     {
         if (isGameOver) return;
         StartCoroutine(ElevatorExitRoutine());
     }
-
+    //MATHS CONTENT PRESENT HERE
     private IEnumerator ElevatorExitRoutine()
     {
-        // Lock player input
+        // lock player controls
         var playerObj = GameObject.FindGameObjectWithTag("Player");
         var pc = playerObj != null ? playerObj.GetComponent<PlayerController>() : null;
         if (pc == null && playerObj != null) pc = playerObj.GetComponentInParent<PlayerController>();
         if (pc != null) pc.SetInputEnabled(false);
 
-        // Stop any leftover movement
+        // stop any leftover movement
         var rb = playerObj != null ? playerObj.GetComponent<Rigidbody>() : null;
         if (rb != null)
         {
@@ -672,7 +672,7 @@ private void UpdateScoreUI()
             rb.angularVelocity = Vector3.zero;
         }
 
-        // Play elevator SFX
+        // play elevator sound
         if (elevatorSfxClip != null)
         {
             if (elevatorSfxSource != null)
@@ -681,7 +681,7 @@ private void UpdateScoreUI()
                 AudioSource.PlayClipAtPoint(elevatorSfxClip, playerObj.transform.position, elevatorSfxVolume);
         }
 
-        // Fade to black
+        // fade to black
         if (fadeCanvasGroup != null)
         {
             fadeCanvasGroup.blocksRaycasts = true;
@@ -696,10 +696,10 @@ private void UpdateScoreUI()
         if (fadeHoldDuration > 0f)
             yield return new WaitForSecondsRealtime(fadeHoldDuration);
 
-         // Load next scene in Build Settings
+         // load next scene 
          Time.timeScale = 1f;
         
-         // END OF RUN: if we just finished Level 5, save to leaderboard and go to Scoreboard
+         //if we just finished level 5, save to leaderboard and go to scoreboard
          string sceneName = SceneManager.GetActiveScene().name;
                  if (sceneName == "Level5_Mine")
                      {
@@ -715,7 +715,7 @@ private void UpdateScoreUI()
          SceneManager.LoadScene(next);
 
     }
-
+    //MATHS CONTENT PRESENT HERE
     private IEnumerator FadeCanvasGroup(CanvasGroup cg, float targetAlpha, float duration)
     {
         float start = cg.alpha;
@@ -732,9 +732,9 @@ private void UpdateScoreUI()
         cg.alpha = targetAlpha;
     }
 
-    // ----------------------
+   
     // RESTART
-    // ----------------------
+    
     public void RestartLevel()
     {
         Time.timeScale = 1f;
@@ -746,10 +746,10 @@ private void UpdateScoreUI()
         if (isCollapsing) yield break;
         isCollapsing = true;
 
-        // Trigger your normal GameOver (shows message + plays rockfall overlay via GameOver)
+        //  normal gameover (shows message
         LoseGame(COLLAPSE_TIMEOUT_MESSAGE);
 
-        // Optional: extra safety (doesn't break anything)
+        // extra safety 
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -757,14 +757,14 @@ private void UpdateScoreUI()
             if (pc != null) pc.enabled = false;
         }
 
-        // Play collapse SFX
+        // play collapse sound
         if (collapseSfxSource != null && collapseSfxClip != null)
             collapseSfxSource.PlayOneShot(collapseSfxClip, collapseSfxVolume);
 
-        // Let the rockfall overlay animation play first
+        // rockfall overlay animation play
         yield return new WaitForSecondsRealtime(collapseOverlaySeconds);
 
-        // Fade to black using your existing fadeCanvasGroup (same one used by elevator)
+        // fade to black=
         if (fadeCanvasGroup != null)
         {
             fadeCanvasGroup.gameObject.SetActive(true);

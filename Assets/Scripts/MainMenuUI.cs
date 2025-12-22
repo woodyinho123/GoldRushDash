@@ -5,21 +5,23 @@ using TMPro;
 public class MainMenuUI : MonoBehaviour
 {
     [Header("Scenes")]
+    [SerializeField] private string controlsSceneName = "ControlsScene";
     [SerializeField] private string firstLevelSceneName = "Level1_Mine";
     [SerializeField] private string scoreboardSceneName = "ScoreboardScene";
+
 
     [Header("Optional name input")]
     [SerializeField] private TMP_InputField nameInput;
 
     [Header("Menu Panel (optional)")]
-    [SerializeField] private CanvasGroup menuCanvasGroup; // drag your MenuPanel CanvasGroup here
+    [SerializeField] private CanvasGroup menuCanvasGroup; 
 
     private void Awake()
     {
-        // IMPORTANT: if you paused in a previous scene, this prevents UI/timeline weirdness
+        // this prevents UI/timeline weirdness***
         Time.timeScale = 1f;
-
-        // Force menu visible & clickable (prevents "still faded" after splash)
+        //SplashScreen bug where screen stays black for 4 seconds***
+        //  menu visible + clickable 
         if (menuCanvasGroup != null)
         {
             menuCanvasGroup.alpha = 1f;
@@ -30,14 +32,14 @@ public class MainMenuUI : MonoBehaviour
 
     private void Start()
     {
-        // Load saved name into input field
+        // load saved name into input field
         if (nameInput != null)
         {
             string saved = RunScoreManager.GetPlayerName();
             if (!string.IsNullOrWhiteSpace(saved))
                 nameInput.text = saved;
 
-            // Save whenever they finish editing
+            // save whenever they finish typing
             nameInput.onEndEdit.AddListener(OnNameEdited);
         }
     }
@@ -53,10 +55,10 @@ public class MainMenuUI : MonoBehaviour
         RunScoreManager.SetPlayerName(value);
     }
 
-    // Hook this to your Start button OnClick()
+    // start button 
     public void StartGoldRush()
     {
-        // Decide final name
+        // final name
         string chosenName = (nameInput != null) ? nameInput.text : "";
         if (string.IsNullOrWhiteSpace(chosenName))
             chosenName = "Player";
@@ -65,10 +67,15 @@ public class MainMenuUI : MonoBehaviour
         RunScoreManager.ResetRun();
         MenuMusicController.Instance?.StopAndDestroy();
 
-        SceneManager.LoadScene(firstLevelSceneName);
+        // what to load next + where to return 
+        PlayerPrefs.SetString("GRD_NextScene", firstLevelSceneName);
+        PlayerPrefs.SetString("GRD_BackScene", SceneManager.GetActiveScene().name);
+
+        SceneManager.LoadScene(controlsSceneName);
+
     }
 
-    // Hook this to your Scoreboard button OnClick()
+    // scoreboard button
     public void OpenScoreboard()
     {
         SceneManager.LoadScene(scoreboardSceneName);

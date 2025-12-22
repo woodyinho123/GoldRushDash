@@ -5,16 +5,16 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Ground Step / Slope")]
     public float maxSlopeAngle = 55f;
-    public float stepHeight = 0.35f;      // try 0.25–0.45
+    public float stepHeight = 0.35f;      
     public float stepDown = 0.6f;         // how far we can snap down after stepping
-    public LayerMask movementMask = ~0;   // set in Inspector if needed
-    public float stepUpPerFrame = 0.12f;  // NEW: limits vertical pop (tune 0.08–0.2)
+    public LayerMask movementMask = ~0;   
+    public float stepUpPerFrame = 0.12f;  
 
 
     [Header("Movement")]
     public float walkSpeed = 3f;
-    public float runSpeed = 6f;        // faster
-    public float turnSpeed = 180f;     // degrees per second
+    public float runSpeed = 6f;       
+    public float turnSpeed = 180f;     // degrees per second)
     public float moveEnergyPerSecond = 5f;
     public int oreCount = 0;
     public Animator anim;
@@ -29,10 +29,10 @@ public class PlayerController : MonoBehaviour
 
 
     private Rigidbody rb;
-    // NEW: we temporarily freeze rotation on ladders to stop physics torque/jitter
+    //  temporarily freeze rotation on ladders to stop jitter
     private RigidbodyConstraints _constraintsBeforeLadder;
 
-    private CapsuleCollider capsule; // NEW
+    private CapsuleCollider capsule; 
     private GoldOreMineable currentOre;    // ore we are standing next to
     private bool isMining = false;         // are we currently mining?
     private bool isRunning = false;        // are we currently running?
@@ -49,10 +49,10 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("Jump")]
-    public float jumpForce = 6f;          // used when jumping OFF ladders
-    public float forwardJumpForce = 4f;       // NEW: forward push when ground-jumping
-    private bool groundJumpRequested = false; // NEW
-    private float groundJumpV = 0f;           // NEW: stores vertical input at jump press
+    public float jumpForce = 6f;          // used when jumpingoff ladders
+    public float forwardJumpForce = 4f;       //  forward push when ground jumping
+    private bool groundJumpRequested = false; 
+    private float groundJumpV = 0f;           //  stores vertical input at jump press
 
     [Header("Footstep Audio")]
     public AudioSource footstepSource;     // looped walking sound
@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
     private bool _airborneFromLadder = false;
 
     [Header("Fall Damage")]
-    // Negative value: e.g. -18 means "if we hit the ground while falling faster than -18"
+    // negative value  -18 means if we hit the ground while falling faster than -18
     public float fatalFallSpeed = -18f;
     private bool wasGrounded = false;
     private float lastVerticalSpeed = 0f;
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
 
         if (anim == null)
         {
-            // Find the Animator on the Miner child
+            // find the Animator on the miner child
             anim = GetComponentInChildren<Animator>();
         }
 
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
             miningPromptUI.SetActive(false);
         }
 
-        // Ensure we have a footstep AudioSource
+        // ensures we have a footstep audio
         if (footstepSource == null)
         {
             footstepSource = GetComponent<AudioSource>();
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
 
         if (footstepSource != null)
         {
-            // We want to control this manually
+            // we want to control this manually
             footstepSource.playOnAwake = false;
             footstepSource.loop = true;
         }
@@ -128,10 +128,10 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("PlayerController: FootstepSource not assigned.");
         }
 
-        // NEW: damage flash setup
+        // damage flash setup
         _damageMpb = new MaterialPropertyBlock();
-        _baseColorId = Shader.PropertyToID("_BaseColor"); // URP/Lit
-        _colorId = Shader.PropertyToID("_Color");         // Standard
+        _baseColorId = Shader.PropertyToID("_BaseColor"); // lit
+        _colorId = Shader.PropertyToID("_Color");         // standard
 
         if (damageFlashRenderers == null || damageFlashRenderers.Length == 0)
             damageFlashRenderers = GetComponentsInChildren<Renderer>();
@@ -155,14 +155,14 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
+    //MATHS CONTENT PRESENT HERE
     public void SetInputEnabled(bool enabled)
     {
         inputEnabled = enabled;
 
         if (!enabled)
         {
-            // Stop movement immediately
+            // stop movement immediately
             if (rb != null)
             {
                 rb.linearVelocity = Vector3.zero;
@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // ---------------------- PHYSICS MOVEMENT ----------------------
+    // PHYSICS MOVEMENT //MATHS CONTENT PRESENT HERE
     void FixedUpdate()
     {
        
@@ -200,22 +200,22 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        float h = Input.GetAxisRaw("Horizontal"); // A/D + Arrow keys (used for turning on ground)
-        float v = Input.GetAxisRaw("Vertical");   // W/S + Up/Down Arrow (forward/back)
+        float h = Input.GetAxisRaw("Horizontal"); // A/D + arrow keys  for turning 
+        float v = Input.GetAxisRaw("Vertical");   // W/S + up/down arrow 
 
-        // Q/R strafe (swapped to match your expected directions)
+        // q/r strafe swapped to fix opposite directions
         float strafe = 0f;
 
-        // Q = RIGHT (for your setup)
+        // q = right
         if (Input.GetKey(KeyCode.Q)) strafe += 1f;
 
-        // R = LEFT (for your setup)
+        // r = left 
         if (Input.GetKey(KeyCode.R)) strafe -= 1f;
-
-        // NEW: prevent collision torque from spinning the player/camera
+        //**Fix camera contantly rotating when colliding with objects***
+        //  prevents collision torque from spinning the player + fixes camera bug
         rb.angularVelocity = Vector3.zero;
 
-        // Count down "no rotation" window after ladder jumps
+        // *count down no rotation window after ladder jumps
         if (_postLadderTimer > 0f)
         {
             _postLadderTimer -= Time.fixedDeltaTime;
@@ -224,30 +224,30 @@ public class PlayerController : MonoBehaviour
         // LADDER MODE
         if (isOnLadder)
         {
-            // IMPORTANT: ladder sideways movement uses A/D ONLY (not arrow keys)
+            //  ladder sideways movement uses a/d only (not arrow keys)
             float ladderH = 0f;
             if (Input.GetKey(KeyCode.A)) ladderH -= 1f;
             if (Input.GetKey(KeyCode.D)) ladderH += 1f;
 
             HandleLadderMovement(ladderH, v);
-            // we still want fall tracking below, so do NOT 'return' before that
+            // we still want fall tracking below, so do not return before that
         }
 
         else
         {
-            // --------- NORMAL GROUND MOVEMENT ---------
+            // NORMAL GROUND MOVEMENT
             if (!isMining)
             {
-                // decide if we want to run (hold Left Shift while moving)
-                // decide if we want to run (hold Left Shift while moving)
+                
+                // decide if we want to run- hold left shift while moving
                 bool wantsToRun = Input.GetKey(KeyCode.LeftShift) && (Mathf.Abs(v) > 0.1f || Mathf.Abs(strafe) > 0.1f);
 
 
 
 
-                // No sprinting if we're out of energy
-                // No sprinting if sprint is locked (only unlocks at full energy)
-                // No sprinting if sprint is locked (only unlocks at full energy)
+                // no sprinting if were out of energy
+                // no sprinting if sprint is locked-only unlocks at full energy
+                
                 if (GameManager.Instance != null && !GameManager.Instance.CanSprint)
                 {
                     wantsToRun = false;
@@ -260,14 +260,14 @@ public class PlayerController : MonoBehaviour
                 float currentSpeed = isRunning ? runSpeed : walkSpeed;
 
                 // move forward/back along local forward
-                // move forward/back + strafe (only if not in ladder-airborne state)
+                // move forward/back + strafe, but only if not in ladder airborne state
                 bool canUseGroundControls = !_airborneFromLadder;
 
                 if (canUseGroundControls)
                 {
                     Vector3 moveDir = (transform.forward * -v) + (transform.right * strafe);
 
-                    // Prevent faster diagonal speed
+                    // prevents faster diagonal speed
                     if (moveDir.sqrMagnitude > 1f)
                         moveDir.Normalize();
 
@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour
 
                         if (capsule != null)
                         {
-                            // Build capsule endpoints in world space
+                            // builds capsule in world 
                             float radius = capsule.radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.z);
                             float height = capsule.height * transform.lossyScale.y;
                             radius = Mathf.Max(0.01f, radius);
@@ -295,8 +295,8 @@ public class PlayerController : MonoBehaviour
                             Vector3 dir = desiredDelta.normalized;
                             float dist = desiredDelta.magnitude;
                             const float skin = 0.02f;
-
-                            // Cast the capsule forward; if hit, stop just before the wall
+                            //*fixing player running inside of walls**
+                            // cast the capsule forward, if hit, stop just before the wall
                             float slopeCos = Mathf.Cos(maxSlopeAngle * Mathf.Deg2Rad);
 
                             if (Physics.CapsuleCast(p1, p2, radius, dir, out RaycastHit hit, dist + skin, movementMask, QueryTriggerInteraction.Ignore))
@@ -306,7 +306,7 @@ public class PlayerController : MonoBehaviour
 
                                 if (walkableSlope)
                                 {
-                                    // Move along the slope instead of stopping
+                                    // move along the slope instead of stopping
                                     Vector3 slopeDelta = Vector3.ProjectOnPlane(desiredDelta, hit.normal);
 
                                     if (slopeDelta.sqrMagnitude > 0.000001f)
@@ -314,15 +314,15 @@ public class PlayerController : MonoBehaviour
                                         Vector3 slopeDir = slopeDelta.normalized;
                                         float slopeDist = slopeDelta.magnitude;
 
-                                        // Cast again along the slope movement to avoid clipping into other geometry
+                                        // cast again along the slope movement to avoid clipping into other walls etc
                                         if (Physics.CapsuleCast(p1, p2, radius, slopeDir, out RaycastHit slopeHit, slopeDist + skin, movementMask, QueryTriggerInteraction.Ignore))
                                         {
-                                            // If slope-move is blocked by a small lip/mound edge, try stepping up
+                                            // If slope move is blocked by a small mud mound edge, try stepping up
                                             bool stepped = TryStepMove(ref newPos, slopeDelta, p1, p2, radius, movementMask, skin);
 
                                             if (!stepped)
                                             {
-                                                // Can't step -> move as close as possible
+                                                // cant step, move as close as possible
                                                 float safeSlopeDist = Mathf.Max(0f, slopeHit.distance - skin);
                                                 newPos += slopeDir * safeSlopeDist;
                                             }
@@ -336,28 +336,28 @@ public class PlayerController : MonoBehaviour
                                 }
                                 else
                                 {
-                                    // Too steep: treat like a wall (stop just before it)
+                                    // too steep- treat like a wall and stop just before it*
                                     float safeDist = Mathf.Max(0f, hit.distance - skin);
                                     newPos += dir * safeDist;
                                 }
                             }
                             else
                             {
-                                // No hit — move full amount
+                                // no hit — move full amount
                                 newPos += desiredDelta;
                             }
 
                         }
                         else
                         {
-                            // Fallback if capsule isn't set
+                            // fallback if capsule isnt set
                             newPos += desiredDelta;
                         }
 
                         Vector3 appliedDelta = newPos - rb.position;
                         rb.MovePosition(newPos);
-
-                        // Drain sprint energy only if sprinting AND we actually moved
+                        //**need to fix sprint energy drain while standing still**
+                        // drain sprint energy only if sprintingand we actually moved
                         if (isRunning && Mathf.Abs(v) > 0.01f && GameManager.Instance != null && appliedDelta.magnitude > 0.0005f)
                         {
                             GameManager.Instance.SpendEnergy(moveEnergyPerSecond * Time.fixedDeltaTime);
@@ -366,7 +366,7 @@ public class PlayerController : MonoBehaviour
                 }
 
 
-                // ROTATION (turn left/right) - DISABLED during post-ladder cooldown AND ladder-airborne
+                // Rrot diabled during post ladder cooldown +ladder-airborne
                 bool canRotate = !_airborneFromLadder && (_postLadderTimer <= 0f);
 
                 if (canRotate && Mathf.Abs(h) > 0.01f)
@@ -376,15 +376,15 @@ public class PlayerController : MonoBehaviour
                     rb.MoveRotation(rb.rotation * deltaRotation);
                 }
 
-                // Apply ground jump in physics step (does not interfere with ladder jump)
+                // apply ground jump in physics step this(does not interfere with ladder jump)
                 if (groundJumpRequested && !isOnLadder && IsGrounded())
                 {
                     groundJumpRequested = false;
 
-                    // Clear vertical velocity so jump height is consistent
+                    // clear vertical  so jump height is consistent
                     rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
-                    // Use your same "forward sign" convention (-v)
+                    
                     Vector3 forward = transform.forward * -groundJumpV;
                     Vector3 jumpVec = Vector3.up * jumpForce + forward * forwardJumpForce;
 
@@ -400,14 +400,14 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // ANIMATION SPEED (walking) + running flag
-        // ANIMATION (walking + running + ladder)
+        // ANIMATION SPEED 
+        // ANIMATION 
         if (anim != null)
         {
             float climbInput = Mathf.Abs(v);  // ladder up/down input
             float groundInput = Mathf.Clamp01(new Vector2(v, strafe).magnitude);
 
-            // Speed drives whichever locomotion mode we’re in
+            // speed drives whichever locomotion mode were in, finish this line later**
             float speedParam =
                 isMining ? 0f :
                 isOnLadder ? climbInput :
@@ -415,29 +415,29 @@ public class PlayerController : MonoBehaviour
 
             anim.SetFloat("Speed", speedParam);
 
-            // No running on ladders
+            // no running on ladders*
             anim.SetBool("IsRunning", isRunning && !isOnLadder && !isMining);
-
-            // Only “climbing” while actually moving on the ladder (prevents climb-in-place)
+            //having issue with climbing animation**
+            // only climbing while actually moving on the ladder to prevent climb-in-place
             bool isActivelyClimbing = isOnLadder && climbInput > 0.1f;
             anim.SetBool("IsClimbing", isActivelyClimbing);
         }
 
 
 
-        // ---------------- FALL DAMAGE ----------------
-        // Track vertical speed
+        // FALL DAMAGE 
+        // track vertical speed
         lastVerticalSpeed = rb.linearVelocity.y;
 
         bool groundedNow = IsGrounded();
 
-        // Just landed this frame
+        // just landed this frame
         if (groundedNow && !wasGrounded)
         {
             if (lastVerticalSpeed < fatalFallSpeed)
             {
-                // Use reflection to call GameManager.LoseGame with a custom message,
-                // same pattern as RockDamage instantDeath.
+                // use reflection to call gamemanager.losegame with a custom message
+                // same pattern as rockdamage instantDeath*
                 if (GameManager.Instance != null)
                 {
                     var gm = GameManager.Instance;
@@ -455,7 +455,7 @@ public class PlayerController : MonoBehaviour
 
         wasGrounded = groundedNow;
 
-        // If we hit the ground or another ladder, we're no longer in ladder-airborne state
+        // ff we hit the ground or another ladder were no longer in ladder-airborne state
         if (groundedNow || isOnLadder)
         {
             _airborneFromLadder = false;
@@ -463,7 +463,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    // ---------------------- NON-PHYSICS / INPUT ----------------------
+    //  NON-PHYSICS and input //MATHS CONTENT PRESENT HERE
     void Update()
     {
 
@@ -476,8 +476,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        // ---------------- MINING ----------------
-        // Mining is NOT allowed if energy hit 0 and is still recharging (same lock as sprint)
+        //  MINING
+        // mining is not allowed if energy hit 0 and is still recharging (same lock as sprint)
         bool canMine = (GameManager.Instance == null) || GameManager.Instance.CanMine;
         bool wantsToMine = (currentOre != null && Input.GetKey(KeyCode.E) && canMine);
 
@@ -487,13 +487,13 @@ public class PlayerController : MonoBehaviour
             {
                 currentOre.Mine(Time.deltaTime);
 
-                // ONLY drain energy while actively mining
+                // only drain energy while actively mining
                 if (GameManager.Instance != null)
                     GameManager.Instance.SpendEnergy(mineEnergyPerSecond * Time.deltaTime);
             }
             else
             {
-                // If player stops mining OR mining is locked, reset/hide the progress bar
+                // if player stops mining or mining is locked, reset orhide the progress bar
                 currentOre.ResetMining();
             }
         }
@@ -507,19 +507,20 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Setting IsMining TRUE on Animator: " + anim.gameObject.name);
         }
 
-        // Safety: if somehow we lost the ore, hide the prompt
+        // safety- if somehow we lost the ore, hide the prompt
         if (currentOre == null && miningPromptUI != null && miningPromptUI.activeSelf)
         {
             miningPromptUI.SetActive(false);
         }
 
-        // Drive mining animation
+        // drive mining animation
         if (anim != null)
         {
             anim.SetBool("IsMining", isMining);
         }
 
-        // ----- FOOTSTEPS (looped source on/off) -----
+        // FOOTSTEPS
+        // looped  on/off 
         float moveV = Input.GetAxisRaw("Vertical");
         float moveStrafe = 0f;
         if (Input.GetKey(KeyCode.Q)) moveStrafe -= 1f;
@@ -542,7 +543,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Ground jump (Space + forward/back). Does NOT affect ladder jump.
+        // ground jump  does not affect ladder jump
         if (!isOnLadder && !isMining && Input.GetButtonDown("Jump") && IsGrounded())
         {
             groundJumpRequested = true;
@@ -550,14 +551,14 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        // Capture jump input for ladders (so FixedUpdate doesn't miss it)
+        // capture jump input for ladders so fixedupdate doesnt miss it
         if (isOnLadder && Input.GetButtonDown("Jump"))
         {
             ladderJumpRequested = true;
         }
     }
 
-    // ---------------------- ORE TRIGGERS ----------------------
+    //  ORE TRIGGERS 
     private void OnTriggerEnter(Collider other)
     {
         GoldOreMineable ore = other.GetComponent<GoldOreMineable>();
@@ -588,11 +589,11 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-    // ---------------------- LADDER API (called by LadderZone) ----------------------
+    //MATHS CONTENT PRESENT HERE
+    // LADDER API 
     public void SetOnLadder(bool onLadder, Transform ladderTransform)
     {
-        // Prevent spam re-enter on the same ladder from re-snapping every frame
+        // prevent spam reenter on the same ladder from resnapping every frame
         if (onLadder && isOnLadder && currentLadder == ladderTransform)
             return;
 
@@ -601,18 +602,18 @@ public class PlayerController : MonoBehaviour
             isOnLadder = true;
             currentLadder = ladderTransform;
 
-            // Cache the ladder's BoxCollider (on the same object as LadderZone)
+            // cache the ladders boxcollider on the same object as ladderzone
             currentLadderCollider = ladderTransform.GetComponent<BoxCollider>();
 
-            // NEW: freeze rotation while on ladder to stop physics torque causing jitter/camera drift
+            // freeze rotation while on ladder to stop  causing camerajitter*
             _constraintsBeforeLadder = rb.constraints;
             rb.constraints = RigidbodyConstraints.FreezeRotation;
 
-            // Snap player inside the ladder bounds once on entry to prevent jitter
+            // snap player inside the ladder bounds once on entry to prevent jitter
             if (currentLadderCollider != null)
             {
                 Bounds b = currentLadderCollider.bounds;
-                float margin = 0.10f; // slightly safer margin to prevent trigger edge flicker
+                float margin = 0.10f; 
 
                 Vector3 pos = rb.position;
                 pos.x = Mathf.Clamp(pos.x, b.min.x + margin, b.max.x - margin);
@@ -636,9 +637,9 @@ public class PlayerController : MonoBehaviour
                 currentLadder = null;
                 currentLadderCollider = null;
 
-                rb.useGravity = true; // re-enable gravity
+                rb.useGravity = true; // reenable gravity
 
-                // NEW: restore whatever constraints we had before the ladder
+                //  restore whatever constraints we had before the ladder
                 rb.constraints = _constraintsBeforeLadder;
             }
         }
@@ -655,7 +656,7 @@ public class PlayerController : MonoBehaviour
 
     private System.Collections.IEnumerator FlashDamageCo()
     {
-        // Set red
+        // set red******
         for (int i = 0; i < damageFlashRenderers.Length; i++)
         {
             var r = damageFlashRenderers[i];
@@ -669,7 +670,7 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(damageFlashDuration);
 
-        // Restore original
+        // restore original
         for (int i = 0; i < damageFlashRenderers.Length; i++)
         {
             var r = damageFlashRenderers[i];
@@ -684,69 +685,69 @@ public class PlayerController : MonoBehaviour
         _damageFlashCo = null;
     }
 
-
-    // ---------------------- LADDER MOVEMENT (Rigidbody) ----------------------
+    //MATHS CONTENT PRESENT HERE
+    //  LADDER MOVEMENT rigidbody 
     private void HandleLadderMovement(float h, float v)
     {
-        // v = up/down input, h = left/right input
+        // v = up/down inputh = left/right input
 
-        // Start from current position
+        // we start from current position
         Vector3 targetPos = rb.position;
 
-        // INSERT after line 634:
+        
         Vector3 ladderRight = (currentLadder != null) ? currentLadder.right : transform.right;
 
 
-        // 1) Vertical climb
+        //  vertical climb
         if (Mathf.Abs(v) > 0.01f)
         {
-            Vector3 climbDir = Vector3.up * v; // +1 up, -1 down
+            Vector3 climbDir = Vector3.up * v; // +1 up -1 down
             targetPos += climbDir * (ladderClimbSpeed * ladderSpeedMultiplier) * Time.fixedDeltaTime;
 
         }
 
-        // 2) Side-to-side move along the ladder
+        // sideto side move along the ladder
         if (Mathf.Abs(h) > 0.01f)
         {
-            // NEW:
-            Vector3 sideDir = ladderRight * -h;  // A/D (relative to ladder, not player rotation)
+            
+            Vector3 sideDir = ladderRight * -h;  // a/d relative to ladder not player rotation
 
 
             targetPos += sideDir * ladderSideMoveSpeed * Time.fixedDeltaTime;
         }
 
-        // 3) Clamp inside the ladder's BoxCollider so we don't leave sideways
+        //  weclamp inside the ladders boxcollider so we dont leave sideways
         if (currentLadderCollider != null)
         {
             Bounds b = currentLadderCollider.bounds;
-            float margin = 0.05f; // small padding so we don't sit exactly on the edge
+            float margin = 0.05f; // small padding so we dont sit exactly on the edge
 
             targetPos.x = Mathf.Clamp(targetPos.x, b.min.x + margin, b.max.x - margin);
             targetPos.z = Mathf.Clamp(targetPos.z, b.min.z + margin, b.max.z - margin);
         }
 
-        // Apply climb + side move in one go
+        
         rb.MovePosition(targetPos);
 
-        // 4) Jump off the ladder (uses the flag we set in Update)
-        // 4) Jump off the ladder (uses the flag we set in Update)
+        // ump off the ladder uses the flag we set in update
+        //  jump off the ladder uses the flag we set in update
         if (ladderJumpRequested)
         {
             ladderJumpRequested = false;
 
-            // NEW: only jump off ladder if there IS a sideways direction held (A/D)
+            // only jump off ladder if theres a sideways key held *** being really stubborn >:(
             if (Mathf.Abs(h) > 0.01f)
             {
                 isOnLadder = false;
                 currentLadder = null;
                 currentLadderCollider = null;
                 rb.useGravity = true;
-                rb.constraints = _constraintsBeforeLadder; // IMPORTANT: unfreeze rotation after ladder jump
+                rb.constraints = _constraintsBeforeLadder; // unfreeze rotation after ladder jump remember this****
 
-                // Stop any leftover ladder velocity before we launch
+                // stop any leftover ladder velocity before we launch
                 rb.linearVelocity = Vector3.zero;
 
-                // Upward + sideways push
+                // upward + sideways push
                 Vector3 jumpDir = Vector3.up * jumpForce;
                 // NEW:
                 Vector3 side = ladderRight * -h * ladderSideJumpForce;
@@ -754,10 +755,10 @@ public class PlayerController : MonoBehaviour
 
                 rb.AddForce(jumpDir + side, ForceMode.VelocityChange);
 
-                // NEW: mark that we're flying due to a ladder jump
+                // markin that were flying due to a ladder jump
                 _airborneFromLadder = true;
 
-                // Start the cooldown: no rotation allowed while this is > 0
+                // start the cooldown no rotation allowed while this is > 0
                 _postLadderTimer = postLadderNoRotateTime;
 
                 if (anim != null)
@@ -766,12 +767,12 @@ public class PlayerController : MonoBehaviour
                     anim.SetTrigger("Jump");
                 }
             }
-            // else: no sideways input -> ignore Space press and stay on ladder
+            // else:    no sideways input - ignore space press and stay on ladder
         }
 
 
 
-        // 5) Climb animation while on ladder
+        // climb animation while on ladder
         if (anim != null)
         {
             anim.SetFloat("Speed", Mathf.Abs(v));  // how fast the legs move
@@ -786,7 +787,7 @@ public class PlayerController : MonoBehaviour
     {
         if (desiredDelta.sqrMagnitude < 0.000001f)
             return false;
-        // Don't step-up if we're not grounded (prevents popping during airtime)
+        // dont stepup if were not grounded prevents popping during airtime
         if (!IsGrounded())
             return false;
 
@@ -794,12 +795,12 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = desiredDelta.normalized;
         float dist = desiredDelta.magnitude;
 
-        // 1) try moving from a raised capsule (step up)
+        // try moving from a raised capsule
         Vector3 up = Vector3.up * stepHeight;
         Vector3 p1Up = p1 + up;
         Vector3 p2Up = p2 + up;
 
-        // must have space at the raised position
+        // must have space at the raised position**
         if (Physics.CheckCapsule(p1Up, p2Up, radius, mask, QueryTriggerInteraction.Ignore))
             return false;
 
@@ -807,10 +808,10 @@ public class PlayerController : MonoBehaviour
         if (Physics.CapsuleCast(p1Up, p2Up, radius, dir, out _, dist + skin, mask, QueryTriggerInteraction.Ignore))
             return false;
 
-        // 2) apply the raised move
+        //apply the raised move
         Vector3 steppedPos = newPos + up + desiredDelta;
 
-        // 3) snap down to ground (so we don't "float")
+        // snap down to ground so we dont float
         Vector3 snapStart = steppedPos + Vector3.up * skin;
         if (Physics.Raycast(snapStart, Vector3.down, out RaycastHit downHit, stepHeight + stepDown, mask, QueryTriggerInteraction.Ignore))
         {
@@ -820,7 +821,7 @@ public class PlayerController : MonoBehaviour
             {
                 float targetY = downHit.point.y + skin;
 
-                // Smooth the vertical snap so stairs/mounds don't look like a hop
+                // smooth the vertical snap so mounds dont look like a hop
                 steppedPos.y = Mathf.MoveTowards(newPos.y, targetY, stepUpPerFrame);
 
                 newPos = steppedPos;
@@ -829,16 +830,16 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // If no ground found, still allow the step move (eg small ledge)
+        // uf no ground found still allow the step move
         newPos = steppedPos;
         return true;
     }
 
 
-    // ---------------------- GROUND CHECK ----------------------
+    //  GROUND CHECK //MATHS CONTENT PRESENT HERE
     private bool IsGrounded()
     {
-        // Simple raycast down from the player; you can adjust distance if needed
+        //  raycast down from  player
         return Physics.Raycast(transform.position, Vector3.down, 1.1f);
     }
 }

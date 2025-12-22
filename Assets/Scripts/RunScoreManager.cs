@@ -15,7 +15,7 @@ public static class RunScoreManager
     {
         return PlayerPrefs.GetInt(ScoreKey, 0);
     }
-
+    //MATHS CONTENT PRESENT HERE
     public static void AddPoints(int amount)
     {
         int newScore = Mathf.Max(0, GetRunScore() + amount);

@@ -3,13 +3,13 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     [Header("Target")]
-    public Transform target;                 // drag PlayerRoot here
-    public PlayerController playerController; // drag PlayerRoot here as well
+    public Transform target;                 
+    public PlayerController playerController;
 
     [Header("Offsets")]
-    // Ground offset will be captured from your current camera placement
+    
     public Vector3 groundOffset;
-    public Vector3 ladderOffset = new Vector3(0f, 5f, -7f); // higher & back for ladder
+    public Vector3 ladderOffset = new Vector3(0f, 5f, -7f); // higher & back
 
     [Header("Look Up")]
     public float groundLookUp = 0f;
@@ -31,17 +31,17 @@ public class CameraFollow : MonoBehaviour
 
         if (target != null)
         {
-            // Capture your current scene camera position as the ground view
+            // camera position as the ground view
             groundOffset = transform.position - target.position;
         }
 
         if (_cam != null)
         {
-            // Use whatever FOV you already had as groundFOV
+            //  groundFOV
             groundFOV = _cam.fieldOfView;
         }
 
-        // Auto-wire PlayerController if missing
+        
         if (playerController == null && target != null)
         {
             playerController = target.GetComponentInChildren<PlayerController>();
@@ -54,20 +54,20 @@ public class CameraFollow : MonoBehaviour
 
         bool onLadder = (playerController != null && playerController.IsOnLadder);
 
-        // Choose offset/look-up
+        
         Vector3 offset = onLadder ? ladderOffset : groundOffset;
         float lookUp = onLadder ? ladderLookUp : groundLookUp;
 
-        // Position – world-space follow
+        // space follow
         Vector3 desiredPos = target.position + offset;
         transform.position = Vector3.Lerp(transform.position, desiredPos,
                                           Time.deltaTime * positionLerpSpeed);
 
-        // Look at player (higher when on ladder)
+        // Look at player
         Vector3 lookTarget = target.position + Vector3.up * lookUp;
         transform.LookAt(lookTarget);
 
-        // FOV blend
+        // FOV 
         if (_cam != null)
         {
             float targetFov = onLadder ? ladderFOV : groundFOV;

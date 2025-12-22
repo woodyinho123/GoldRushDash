@@ -51,8 +51,8 @@ public class GoldOreMineable : MonoBehaviour
 
 
 
-
-    // Called every frame the player is actively mining this ore
+    //MATHS CONTENT PRESENT HERE
+    // Called when the player is actively mining this ore
     public void Mine(float deltaTime)
     {
         if (isDepleted) return;
@@ -65,7 +65,7 @@ public class GoldOreMineable : MonoBehaviour
 
         currentMiningTime += deltaTime;
 
-        float t = Mathf.Clamp01(currentMiningTime / miningTime);  // 0 → 1
+        float t = Mathf.Clamp01(currentMiningTime / miningTime);  // 0 / 1
 
         if (miningProgressSlider != null)
         {
@@ -82,7 +82,7 @@ public class GoldOreMineable : MonoBehaviour
     }
 
 
-    // Called when the player stops mining or walks away
+    //  when the player stops mining or walks away
     public void ResetMining()
     {
         if (isDepleted) return;
@@ -96,34 +96,34 @@ public class GoldOreMineable : MonoBehaviour
         }
     }
 
-
+    //MATHS CONTENT PRESENT HERE
     private void CompleteMining()
     {
         if (isDepleted) return;
         isDepleted = true;
 
-        // Hide the progress bar
+        // hide progress bar
         if (miningProgressSlider != null)
         {
             miningProgressSlider.gameObject.SetActive(false);
         }
 
-        // Play VFX
+        // play vfx
         if (mineVFX != null)
         {
-            // Detach so it isn't destroyed with the ore
+            // detach so it isnt destroyed with the ore
             mineVFX.transform.parent = null;
             mineVFX.Play();
             Destroy(mineVFX.gameObject, 2f);
         }
 
-        // Play SFX
+        // play sfx
         if (mineSfx != null)
         {
             AudioSource.PlayClipAtPoint(mineSfx, transform.position, mineSfxVolume);
         }
 
-        // Spend energy & inform GameManager
+        // spend energy  inform gamemanager
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SpendEnergy(mineEnergyCost);
@@ -134,7 +134,7 @@ public class GoldOreMineable : MonoBehaviour
         }
 
 
-        // Remove this ore
+        // remove this ore
         Destroy(gameObject);
     }
 }

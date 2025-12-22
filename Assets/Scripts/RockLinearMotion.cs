@@ -25,8 +25,8 @@ public class RockLinearMotion : MonoBehaviour
     public float destroySecondsAfterImpact = 3f;
 
          [Header("Impact VFX")]
-     public ParticleSystem smokePoofPrefab;      // assign RockSmokePoof prefab
-    public float smokePoofExtraLifetime = 0.5f; // safety buffer before destroying the VFX object
+     public ParticleSystem smokePoofPrefab;      // assign 
+    public float smokePoofExtraLifetime = 0.5f; // safety buffer before destroying
 
      private Coroutine _destroyRoutine;
 
@@ -34,10 +34,10 @@ public class RockLinearMotion : MonoBehaviour
 
     [Header("Warning Indicator")]
      public bool showWarningCircle = true;
-     public GameObject warningCirclePrefab;     // Assign RockWarningCircle prefab
-     public float warningGroundOffset = 0.02f;  // Stops z-fighting
-     public float warningRayDistance = 50f;     // How far down to search for ground
-     public float warningRadiusMultiplier = 1f; // 1 = match spherecast radius
+     public GameObject warningCirclePrefab;     // A
+     public float warningGroundOffset = 0.02f;  // stops z-fighting
+     public float warningRayDistance = 50f;     // how far down to search for ground
+     public float warningRadiusMultiplier = 1f; // 1 = match spherecast radius************
 
      private GameObject _warningInstance;
 
@@ -49,12 +49,12 @@ public class RockLinearMotion : MonoBehaviour
     private bool _impacted;         // already hit the ground
     private float _radius;          // sphere radius for ground
 
-    public float CurrentSpeed { get; private set; } // v = u + a t
+    public float CurrentSpeed { get; private set; } // v = u + a t?
 
      [Header("Warning Fallback")]
-     public float fallbackGroundY = 0f; // used if raycast doesn't hit anything
+     public float fallbackGroundY = 0f; // if raycast doesnt hit anything
 
-
+    //MATHS CONTENT PRESENT HERE
     private void Awake()
     {
         // direction
@@ -73,32 +73,32 @@ public class RockLinearMotion : MonoBehaviour
         _startPos = transform.position;
         if (startOnAwake) Drop();
     }
-
-        public void Drop()
+    //MATHS CONTENT PRESENT HERE
+    public void Drop()
      {
          if (_impacted) return;
          _t = 0f;
          _falling = true;
 
-         // Spawn warning circle once
+         //  warning circle once
          if (showWarningCircle && warningCirclePrefab != null && _warningInstance == null)
          {
              _warningInstance = Instantiate(warningCirclePrefab);
 
-            // Scale to match radius (diameter = radius * 2)
+            // scale radius , diameter = radius * 2)
              float diameter = Mathf.Max(0.01f, (_radius * warningRadiusMultiplier) * 2f);
              _warningInstance.transform.localScale = new Vector3(diameter, diameter, diameter);
          }
      }
 
-
+    //MATHS CONTENT PRESENT HERE
     private void Update()
     {
         if (!_falling || _impacted) return;
 
         _t += Time.deltaTime;
 
-        // v = u + a t
+        //**v = u + a t***
         CurrentSpeed = initialSpeed + acceleration * _t;
 
        
@@ -108,19 +108,19 @@ public class RockLinearMotion : MonoBehaviour
 
         //  check if we hit ground between current and target
         Vector3 from = transform.position;
-                 // Keep warning circle pinned to the ground beneath the rock
+                 //  warning circle pinned to the ground beneath the rock
          if (_warningInstance != null)
                      {
                          if (Physics.Raycast(from, Vector3.down, out RaycastHit groundHit, warningRayDistance, groundMask, QueryTriggerInteraction.Ignore))
                              {
-                                 // Always place under the rock and keep perfectly flat
+                                 // place under the rock and keep perfectly flat
                  _warningInstance.transform.position = new Vector3(from.x, groundHit.point.y + warningGroundOffset, from.z);
                                 _warningInstance.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
                              }
 
             else
             {
-                // Fallback: still show it under the rock so it never "disappears"
+                // fallback still show it under the rock so it never disappears
                 Vector3 p = _warningInstance.transform.position;
                 p.x = from.x;
                 p.z = from.z;
@@ -158,7 +158,7 @@ public class RockLinearMotion : MonoBehaviour
         if (_impacted) return;
         _impacted = true;
         _falling = false;
-        // Remove warning circle
+        // remove warning circle (**circles white background wont tur ninvisible**) bug
         if (_warningInstance != null)
         {
             Destroy(_warningInstance);
@@ -169,7 +169,7 @@ public class RockLinearMotion : MonoBehaviour
 
         SendMessage("OnRockImpact", SendMessageOptions.DontRequireReceiver);
 
-        // clean up rock after impact (spawn smoke when it disappears)
+        // clean up rock after impact- spawn smoke when it disappears
         if (_destroyRoutine != null) StopCoroutine(_destroyRoutine);
 
         if (destroySecondsAfterImpact > 0f)
@@ -188,17 +188,17 @@ public class RockLinearMotion : MonoBehaviour
         SpawnSmokePoof();
         Destroy(gameObject);
     }
-
+    //MATHS CONTENT PRESENT HERE
     private void SpawnSmokePoof()
     {
         if (smokePoofPrefab == null) return;
 
         ParticleSystem ps = Instantiate(smokePoofPrefab, transform.position, Quaternion.identity);
 
-        // destroy the spawned VFX after it finishes
+        // destroy the spawned vfx after it finishes
         float lifetime = ps.main.duration;
 
-        // add the max start lifetime if available (covers most particle setups)
+        // add the max start lifetime if available 
         lifetime += ps.main.startLifetime.constantMax;
 
         Destroy(ps.gameObject, lifetime + smokePoofExtraLifetime);

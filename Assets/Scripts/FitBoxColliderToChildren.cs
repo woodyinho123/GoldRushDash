@@ -4,14 +4,14 @@ using UnityEngine;
 public class FitBoxColliderToChildren : MonoBehaviour
 {
     [ContextMenu("Fit BoxCollider To Children")]
-    public void Fit()
+    public void Fit()   //MATHS CONTENT PRESENT HERE
     {
-        // Get or add a BoxCollider on this object
+        //  add  boxcollider on this object
         BoxCollider box = GetComponent<BoxCollider>();
         if (box == null)
             box = gameObject.AddComponent<BoxCollider>();
 
-        // Find all child renderers (your ladders)
+        // find all child renderers (ladders)
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
 
         if (renderers.Length == 0)
@@ -20,19 +20,19 @@ public class FitBoxColliderToChildren : MonoBehaviour
             return;
         }
 
-        // Combine their bounds in world space
+        // combine their bounds in world space
         Bounds combined = renderers[0].bounds;
         for (int i = 1; i < renderers.Length; i++)
         {
             combined.Encapsulate(renderers[i].bounds);
         }
 
-        // Convert world bounds to local space of this object
-        // IMPORTANT: works best if parent has no rotation and scale = 1
+        // convert world bounds to local space of this object
+        
         Vector3 centerLocal = transform.InverseTransformPoint(combined.center);
         Vector3 sizeLocal = transform.InverseTransformVector(combined.size);
 
-        // Make sizes positive
+        // make sizes positive
         sizeLocal = new Vector3(
             Mathf.Abs(sizeLocal.x),
             Mathf.Abs(sizeLocal.y),

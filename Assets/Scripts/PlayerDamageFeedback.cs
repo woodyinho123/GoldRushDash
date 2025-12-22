@@ -4,12 +4,12 @@ using UnityEngine;
 public class PlayerDamageFeedback : MonoBehaviour
 {
     [Header("Hurt SFX")]
-    public AudioSource hurtSource;      // optional: if null, we’ll try GetComponent<AudioSource>()
+    public AudioSource hurtSource;      
     public AudioClip hurtClip;
     [Range(0f, 1f)] public float hurtVolume = 1f;
 
     [Header("Flash Red")]
-    public Renderer[] flashRenderers;   // assign Miner mesh renderers, or leave empty to auto-find
+    public Renderer[] flashRenderers;   // assign miner mesh 
     public float flashDuration = 0.15f;
     public Color flashColor = Color.red;
 
@@ -32,8 +32,8 @@ public class PlayerDamageFeedback : MonoBehaviour
             flashRenderers = GetComponentsInChildren<Renderer>();
 
         _mpb = new MaterialPropertyBlock();
-        _baseColorId = Shader.PropertyToID("_BaseColor"); // URP/Lit
-        _colorId = Shader.PropertyToID("_Color");         // Standard
+        _baseColorId = Shader.PropertyToID("_BaseColor"); // lit
+        _colorId = Shader.PropertyToID("_Color");         // standard
 
         _origColors = new Color[flashRenderers.Length];
         for (int i = 0; i < flashRenderers.Length; i++)
@@ -59,11 +59,11 @@ public class PlayerDamageFeedback : MonoBehaviour
         if (Time.time < _nextAllowedTime) return;
         _nextAllowedTime = Time.time + minTimeBetweenHurt;
 
-        // SFX
+        // sfx
         if (hurtSource != null && hurtClip != null)
             hurtSource.PlayOneShot(hurtClip, hurtVolume);
 
-        // Flash
+        // flash
         if (_co != null) StopCoroutine(_co);
         _co = StartCoroutine(FlashCo());
     }

@@ -17,7 +17,7 @@ public class ScoreboardUI : MonoBehaviour
 
     public void Refresh()
     {
-        // Clear existing rows
+        // clear rows
         for (int i = content.childCount - 1; i >= 0; i--)
             Destroy(content.GetChild(i).gameObject);
 
@@ -28,7 +28,7 @@ public class ScoreboardUI : MonoBehaviour
             var row = Instantiate(rowPrefab, content);
             var texts = row.GetComponentsInChildren<TextMeshProUGUI>(true);
 
-            // Expect: first TMP = name, second TMP = score
+            
             if (texts.Length >= 2)
             {
                 texts[0].text = e.playerName;

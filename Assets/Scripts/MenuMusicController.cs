@@ -11,12 +11,12 @@ public class MenuMusicController : MonoBehaviour
     [SerializeField] private string[] keepAliveSceneNames = { "MainMenuScene", "ScoreboardScene" };
 
     private AudioSource _src;
-
+    //MATHS CONTENT PRESENT HERE
     private void Awake()
     {
         _src = GetComponent<AudioSource>();
 
-        // Singleton: destroy duplicates
+        //  destroy duplicates
         if (Instance != null && Instance != this)
         {
             if (_src != null) _src.Stop();
@@ -29,7 +29,7 @@ public class MenuMusicController : MonoBehaviour
 
         SceneManager.activeSceneChanged += OnActiveSceneChanged;
 
-        // Start music (we told you to set Play On Awake OFF)
+        // start music 
         if (_src != null && !_src.isPlaying)
             _src.Play();
     }
@@ -45,7 +45,7 @@ public class MenuMusicController : MonoBehaviour
 
     private void OnActiveSceneChanged(Scene from, Scene to)
     {
-        // If we leave menu/scoreboard, remove this object so it won't play in gameplay scenes
+        //  remove this music so it won't play in gameplay scenes**
         if (!IsKeepAliveScene(to.name))
             Destroy(gameObject);
     }

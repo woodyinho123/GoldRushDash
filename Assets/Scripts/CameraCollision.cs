@@ -3,7 +3,7 @@ using UnityEngine;
 public class CameraCollision : MonoBehaviour
 {
     [Header("References")]
-    public Transform pivot; // drag Focal Point here
+    public Transform pivot; 
 
     [Header("Collision settings")]
     public float cameraRadius = 0.25f;
@@ -12,7 +12,7 @@ public class CameraCollision : MonoBehaviour
     public float smoothing = 10f;
 
     [Header("Layers")]
-    public LayerMask collisionMask = ~0; // everything by default
+    public LayerMask collisionMask = ~0; 
 
     private Vector3 _defaultLocalPos;
     private float _currentDist;
@@ -27,7 +27,7 @@ public class CameraCollision : MonoBehaviour
             return;
         }
 
-        // Camera's intended local offset relative to pivot (Focal Point)
+        
         _defaultLocalPos = pivot.InverseTransformPoint(transform.position);
 
         _currentDist = _defaultLocalPos.magnitude;
@@ -40,7 +40,7 @@ public class CameraCollision : MonoBehaviour
 
         Vector3 pivotWorldPos = pivot.position;
 
-        // Desired camera world position if there was no collision
+        
         Vector3 desiredWorldPos = pivot.TransformPoint(_defaultLocalPos);
 
         Vector3 toCam = desiredWorldPos - pivotWorldPos;
@@ -51,7 +51,7 @@ public class CameraCollision : MonoBehaviour
 
         float targetDist = maxDist;
 
-        // SphereCast from pivot toward desired camera position
+        
         if (Physics.SphereCast(
                 pivotWorldPos,
                 cameraRadius,
@@ -64,13 +64,13 @@ public class CameraCollision : MonoBehaviour
             targetDist = Mathf.Max(minDistance, hit.distance - collisionOffset);
         }
 
-        // Smooth distance so it doesn't snap forward
+        
         _desiredDist = targetDist;
         _currentDist = Mathf.Lerp(_currentDist, _desiredDist, Time.deltaTime * smoothing);
 
         Vector3 targetWorldPos = pivotWorldPos + dir * _currentDist;
 
-        // Smooth position
+      
         transform.position = Vector3.Lerp(transform.position, targetWorldPos, Time.deltaTime * smoothing);
     }
 }

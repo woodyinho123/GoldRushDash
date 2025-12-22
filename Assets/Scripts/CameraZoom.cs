@@ -3,16 +3,16 @@ using UnityEngine;
 public class CameraZoom : MonoBehaviour
 {
     [Header("References")]
-    public Transform pivot; // drag Focal Point here
+    public Transform pivot; // drag 
 
     [Header("Zoom Settings")]
     public float zoomSpeed = 2f;          // how fast the zoom changes
-    public float minZoomDistance = 0.8f;  // closest allowed (prevents clipping into player)
+    public float minZoomDistance = 0.8f;  // closest allowed
     public float maxZoomDistance = 6f;    // farthest allowed
 
     [Header("Zoom Height (keeps feet visible)")]
-    public float nearHeight = -0.25f;   // camera local Y when zoomed IN
-    public float farHeight = 0.15f;    // camera local Y when zoomed OUT
+    public float nearHeight = -0.25f;   // camera local Y 
+    public float farHeight = 0.15f;    // camera local Y 
 
 
     [Header("Over-Shoulder + Look Down (Zoom Assist)")]
@@ -35,7 +35,7 @@ public class CameraZoom : MonoBehaviour
 
     private int _shoulderSign = 1;     // +1 = right shoulder, -1 = left shoulder
     private float _currentLocalX = 0f; // smoothed local X
-    private float _currentPitch = 0f;  // smoothed pitch (degrees)
+    private float _currentPitch = 0f;  // smoothed pitch 
     private Quaternion _baseLocalRot;
 
     [Header("Smoothing")]
@@ -54,18 +54,18 @@ public class CameraZoom : MonoBehaviour
             return;
         }
 
-        // distance is how far camera is behind pivot (local -Z usually)
-        // SAFER: assumes camera is a child of pivot and uses localPosition
+        // distance is how far camera is behind pivot 
+       
                _currentDistance = Mathf.Clamp(Mathf.Abs(transform.localPosition.z), minZoomDistance, maxZoomDistance);
-               _baseLocalPos = transform.localPosition; // <-- ADD THIS
+               _baseLocalPos = transform.localPosition; // - ADD THIS
                 _targetDistance = _currentDistance;
 
 
 
-        // Start from whatever the camera is currently set to
+        // start from whatever the camera is currently set to
         _currentLocalX = transform.localPosition.x;
 
-        // Normalize pitch (Unity gives 0..360, we want -180..180-ish)
+        // normalize pitch 
         float startPitch = transform.localEulerAngles.x;
         if (startPitch > 180f) startPitch -= 360f;
         _currentPitch = startPitch;
@@ -77,7 +77,7 @@ public class CameraZoom : MonoBehaviour
 
     void Update()
     {
-        // Mouse wheel: positive usually zooms in/out depending on mouse.
+        // mouse wheel
         float scroll = Mathf.Clamp(Input.mouseScrollDelta.y, -1f, 1f);
 
         if (enableOverShoulder && Input.GetKeyDown(switchShoulderKey))
@@ -97,18 +97,18 @@ public class CameraZoom : MonoBehaviour
     {
         _currentDistance = Mathf.Lerp(_currentDistance, _targetDistance, Time.deltaTime * smooth);
 
-        // 0 = zoomed in, 1 = zoomed out
+        // 0 = zoomed in 1 = zoomed out
         float t = Mathf.InverseLerp(minZoomDistance, maxZoomDistance, _currentDistance);
 
         Vector3 localPos = _baseLocalPos;
 
-        // distance (behind pivot)
+        // distance 
         localPos.z = -_currentDistance;
 
-        // height shifts lower when zoomed in (so you see feet)
+        // height shifts lower when zoomed in
         localPos.y = Mathf.Lerp(nearHeight, farHeight, t);
 
-        // Over-the-shoulder offset (smoothed)
+        // over-the-shoulder 
         float targetX = enableOverShoulder
             ? _shoulderSign * Mathf.Lerp(nearShoulderOffset, farShoulderOffset, t)
             : 0f;
@@ -118,7 +118,7 @@ public class CameraZoom : MonoBehaviour
 
         transform.localPosition = localPos;
 
-        // Tilt down a bit more when zoomed in (smoothed)
+        // tilt down a bit more when zoomed in 
         float targetPitch = enableOverShoulder
             ? Mathf.Lerp(nearPitchDown, farPitchDown, t)
             : 0f;

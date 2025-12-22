@@ -3,8 +3,8 @@ using UnityEngine;
 public class LadderCameraAdjust : MonoBehaviour
 {
     [Header("References")]
-    public PlayerController player;  // drag PlayerRoot here
-    public Camera cam;               // drag this Camera here (or leave empty to auto-find)
+    public PlayerController player;  // drag playerroot here
+    public Camera cam;               // drag this amera here 
 
     [Header("Pitch (look up/down)")]
     public float extraLadderPitch = -20f;   // negative = look up
@@ -15,7 +15,7 @@ public class LadderCameraAdjust : MonoBehaviour
     public float fovLerpSpeed = 5f;
 
     [Header("Position (local)")]
-    public float ladderHeightOffset = -0.25f; // negative = camera goes LOWER on ladder
+    public float ladderHeightOffset = -0.25f; // negative = camera goes low on ladder
     public float positionLerpSpeed = 5f;
 
 
@@ -23,8 +23,8 @@ public class LadderCameraAdjust : MonoBehaviour
     public float ladderHoldTime = 0.4f;    // seconds to keep ladder view after leaving ladder
 
     [Header("Ground check (for ladder-to-ladder jumps)")]
-    public float groundCheckDistance = 1.2f;     // increase if your player is tall
-    public LayerMask groundMask = ~0;            // set to your ground layers if needed
+    public float groundCheckDistance = 1.2f;     // increase 
+    public LayerMask groundMask = ~0;            
 
 
     private Quaternion _groundLocalRot;
@@ -35,29 +35,29 @@ public class LadderCameraAdjust : MonoBehaviour
 
 
     private float _ladderTimer = 0f;
-
+    //MATHS CONTENT PRESENT HERE
     void Awake()
     {
         if (cam == null)
             cam = GetComponent<Camera>();
 
-        // Remember the normal camera orientation
+        // emember the normal camera orientation
         _groundLocalRot = transform.localRotation;
 
-        // Remember the normal camera local position
+        // emember the normal camera local position
         _groundLocalPos = transform.localPosition;
 
-        // Ladder position = ground position + a vertical offset
+        // ladder position = ground position + a vertical offset
         _ladderLocalPos = _groundLocalPos + new Vector3(0f, ladderHeightOffset, 0f);
 
 
-        // Ladder rotation = original rotation pitched up/down by extraLadderPitch
+        // ladder rotation = original rotation pitched up/down by extraladderpitch
         _ladderLocalRot = Quaternion.Euler(extraLadderPitch, 0f, 0f) * _groundLocalRot;
 
         if (cam != null)
             _groundFOV = cam.fieldOfView;
     }
-
+    //MATHS CONTENT PRESENT HERE
     void LateUpdate()
     {
         if (player == null || cam == null)
@@ -65,35 +65,35 @@ public class LadderCameraAdjust : MonoBehaviour
 
         bool onLadderNow = player.IsOnLadder;
 
-        // Simple grounded check (so ladder camera doesn't drop mid-air between ladders)
+        // grounded check so ladder camera doesnt drop midair between ladders
         Vector3 origin = player.transform.position + Vector3.up * 0.1f;
         bool groundedNow = Physics.Raycast(origin, Vector3.down, groundCheckDistance, groundMask, QueryTriggerInteraction.Ignore);
 
         if (onLadderNow)
         {
-            // While on ladder, keep refreshing the hold timer
+            // while on ladder keep refreshing the hold timer
             _ladderTimer = ladderHoldTime;
         }
         else
         {
-            // If we're NOT grounded (airborne), do NOT count the timer down.
-            // This keeps ladder camera active for ladder-to-ladder jumps.
+            // If  not grounded  do not count the timer down
+            // keeps ladder camera active for ladder-to-ladder jumps
             if (groundedNow && _ladderTimer > 0f)
                 _ladderTimer -= Time.deltaTime;
         }
 
-        // Ladder context = on ladder, OR still holding, OR airborne (between ladders)
+        // ladder context = on ladderor still holding, or airbornebetween ladders
         bool ladderContext = onLadderNow || _ladderTimer > 0f;
 
 
 
-        // Choose target rotation, position and FOV
+        // choose target rotation, position and fov
         Quaternion targetRot = ladderContext ? _ladderLocalRot : _groundLocalRot;
         Vector3 targetPos = ladderContext ? _ladderLocalPos : _groundLocalPos;
         float targetFov = ladderContext ? ladderFOV : _groundFOV;
 
 
-        // Smoothly blend to them
+        // smoothly blend to them
         transform.localRotation = Quaternion.Slerp(
             transform.localRotation,
             targetRot,

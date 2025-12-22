@@ -30,7 +30,7 @@ public class SpikeTrapAnimated : MonoBehaviour
         if (spikesAnimator == null)
             spikesAnimator = GetComponentInChildren<Animator>();
 
-        // Start retracted: set animation to first frame and pause it
+        //  set animation to first frame and pause it*
         if (spikesAnimator != null)
         {
             spikesAnimator.Play(raiseStateName, 0, 0f);
@@ -48,7 +48,7 @@ public class SpikeTrapAnimated : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        // Damage should NOT move player: we only call TakeDamage
+        // damage shouldnt move player- we only call TakeDamage
         if (_running)
         {
             TryDamage();
@@ -70,41 +70,41 @@ public class SpikeTrapAnimated : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.TakeDamage(damage);
     }
-
+    //MATHS CONTENT PRESENT HERE
     private IEnumerator TrapRoutine()
     {
         _running = true;
         _damagedThisCycle = false;
 
-        // EXTEND (play forward)
+        // EXTEND
         spikesAnimator.speed = 1f;
         spikesAnimator.Play(raiseStateName, 0, 0f);
 
-        // Wait until the animation reaches the end
+        //  until the animation reaches the end
         yield return WaitForStateNormalizedTime(0.98f);
 
-        // Hold at the top
+        // hold 
         spikesAnimator.speed = 0f;
         yield return new WaitForSeconds(stayExtendedTime);
 
-        // RETRACT (play reverse)
+        // play reverse
         spikesAnimator.speed = -1f;
         spikesAnimator.Play(raiseStateName, 0, 1f);
 
-        // Wait until it reaches the start
+        // wait until it reaches the start
         yield return WaitForStateNormalizedTime(0.02f);
 
-        // Freeze retracted
+        // freeze retracted
         spikesAnimator.speed = 0f;
         spikesAnimator.Play(raiseStateName, 0, 0f);
 
         _running = false;
         _cooldown = cooldownTime;
     }
-
+    //MATHS CONTENT PRESENT HERE
     private IEnumerator WaitForStateNormalizedTime(float target)
     {
-        // We assume the current state is raiseStateName on layer 0
+        
         while (true)
         {
             var s = spikesAnimator.GetCurrentAnimatorStateInfo(0);

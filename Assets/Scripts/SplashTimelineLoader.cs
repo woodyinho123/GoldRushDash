@@ -8,7 +8,7 @@ public class SplashTimelineLoader : MonoBehaviour
 {
     [SerializeField] private PlayableDirector director;
     [SerializeField] private string mainMenuSceneName = "MainMenuScene";
-    [SerializeField] private float fallbackDuration = 4f; // if Unity reports 0
+    [SerializeField] private float fallbackDuration = 4f; // if unity reports 0
 
     private IEnumerator Start()
     {
@@ -24,11 +24,11 @@ public class SplashTimelineLoader : MonoBehaviour
             director.extrapolationMode = DirectorWrapMode.Hold;
             director.time = 0;
 
-            // Apply the first frame immediately (important for fade-from-black / alpha 0 start)
+            
             director.Evaluate();
             director.Play();
 
-            // Wait until the timeline actually finishes
+            // wait till timeline finishes
             yield return new WaitUntil(() => director.state != PlayState.Playing);
         }
         else

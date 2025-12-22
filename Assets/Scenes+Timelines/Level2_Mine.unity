@@ -23625,8 +23625,8 @@ MonoBehaviour:
   inputEnabled: 1
   damageFlashRenderers: []
   damageFlashDuration: 0.15
-  jumpForce: 6
-  forwardJumpForce: 4
+  jumpForce: 0
+  forwardJumpForce: 0
   footstepSource: {fileID: 1205118705}
   ladderClimbSpeed: 3
   ladderSideJumpForce: 5

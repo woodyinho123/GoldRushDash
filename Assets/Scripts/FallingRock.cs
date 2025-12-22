@@ -9,7 +9,7 @@ public class FallingRock : MonoBehaviour
 
     [Header("Linear Motion")]
     public Vector3 fallDirection = Vector3.down;
-    public float fallSpeed = 0.5f;   // UNITS PER SECOND, easy to tune
+    public float fallSpeed = 0.5f;   // UNITS PER SECOND
 
     [Header("VFX")]
     public GameObject dustVFXPrefab;
@@ -36,14 +36,14 @@ public class FallingRock : MonoBehaviour
     private bool _hasHitPlayer;
     private float _radius;
 
-    private void Awake()
+    private void Awake()//MATHS CONTENT PRESENT HERE
     {
-        // Ensure direction is valid
+        //  directionsure is valid
         if (fallDirection.sqrMagnitude < 1e-5f)
             fallDirection = Vector3.down;
         fallDirection.Normalize();
 
-        // Ensure we have a trigger sphere collider
+        // ensure we have a trigger collider
         SphereCollider sc = GetComponent<SphereCollider>();
         if (sc == null) sc = gameObject.AddComponent<SphereCollider>();
         sc.isTrigger = true;
@@ -56,7 +56,7 @@ public class FallingRock : MonoBehaviour
 
     private void Start()
     {
-        // Rock starts idle; RockTriggerZone will call Drop()
+        // rock starts idle rockTriggerzone will call drop
         _falling = false;
         _impacted = false;
         _hasHitPlayer = false;
@@ -67,54 +67,54 @@ public class FallingRock : MonoBehaviour
         if (_impacted) return;
         _falling = true;
     }
-
+    //MATHS CONTENT PRESENT HERE
     private void Update()
     {
         if (!_falling || _impacted) return;
 
-        // Make sure direction is normalised
+        // make sure direction is normalised**
         Vector3 dir = fallDirection.normalized;
         if (dir.sqrMagnitude < 1e-5f)
             dir = Vector3.down;
 
-        // How far to move this frame
-        float step = fallSpeed * Time.deltaTime;   // THIS is the only speed now
+        // how far to move this frame
+        float step = fallSpeed * Time.deltaTime;   // THIS is the only speed now*
 
         Vector3 from = transform.position;
         Vector3 to = from + dir * step;
 
-        // Spherecast down to see if we hit ground between from -> to
+        // spherecast  to see if we hit ground between from  to
         if (Physics.SphereCast(from, _radius, dir, out RaycastHit hit,
                                step + groundSkin, groundMask,
                                QueryTriggerInteraction.Ignore))
         {
-            // If we hit something that is NOT the player, treat as ground
+            // if we hit something that is notthe player then treat as ground
             if (!hit.collider.CompareTag("Player"))
             {
-                // Snap just above ground and impact
+                // snap just above ground 
                 transform.position = hit.point - dir * (_radius - groundSkin);
                 Impact();
             }
             else
             {
-                // Just move through player; damage is handled in Impact()
+                // just move through player but damage is handled in impact()
                 transform.position = to;
             }
         }
         else
         {
-            // No ground hit this frame
+            // no ground hit this frame hmm
             transform.position = to;
         }
     }
-
+    //MATHS CONTENT PRESENT HERE
     private void Impact()
     {
         if (_impacted) return;
         _impacted = true;
         _falling = false;
 
-        // DAMAGE in a radius around the impact point
+        // making damage in a radius around the impact point
         if (!_hasHitPlayer && energyDamage > 0f)
         {
             Collider[] hits = Physics.OverlapSphere(transform.position, damageRadius);
@@ -133,18 +133,18 @@ public class FallingRock : MonoBehaviour
             }
         }
 
-        // VFX
+        // vfx
         if (dustVFXPrefab != null)
         {
             GameObject dust = Instantiate(dustVFXPrefab, transform.position, Quaternion.identity);
             Destroy(dust, 3f);
         }
 
-        // SFX
+        //asfx
         if (impactClip != null)
             AudioSource.PlayClipAtPoint(impactClip, transform.position, impactVolume);
 
-        // Hide mesh & colliders
+        // hide mesh + colliders
         foreach (var mr in GetComponentsInChildren<MeshRenderer>())
             mr.enabled = false;
 

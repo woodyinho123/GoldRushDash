@@ -24,7 +24,7 @@ public class RockTriggerZone : MonoBehaviour
         triggered = true;
         Debug.Log($"RockTriggerZone: Player entered, will drop rock {rockToDrop} after {dropDelay} sec");
 
-        // Play warning sound immediately when player enters
+        // warning sound when player enters
         if (warningAudio != null)
         {
             warningAudio.Play();
@@ -42,7 +42,7 @@ public class RockTriggerZone : MonoBehaviour
 
     private IEnumerator DelayedDrop()
     {
-        // Wait before starting the fall
+        // wait before starting the fall
         yield return new WaitForSeconds(dropDelay);
 
         if (rockToDrop != null)

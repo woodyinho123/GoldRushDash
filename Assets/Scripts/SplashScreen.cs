@@ -12,7 +12,7 @@ public class SplashScreen : MonoBehaviour
         Invoke("LoadMainGameScene", splashDuration);  //game scene loaded after delay
     }
 
-    // SplashScreen.cs 
+    
     
 
     void LoadMainGameScene()

@@ -18,26 +18,25 @@ public class SpikeTrapDamage : MonoBehaviour
         if (col != null) col.isTrigger = true;
     }
 
-    // Called by animation events
+   
     public void EnableDamageWindow()
     {
         _damageWindowOpen = true;
-        _hasDamagedThisCycle = false; // new spike cycle starts -> allow 1 hit
+        _hasDamagedThisCycle = false; // new spike cycle 
     }
 
-    // Called by animation events
+    
     public void DisableDamageWindow()
     {
         _damageWindowOpen = false;
-        _hasDamagedThisCycle = false; // reset for next cycle
+        _hasDamagedThisCycle = false; // reset 
     }
 
     private void OnTriggerEnter(Collider other) => TryDamage(other);
 
     private void OnTriggerStay(Collider other)
     {
-        // Important: if player is already standing in it when spikes rise,
-        // OnTriggerEnter won't fire, so Stay is needed.
+        
         TryDamage(other);
     }
 
