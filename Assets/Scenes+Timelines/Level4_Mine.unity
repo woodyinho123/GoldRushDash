@@ -661,6 +661,14 @@ PrefabInstance:
       propertyPath: m_Center.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.9842649
@@ -915,6 +923,10 @@ PrefabInstance:
     - target: {fileID: 162688346552673926, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
       propertyPath: m_Name
       value: DiamondOre_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
+      propertyPath: mineEnergyCost
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
       propertyPath: m_LocalScale.x
@@ -1300,6 +1312,14 @@ PrefabInstance:
     - target: {fileID: 492737169892121067, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_Center.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3083,6 +3103,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ruby_ore (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_LocalScale.x
       value: -3.32
@@ -4795,8 +4827,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -5761,8 +5801,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -6245,6 +6293,14 @@ PrefabInstance:
     - target: {fileID: 492737169892121067, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_Center.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7184,8 +7240,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -8366,8 +8430,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -8560,6 +8632,14 @@ PrefabInstance:
       propertyPath: m_Center.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.731
@@ -8621,6 +8701,10 @@ PrefabInstance:
     - target: {fileID: 162688346552673926, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
       propertyPath: m_Name
       value: DiamondOre_01 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
+      propertyPath: mineEnergyCost
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
       propertyPath: m_LocalScale.x
@@ -9837,8 +9921,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -10142,8 +10234,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -15377,6 +15477,14 @@ PrefabInstance:
       propertyPath: m_Center.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.445
@@ -15618,6 +15726,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ruby_ore (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.45999992
@@ -15766,8 +15886,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -16811,8 +16939,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -17162,6 +17298,18 @@ PrefabInstance:
     - target: {fileID: 162688346552673926, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_Name
       value: Ruby_ore (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18416,8 +18564,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -20127,8 +20283,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -20652,6 +20816,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ruby_ore (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -20.939
@@ -20731,8 +20907,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -22949,6 +23133,14 @@ PrefabInstance:
       propertyPath: m_Center.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.0119998
@@ -23201,8 +23393,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -24227,6 +24427,14 @@ PrefabInstance:
       propertyPath: m_Center.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.994
@@ -24437,8 +24645,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -26066,6 +26282,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ruby_ore (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.8900003
@@ -27616,6 +27844,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ruby_ore (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5329999
@@ -27740,6 +27980,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ruby_ore
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.47
@@ -27814,8 +28066,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -27922,6 +28182,18 @@ PrefabInstance:
     - target: {fileID: 162688346552673926, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_Name
       value: Ruby_ore (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_LocalScale.x
@@ -28440,8 +28712,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -28830,8 +29110,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -28949,11 +29237,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6148917523009301357, guid: 0b975fcab3616b94f94b15a51f7e73bd, type: 3}
       propertyPath: interval
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 6148917523009301357, guid: 0b975fcab3616b94f94b15a51f7e73bd, type: 3}
       propertyPath: destroyAfterSeconds
-      value: 5
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6148917523009301357, guid: 0b975fcab3616b94f94b15a51f7e73bd, type: 3}
       propertyPath: dropPoints.Array.size
@@ -30636,6 +30924,14 @@ PrefabInstance:
       propertyPath: m_Center.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.007
@@ -32073,8 +32369,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -33120,6 +33424,14 @@ PrefabInstance:
     - target: {fileID: 162688346552673926, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
       propertyPath: m_Name
       value: DiamondOre_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
+      propertyPath: mineEnergyCost
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
       propertyPath: m_LocalScale.x
@@ -35165,6 +35477,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DiamondOre_01 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
+      propertyPath: mineEnergyCost
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 2e0e7911e6bc68344b0a640be9af8d10, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.0349925
@@ -35335,6 +35651,18 @@ PrefabInstance:
     - target: {fileID: 162688346552673926, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_Name
       value: Ruby_ore (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_LocalScale.x
@@ -35858,8 +36186,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -36643,7 +36979,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 5544a00f5d81e86459c22566a98cf3b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.032
+      value: -4.093
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 5544a00f5d81e86459c22566a98cf3b0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -36711,6 +37047,18 @@ PrefabInstance:
     - target: {fileID: 162688346552673926, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_Name
       value: Ruby_ore (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -37005,6 +37353,14 @@ PrefabInstance:
     - target: {fileID: 492737169892121067, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_Center.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -37371,8 +37727,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -39374,8 +39738,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -39871,6 +40243,18 @@ PrefabInstance:
     - target: {fileID: 162688346552673926, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_Name
       value: Ruby_ore (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 72a4e6266ce8ddc49867521566766fb6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -40368,8 +40752,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -40761,8 +41153,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -41527,8 +41927,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec
@@ -42194,6 +42602,14 @@ PrefabInstance:
     - target: {fileID: 492737169892121067, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_Radius
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: miningTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
+      propertyPath: mineEnergyCost
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: 0369ef29b1299744e9ef3fd44532341a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -44701,8 +45117,16 @@ PrefabInstance:
       value: 0.334
       objectReference: {fileID: 0}
     - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: miningTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: scoreValue
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675139896752072987, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
+      propertyPath: mineEnergyCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7373180677875894809, guid: 7f94a37d3e40eff4fba9cd9c9d34934c, type: 3}
       propertyPath: lengthInSec

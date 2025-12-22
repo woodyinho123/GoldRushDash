@@ -18675,6 +18675,10 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: -0.17
       objectReference: {fileID: 0}
+    - target: {fileID: 7472998028622576234, guid: c35bd9260cb41a140886123561437e38, type: 3}
+      propertyPath: scoreValue
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: c35bd9260cb41a140886123561437e38, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -42516,6 +42520,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.08
       objectReference: {fileID: 0}
+    - target: {fileID: 7010971087869878029, guid: d4066f9263e763044bb037a3025f5513, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: d4066f9263e763044bb037a3025f5513, type: 3}
       propertyPath: m_LocalScale.x
       value: 9.05
@@ -49084,6 +49092,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Emerald_ore (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7472998028622576234, guid: c35bd9260cb41a140886123561437e38, type: 3}
+      propertyPath: scoreValue
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: c35bd9260cb41a140886123561437e38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.05
@@ -50354,6 +50366,10 @@ PrefabInstance:
     - target: {fileID: 492737169892121067, guid: d4066f9263e763044bb037a3025f5513, type: 3}
       propertyPath: m_Radius
       value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 7010971087869878029, guid: d4066f9263e763044bb037a3025f5513, type: 3}
+      propertyPath: scoreValue
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: d4066f9263e763044bb037a3025f5513, type: 3}
       propertyPath: m_LocalScale.x
@@ -67046,6 +67062,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Emerald_ore
       objectReference: {fileID: 0}
+    - target: {fileID: 7472998028622576234, guid: c35bd9260cb41a140886123561437e38, type: 3}
+      propertyPath: scoreValue
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: c35bd9260cb41a140886123561437e38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.45
@@ -69746,6 +69766,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RubyLadder (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7010971087869878029, guid: d4066f9263e763044bb037a3025f5513, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: d4066f9263e763044bb037a3025f5513, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.74
@@ -71390,6 +71414,10 @@ PrefabInstance:
     - target: {fileID: 492737169892121067, guid: d4066f9263e763044bb037a3025f5513, type: 3}
       propertyPath: m_Radius
       value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 7010971087869878029, guid: d4066f9263e763044bb037a3025f5513, type: 3}
+      propertyPath: scoreValue
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: d4066f9263e763044bb037a3025f5513, type: 3}
       propertyPath: m_LocalScale.x
@@ -77539,6 +77567,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Emerald_ore (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7472998028622576234, guid: c35bd9260cb41a140886123561437e38, type: 3}
+      propertyPath: scoreValue
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: c35bd9260cb41a140886123561437e38, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.6217599
@@ -79040,6 +79072,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RubyLadder (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7010971087869878029, guid: d4066f9263e763044bb037a3025f5513, type: 3}
+      propertyPath: scoreValue
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: d4066f9263e763044bb037a3025f5513, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.27674
@@ -79962,6 +79998,10 @@ PrefabInstance:
     - target: {fileID: 492737169892121067, guid: d4066f9263e763044bb037a3025f5513, type: 3}
       propertyPath: m_Radius
       value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 7010971087869878029, guid: d4066f9263e763044bb037a3025f5513, type: 3}
+      propertyPath: scoreValue
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7793756009882962738, guid: d4066f9263e763044bb037a3025f5513, type: 3}
       propertyPath: m_LocalScale.x

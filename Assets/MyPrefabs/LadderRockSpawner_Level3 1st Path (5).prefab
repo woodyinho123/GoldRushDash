@@ -52,11 +52,13 @@ MonoBehaviour:
   - {fileID: 589931996816286189}
   - {fileID: 589931996816286189}
   - {fileID: 589931996816286189}
-  interval: 1.5
+  interval: 2.5
   randomizePoint: 0
   autoStart: 1
   spawnAllPointsEachInterval: 1
   sequentialPoints: 0
+  autoDestroySpawnedRocks: 1
+  destroyAfterSeconds: 20
 --- !u!1 &3871844861393691929
 GameObject:
   m_ObjectHideFlags: 0
