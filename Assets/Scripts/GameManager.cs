@@ -272,7 +272,7 @@ public class GameManager : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.H))
         //{
         //    TakeDamage(10f);
-        //}
+        //} - obsolete**
     }
 
     // 
@@ -396,7 +396,7 @@ private void UpdateScoreUI()
             yield return null;
         }
 
-        // If full unlock sprint and show message once
+        // if full unlock sprint and show message once
         if (!isGameOver && currentEnergy >= maxEnergy - 0.01f)
         {
             currentEnergy = maxEnergy;
