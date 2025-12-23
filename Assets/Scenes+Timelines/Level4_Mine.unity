@@ -3343,8 +3343,8 @@ MonoBehaviour:
   inputEnabled: 1
   damageFlashRenderers: []
   damageFlashDuration: 0.3
-  jumpForce: 3.5
-  forwardJumpForce: 1
+  jumpForce: 2.5
+  forwardJumpForce: 0.8
   footstepSource: {fileID: 145979201}
   ladderClimbSpeed: 2
   ladderSideJumpForce: 5
@@ -18265,7 +18265,7 @@ MonoBehaviour:
   elevatorSfxSource: {fileID: 764355694}
   elevatorSfxClip: {fileID: 8300000, guid: 2bf9ef5d3fd999a4587b1b560210eb09, type: 3}
   elevatorSfxVolume: 1
-  collapseRockfallOverlay: {fileID: 91973311}
+  collapseRockfallOverlay: {fileID: 0}
   maxHealth: 100
   healthBar: {fileID: 1186506654}
   currentHealth: 0
@@ -18285,6 +18285,8 @@ MonoBehaviour:
   collapseSfxSource: {fileID: 506633411}
   collapseSfxClip: {fileID: 8300000, guid: b376bc8971a06fd46a7d98082bb17443, type: 3}
   collapseSfxVolume: 1
+  allOreCollectedMessage: ALL ORE COLLECTED, RUN TO THE ELEVATOR AND ESCAPE!
+  allOreCollectedMessageDuration: 4
   score: 0
   scoreText: {fileID: 1340915265}
   checkpointsEnabled: 1
@@ -30816,7 +30818,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 11.66, y: 350.2}
+  m_AnchoredPosition: {x: 15.8, y: 350.2}
   m_SizeDelta: {x: 277.7, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1340915265

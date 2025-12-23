@@ -552,8 +552,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "W / S  - Move forward / back\nA / D  - Turn (ground) / Move sideways (ladder)\nQ
     / R  - Strafe (ground)\nLeft Shift - Sprint\nSpace - Jump\nE - Mine (near ore)\nMouse
-    Wheel - Zoom Camera in/out\n               \n               Dont take elevator
-    too early!"
+    Wheel - Zoom Camera in/out\nC - Camera shoulder swap (zoomed)\n                 "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

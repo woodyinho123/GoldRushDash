@@ -77,6 +77,14 @@ public class GameManager : MonoBehaviour
     private int totalOre;
     private int collectedOre;
 
+    [Header("Ore Completion")]
+    [SerializeField] private string allOreCollectedMessage = "ALL ORE COLLECTED, RUN TO THE ELEVATOR AND ESCAPE!";
+    [SerializeField] private float allOreCollectedMessageDuration = 4f;
+
+    private bool allOreCollected = false;
+    public bool AllOreCollected => allOreCollected;
+
+
     private float currentTime;
     private int lastTimerSeconds = int.MinValue; //  prevents rebuilding timer  every frame
     private bool isGameOver = false;
@@ -103,7 +111,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    // if you hit 0 energy, sprint stays locked until fully recharged
+    // if you hit 0 energy sprint stays locked until fully recharged
     private bool sprintLocked = false;
     public bool CanSprint => !sprintLocked && HasEnergy;  // Hasenergy just avoids weird edge cases
 
@@ -157,6 +165,7 @@ public class GameManager : MonoBehaviour
         // counts ore at start
         totalOre = GameObject.FindGameObjectsWithTag("GoldOre").Length;
         collectedOre = 0;
+        allOreCollected = false;
         UpdateOreUI();
 
         //    HEALTH 
@@ -315,13 +324,16 @@ private void UpdateScoreUI()
 
     private void WinGame()
     {
-        string msg = $"You collected all the ore!\n({collectedOre}/{totalOre})";
-        GameOver(msg);
+        if (allOreCollected) return;   
+        allOreCollected = true;
+
+        ShowHudMessage(allOreCollectedMessage, allOreCollectedMessageDuration);
     }
+
 
     // 
     // ENERGY //MATHS CONTENT PRESENT HERE
-    
+
     public void SpendEnergy(float amount)
     {
         if (isGameOver) return;
