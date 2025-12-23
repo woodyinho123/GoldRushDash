@@ -30,7 +30,7 @@ public static class LeaderboardService
 
     public static string GetNextDefaultPlayerName()
     {
-        // player 1, player 2, etc 
+        // player 1 player 2 etc 
         int next = GetEntries().Count + 1;
         return $"Player {next}";
     }

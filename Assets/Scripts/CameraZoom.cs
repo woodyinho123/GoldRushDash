@@ -34,7 +34,7 @@ public class CameraZoom : MonoBehaviour
     public float farPitchDown = 6f;
 
     private int _shoulderSign = 1;     // +1 = right shoulder, -1 = left shoulder
-    private float _currentLocalX = 0f; // smoothed local X
+    private float _currentLocalX = 0f; // smoothed local x
     private float _currentPitch = 0f;  // smoothed pitch 
     private Quaternion _baseLocalRot;
 

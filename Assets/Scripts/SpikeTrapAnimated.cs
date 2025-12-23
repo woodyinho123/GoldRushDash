@@ -48,7 +48,7 @@ public class SpikeTrapAnimated : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        // damage shouldnt move player- we only call TakeDamage
+        // damage shouldnt move player- only calling takedamage
         if (_running)
         {
             TryDamage();

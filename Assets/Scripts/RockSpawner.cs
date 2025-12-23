@@ -10,7 +10,7 @@ public class RockSpawner : MonoBehaviour
     //if true drop from  point each interval (constant rockfall wall)
     public bool spawnAllPointsEachInterval = false;
 
-    //  if randomizeoint is false you can cycle through points instead of always using 0
+    //  if randomizeoint is false  cycle through points instead of always using 0
     public bool sequentialPoints = false;
 
     

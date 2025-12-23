@@ -18,9 +18,9 @@ public class MainMenuUI : MonoBehaviour
 
     private void Awake()
     {
-        // this prevents UI/timeline weirdness***
+        // this prevents ui/timeline weirdness***
         Time.timeScale = 1f;
-        //SplashScreen bug where screen stays black for 4 seconds***
+        //splash screen bug where screen stays black for 4 seconds***
         //  menu visible + clickable 
         if (menuCanvasGroup != null)
         {

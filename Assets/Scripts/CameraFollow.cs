@@ -9,7 +9,7 @@ public class CameraFollow : MonoBehaviour
     [Header("Offsets")]
     
     public Vector3 groundOffset;
-    public Vector3 ladderOffset = new Vector3(0f, 5f, -7f); // higher & back
+    public Vector3 ladderOffset = new Vector3(0f, 5f, -7f); // higher and back
 
     [Header("Look Up")]
     public float groundLookUp = 0f;
@@ -37,7 +37,7 @@ public class CameraFollow : MonoBehaviour
 
         if (_cam != null)
         {
-            //  groundFOV
+            //  groundfov
             groundFOV = _cam.fieldOfView;
         }
 

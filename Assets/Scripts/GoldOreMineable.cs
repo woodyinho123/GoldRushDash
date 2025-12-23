@@ -52,12 +52,12 @@ public class GoldOreMineable : MonoBehaviour
 
 
     //MATHS CONTENT PRESENT HERE
-    // Called when the player is actively mining this ore
+    // called when the player is actively mining this ore
     public void Mine(float deltaTime)
     {
         if (isDepleted) return;
 
-        // Show the bar when we start mining
+        // show the bar when we start mining
         if (miningProgressSlider != null && !miningProgressSlider.gameObject.activeSelf)
         {
             miningProgressSlider.gameObject.SetActive(true);

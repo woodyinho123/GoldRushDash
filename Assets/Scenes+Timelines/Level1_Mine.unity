@@ -4413,6 +4413,8 @@ MonoBehaviour:
   elevatorSfxSource: {fileID: 1950394558}
   elevatorSfxClip: {fileID: 8300000, guid: 2bf9ef5d3fd999a4587b1b560210eb09, type: 3}
   elevatorSfxVolume: 1
+  endRunOnElevatorExit: 0
+  scoreboardSceneName: ScoreboardScene
   collapseRockfallOverlay: {fileID: 0}
   maxHealth: 100
   healthBar: {fileID: 600253121}
@@ -4420,7 +4422,7 @@ MonoBehaviour:
   maxEnergy: 100
   energyBar: {fileID: 108568527}
   currentEnergy: 0
-  maxTime: 3
+  maxTime: 72
   timerBar: {fileID: 157430895}
   timerLabel: {fileID: 899373101}
   collapseWarningSeconds: 20
@@ -4437,6 +4439,7 @@ MonoBehaviour:
   allOreCollectedMessageDuration: 4
   score: 0
   scoreText: {fileID: 1511453710}
+  resetRunScoreOnSceneStart: 1
   checkpointsEnabled: 0
   respawnHealth: 100
   deathRespawnDamage: 15
@@ -10280,7 +10283,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 717237171}
+  - {fileID: 538272337}
   - {fileID: 108568526}
   - {fileID: 600253120}
   - {fileID: 2018373454}
@@ -10291,8 +10294,8 @@ RectTransform:
   - {fileID: 899373100}
   - {fileID: 1204547503}
   - {fileID: 1511453709}
-  - {fileID: 538272337}
   - {fileID: 290507534}
+  - {fileID: 717237171}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

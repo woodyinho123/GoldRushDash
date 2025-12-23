@@ -59,7 +59,7 @@ public class FallingRock : MonoBehaviour
 
     private void Start()
     {
-        // rock starts idle rockTriggerzone will call drop
+        // rock starts idle rocktriggerzone will call drop
         _falling = false;
         _impacted = false;
         _hasHitPlayer = false;
@@ -117,7 +117,7 @@ public class FallingRock : MonoBehaviour
         _impacted = true;
         _falling = false;
 
-        // making damage in a radius around the impact point
+        // making damage in a radius 
         if (!_hasHitPlayer && energyDamage > 0f)
         {
             Collider[] hits = Physics.OverlapSphere(transform.position, damageRadius);
@@ -127,7 +127,7 @@ public class FallingRock : MonoBehaviour
                 {
                     Debug.Log($"FallingRock: impact damage to PLAYER, radius={damageRadius}");
 
-                    // Hurt feedback (sound + red flash) lives on the PLAYER
+                    
                     if (playHurtFeedback)
                     {
                         var feedback = h.GetComponentInParent<PlayerDamageFeedback>();

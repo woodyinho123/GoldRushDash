@@ -29,6 +29,11 @@ public class GameManager : MonoBehaviour
     public AudioClip elevatorSfxClip;
     [Range(0f, 1f)] public float elevatorSfxVolume = 1f;
 
+    [Header("End of Run (Leaderboard)")]
+    [SerializeField] private bool endRunOnElevatorExit = false;
+    [SerializeField] private string scoreboardSceneName = "ScoreboardScene";
+
+
 
     [Header("Collapse FX")]
     public GameObject collapseRockfallOverlay;   // assign a full screen ui overlay 
@@ -94,7 +99,7 @@ public class GameManager : MonoBehaviour
     private Coroutine rechargeCoroutine;
 
 
-    // energy / HUD helpers
+    // energy / hud helpers
     private bool isRechargingEnergy = false;
     private Coroutine hudMessageCoroutine;
 
@@ -122,6 +127,10 @@ public class GameManager : MonoBehaviour
     public int score = 0;
     [SerializeField] private TMP_Text scoreText;   // drag tmp here***
 
+    [Header("Run Score (RunScoreManager)")]
+    [SerializeField] private bool resetRunScoreOnSceneStart = false;
+
+
     [Header("CHECKPOINTS")]
     [SerializeField] private bool checkpointsEnabled = false;     // on* in Level 3 only!
     [SerializeField] private float respawnHealth = 100f;          // health after respawn 
@@ -148,6 +157,12 @@ public class GameManager : MonoBehaviour
 
 
         Time.timeScale = 1f;
+        // only tick this in the 1st level of a run******
+        if (resetRunScoreOnSceneStart)
+        {
+            RunScoreManager.ResetRun();
+        }
+
         // CHECKPOINT 
         respawnHealth = maxHealth;
 
@@ -724,16 +739,19 @@ private void UpdateScoreUI()
 
          // load next scene 
          Time.timeScale = 1f;
-        
-         //if we just finished level 5, save to leaderboard and go to scoreboard
-         string sceneName = SceneManager.GetActiveScene().name;
-                 if (sceneName == "Level5_Mine")
-                     {
-                         LeaderboardService.AddEntry(RunScoreManager.GetPlayerName(), RunScoreManager.GetRunScore());
-                         SceneManager.LoadScene("ScoreboardScene");
-                         yield break;
-                     }
-        
+
+        //if we just finished last level, save to leaderboard and go to scoreboard
+       
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        if (endRunOnElevatorExit || sceneName == "Level5_Mine")
+        {
+            LeaderboardService.AddEntry(RunScoreManager.GetPlayerName(), RunScoreManager.GetRunScore());
+            SceneManager.LoadScene(scoreboardSceneName);
+            yield break;
+        }
+
+
         int next = SceneManager.GetActiveScene().buildIndex + 1;
                  if (next >= SceneManager.sceneCountInBuildSettings)
                         next = 0;

@@ -527,7 +527,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 97.2, y: -338.6}
+  m_AnchoredPosition: {x: 97.2, y: -356.89}
   m_SizeDelta: {x: 952.3, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &794162541
@@ -552,7 +552,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "W / S  - Move forward / back\nA / D  - Turn (ground) / Move sideways (ladder)\nQ
     / R  - Strafe (ground)\nLeft Shift - Sprint\nSpace - Jump\nE - Mine (near ore)\nMouse
-    Wheel - Zoom Camera in/out\nC - Camera shoulder swap (zoomed)\n                 "
+    Wheel - Zoom Camera in/out\nC - Camera shoulder swap (zoomed)\nESC - Pause Menu\n                 "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

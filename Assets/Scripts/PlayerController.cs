@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
 
         if (anim == null)
         {
-            // find the Animator on the miner child
+            // find the animator on the miner child
             anim = GetComponentInChildren<Animator>();
         }
 
@@ -740,7 +740,7 @@ public class PlayerController : MonoBehaviour
 
                 // upward + sideways push
                 Vector3 jumpDir = Vector3.up * jumpForce;
-                // NEW:
+                
                 Vector3 side = ladderRight * -h * ladderSideJumpForce;
 
 

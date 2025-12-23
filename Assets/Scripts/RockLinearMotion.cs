@@ -80,12 +80,12 @@ public class RockLinearMotion : MonoBehaviour
          _t = 0f;
          _falling = true;
 
-         //  warning circle once
+         //  warning circle once - OBSOLETE**
          if (showWarningCircle && warningCirclePrefab != null && _warningInstance == null)
          {
              _warningInstance = Instantiate(warningCirclePrefab);
 
-            // scale radius , diameter = radius * 2)
+            // scale radius  diameter = radius * 2)
              float diameter = Mathf.Max(0.01f, (_radius * warningRadiusMultiplier) * 2f);
              _warningInstance.transform.localScale = new Vector3(diameter, diameter, diameter);
          }
@@ -98,7 +98,7 @@ public class RockLinearMotion : MonoBehaviour
 
         _t += Time.deltaTime;
 
-        //**v = u + a t***
+        //**v = u + a t***  math lecture notes
         CurrentSpeed = initialSpeed + acceleration * _t;
 
        
@@ -120,7 +120,7 @@ public class RockLinearMotion : MonoBehaviour
 
             else
             {
-                // fallback still show it under the rock so it never disappears
+                // fallback still show it under the rock  never disappears
                 Vector3 p = _warningInstance.transform.position;
                 p.x = from.x;
                 p.z = from.z;

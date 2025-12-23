@@ -11611,6 +11611,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288675808}
   m_Mesh: {fileID: 120644227677480923, guid: 27c061e01c69a6d45b93e68bac979c54, type: 3}
+--- !u!1 &291088685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 162688346552673926, guid: 55175523256d49a40a0c9de86c74e53b, type: 3}
+  m_PrefabInstance: {fileID: 1893987470}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &293529445
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13312,7 +13317,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 127618265}
-  - {fileID: 903715963}
   - {fileID: 1666487837}
   - {fileID: 1108633865}
   - {fileID: 1184422773}
@@ -13324,6 +13328,7 @@ RectTransform:
   - {fileID: 784110631}
   - {fileID: 105348908}
   - {fileID: 367125296}
+  - {fileID: 903715963}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -14467,6 +14472,8 @@ MonoBehaviour:
   elevatorSfxSource: {fileID: 1937654797}
   elevatorSfxClip: {fileID: 8300000, guid: 2bf9ef5d3fd999a4587b1b560210eb09, type: 3}
   elevatorSfxVolume: 1
+  endRunOnElevatorExit: 0
+  scoreboardSceneName: ScoreboardScene
   collapseRockfallOverlay: {fileID: 0}
   maxHealth: 100
   healthBar: {fileID: 1108633866}
@@ -14474,7 +14481,7 @@ MonoBehaviour:
   maxEnergy: 100
   energyBar: {fileID: 1666487838}
   currentEnergy: 0
-  maxTime: 110
+  maxTime: 90
   timerBar: {fileID: 331666771}
   timerLabel: {fileID: 192577555}
   collapseWarningSeconds: 20
@@ -14491,6 +14498,7 @@ MonoBehaviour:
   allOreCollectedMessageDuration: 4
   score: 0
   scoreText: {fileID: 105348909}
+  resetRunScoreOnSceneStart: 0
   checkpointsEnabled: 0
   respawnHealth: 100
   deathRespawnDamage: 15
@@ -73909,13 +73917,31 @@ PrefabInstance:
     - {fileID: 1231522036532608605, guid: 55175523256d49a40a0c9de86c74e53b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 162688346552673926, guid: 55175523256d49a40a0c9de86c74e53b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1893987477}
   m_SourcePrefab: {fileID: 100100000, guid: 55175523256d49a40a0c9de86c74e53b, type: 3}
 --- !u!4 &1893987473 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7793756009882962738, guid: 55175523256d49a40a0c9de86c74e53b, type: 3}
   m_PrefabInstance: {fileID: 1893987470}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1893987477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291088685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aea116a07cf33704f875c0417fa8881e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LadderOrePickup
+  scoreValue: 10
+  pickupSfx: {fileID: 8300000, guid: 320448e9281fda242b02bb2f7ef5f62d, type: 3}
+  pickupSfxVolume: 1
 --- !u!1001 &1894101258
 PrefabInstance:
   m_ObjectHideFlags: 0
