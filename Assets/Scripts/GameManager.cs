@@ -574,7 +574,7 @@ private void UpdateScoreUI()
             if (checkpointsEnabled)
                 RespawnFromRocks();
             else
-                LoseGame("You were crushed by falling rocks!");
+                LoseGame("You were crushed!");
         }
 
     }
@@ -587,11 +587,25 @@ private void UpdateScoreUI()
         else
             LoseGame("You fell into lava and died!");
     }
+    // fatal fall check
+    public void FatalFallDeath()
+    {
+        // Level 4 has checkpoints enabled so we respawn instead of game end
+        if (checkpointsEnabled && _hasCheckpoint)
+        {
+            RespawnInternal("YOU DIED FROM A FATAL FALL! (RESPAWN)", deathRespawnDamage);
+        }
+        else
+        {
+            LoseGame("You died from a fatal fall!");
+        }
+    }
 
 
-    
+
+
     // GAME OVER
-    
+
     private void LoseGame(string reason)
     {
         GameOver(reason);

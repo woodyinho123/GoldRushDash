@@ -27,6 +27,9 @@ public class FallingRock : MonoBehaviour
 
     [Tooltip("If true, only damages once.")]
     public bool singleHit = true;
+    
+    [Header("Hurt Feedback (Player)")]
+    public bool playHurtFeedback = true;
 
     [Tooltip("Seconds to keep the rock after impact.")]
     public float destroySecondsAfterImpact = 0.8f;
@@ -124,12 +127,21 @@ public class FallingRock : MonoBehaviour
                 {
                     Debug.Log($"FallingRock: impact damage to PLAYER, radius={damageRadius}");
 
+                    // Hurt feedback (sound + red flash) lives on the PLAYER
+                    if (playHurtFeedback)
+                    {
+                        var feedback = h.GetComponentInParent<PlayerDamageFeedback>();
+                        if (feedback != null)
+                            feedback.PlayHurtFeedback();
+                    }
+
                     if (GameManager.Instance != null)
                         GameManager.Instance.TakeDamage(energyDamage);
 
                     _hasHitPlayer = true;
                     break;
                 }
+
             }
         }
 

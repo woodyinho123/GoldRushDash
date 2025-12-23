@@ -436,20 +436,11 @@ public class PlayerController : MonoBehaviour
         {
             if (lastVerticalSpeed < fatalFallSpeed)
             {
-                // use reflection to call gamemanager.losegame with a custom message
-                // same pattern as rockdamage instantDeath*
                 if (GameManager.Instance != null)
                 {
-                    var gm = GameManager.Instance;
-                    var method = gm.GetType().GetMethod(
-                        "LoseGame",
-                        BindingFlags.NonPublic | BindingFlags.Instance
-                    );
-                    if (method != null)
-                    {
-                        method.Invoke(gm, new object[] { "You died from a fatal fall!" });
-                    }
+                    GameManager.Instance.FatalFallDeath();
                 }
+
             }
         }
 
