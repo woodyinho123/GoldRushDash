@@ -3752,7 +3752,7 @@ MonoBehaviour:
   oreCount: 0
   anim: {fileID: 1900779150}
   mineEnergyPerSecond: 2
-  miningPromptUI: {fileID: 1404333601}
+  miningPromptUI: {fileID: 1620344430}
   inputEnabled: 1
   damageFlashRenderers: []
   damageFlashDuration: 0.15
