@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class LadderOrePickup : MonoBehaviour
@@ -13,19 +14,24 @@ public class LadderOrePickup : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        if (GameManager.Instance != null)
+        CollectOre();
+    }
+
+    private void CollectOre()
+    {
+        try
         {
-            // counts towards ore
             GameManager.Instance.OreCollected();
-
-            // adds to overall score
             GameManager.Instance.AddScore(scoreValue);
+
+            // play sound at this position
+            if (pickupSfx != null)
+                AudioSource.PlayClipAtPoint(pickupSfx, transform.position, pickupSfxVolume);
+
+            Destroy(gameObject);
         }
-
-        // play sound at this position
-        if (pickupSfx != null)
-            AudioSource.PlayClipAtPoint(pickupSfx, transform.position, pickupSfxVolume);
-
-        Destroy(gameObject);
+        catch (Exception e) { 
+            Debug.LogException(e);
+        }
     }
 }
