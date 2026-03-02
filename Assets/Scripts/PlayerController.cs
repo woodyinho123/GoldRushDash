@@ -262,7 +262,7 @@ public class PlayerController : MonoBehaviour
                 // move forward/back along local forward
                 // move forward/back + strafe, but only if not in ladder airborne state
                 bool canUseGroundControls = !_airborneFromLadder;
-
+                //hi
                 if (canUseGroundControls)
                 {
                     Vector3 moveDir = (transform.forward * -v) + (transform.right * strafe);
