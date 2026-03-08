@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 
     // energy / hud helpers
     private bool isRechargingEnergy = false;
-    private Coroutine hudMessageCoroutine;
+    
 
     // for clayercontroller true if we have any usable energy
     private const float ENERGY_EMPTY_EPS = 0.01f;   //  treat < this as empty
@@ -113,7 +113,10 @@ public class GameManager : MonoBehaviour
     public bool IsCollapsed => currentTime <= 0f;
     public float TimeRemaining => currentTime;
 
-
+    public float CurrentHealth => currentHealth;
+    public float CurrentEnergy => currentEnergy;
+    public int CollectedOre => collectedOre;
+    public int TotalOre => totalOre;
 
 
     // if you hit 0 energy sprint stays locked until fully recharged
@@ -277,6 +280,8 @@ public class GameManager : MonoBehaviour
                 timerLabel.text = seconds + " SECONDS UNTIL COLLAPSE!";
         }
 
+        GameEvents.RaiseTimerChanged(currentTime, seconds);
+
 
         if (currentTime <= 0f && !isCollapsing)
             StartCoroutine(CollapseTimeoutRoutine());
@@ -292,11 +297,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        //// DEBUG- testing health damage with the h key, rocks not damaging player
-        //if (Input.GetKeyDown(KeyCode.H))
-        //{
-        //    TakeDamage(10f);
-        //} - obsolete**
+        
     }
 
     // 
@@ -313,12 +314,11 @@ public class GameManager : MonoBehaviour
 
     private void UpdateOreUI()
     {
-        if (oreCounterText != null)
-            oreCounterText.text = $"Ore: {collectedOre}/{totalOre}";
+        GameEvents.RaiseOreChanged(collectedOre, totalOre);
     }
 
 
-       public void AddScore(int amount)
+    public void AddScore(int amount)
      {
          score += amount;
          if (score< 0) score = 0;
@@ -330,10 +330,9 @@ public class GameManager : MonoBehaviour
      }
 
 
-private void UpdateScoreUI()
+    private void UpdateScoreUI()
     {
-        if (scoreText != null)
-            scoreText.text = $"Score: {score}";
+        GameEvents.RaiseScoreChanged(score);
     }
 
 
@@ -440,40 +439,26 @@ private void UpdateScoreUI()
         rechargeCoroutine = null;
     }
 
+    private void UpdateHealthUI()
+    {
+        GameEvents.RaiseHealthChanged(currentHealth);
+    }
 
     private void UpdateEnergyUI()
     {
-        if (energyBar != null)
-            energyBar.value = currentEnergy;
+        GameEvents.RaiseEnergyChanged(currentEnergy);
     }
 
 
 
     private void ShowHudMessage(string message, float durationSeconds = 2f)
     {
-        if (hudMessageText == null) return;
-
-        hudMessageText.text = message;
-        hudMessageText.gameObject.SetActive(true);
-
-        if (hudMessageCoroutine != null)
-            StopCoroutine(hudMessageCoroutine);
-
-        hudMessageCoroutine = StartCoroutine(HideHudMessageAfterDelay(durationSeconds));
+        GameEvents.RaiseHudMessage(message, durationSeconds);
     }
 
 
 
-    private IEnumerator HideHudMessageAfterDelay(float delay)
-    {
-        yield return new WaitForSecondsRealtime(delay);
-
-
-        if (hudMessageText != null)
-            hudMessageText.gameObject.SetActive(false);
-
-        hudMessageCoroutine = null;
-    }
+   
 
     public void SetCheckpoint(Transform checkpointTransform, string message = "CHECKPOINT REACHED!")
     {
@@ -530,7 +515,7 @@ private void UpdateScoreUI()
 
         // restore health first
         currentHealth = Mathf.Clamp(respawnHealth, 1f, maxHealth);
-        if (healthBar != null) healthBar.value = currentHealth;
+        UpdateHealthUI();
 
         // teleport player
         var rb = playerObj.GetComponent<Rigidbody>();
@@ -551,7 +536,7 @@ private void UpdateScoreUI()
         {
             currentHealth -= postRespawnDamage;
             currentHealth = Mathf.Clamp(currentHealth, 1f, maxHealth);
-            if (healthBar != null) healthBar.value = currentHealth;
+            UpdateHealthUI();
         }
 
         ShowHudMessage(message, 2f);
@@ -579,10 +564,7 @@ private void UpdateScoreUI()
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        if (healthBar != null)
-            healthBar.value = currentHealth;
-
-        Debug.Log($"[Health] damage={amount}, currentHprivate bool sprintLocked = false;\r\npublic bool CanSprint => !sprintLocked && HasEnergy;  // HasEnergy just avoids weird edge cases\r\nealth={currentHealth}, sliderValue={(healthBar != null ? healthBar.value : -1)}");
+        UpdateHealthUI();
 
         if (currentHealth <= 0f)
         {
@@ -631,13 +613,9 @@ private void UpdateScoreUI()
         if (isGameOver) return;
         isGameOver = true;
 
-        if (gameOverPanel != null)
-            gameOverPanel.SetActive(true);
+        GameEvents.RaiseGameOver(message);
 
-        if (gameOverText != null)
-            gameOverText.text = message;
 
-        
         if (collapseRockfallOverlay != null)
         {
             bool showCollapseFx = (message == COLLAPSE_TIMEOUT_MESSAGE);
