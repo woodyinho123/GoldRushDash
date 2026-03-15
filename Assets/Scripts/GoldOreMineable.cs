@@ -3,9 +3,12 @@ using UnityEngine.UI;
 
 public class GoldOreMineable : MonoBehaviour
 {
-   //mine settings
-    public float miningTime = 2f;      // the seconds required to mine
-    public float mineEnergyCost = 10f; // energy spent when ore is fully mined
+    [Header("Ore Data")]
+    public OreData oreData;
+
+    [Header("Fallback Mining Settings (used only if Ore Data is not assigned)")]
+    [SerializeField] private float miningTime = 2f;
+    [SerializeField] private float mineEnergyCost = 10f;
 
     [Header("VFX and SFX")]
     public ParticleSystem mineVFX;   // child on the ore*
@@ -18,8 +21,12 @@ public class GoldOreMineable : MonoBehaviour
     private float currentMiningTime = 0f;
     private bool isDepleted = false;
 
-    [Header("Score")]
-    public int scoreValue = 15;   // or whatever value mined ore should give
+    [Header("Fallback Score (used only if Ore Data is not assigned)")]
+    [SerializeField] private int scoreValue = 15;
+
+    private float MiningTime => Mathf.Max(0.1f, oreData != null ? oreData.miningTime : miningTime);
+    private float MineEnergyCost => oreData != null ? oreData.mineEnergyCost : mineEnergyCost;
+    private int ScoreValue => oreData != null ? oreData.scoreValue : scoreValue;
 
 
     void Start()
@@ -65,7 +72,7 @@ public class GoldOreMineable : MonoBehaviour
 
         currentMiningTime += deltaTime;
 
-        float t = Mathf.Clamp01(currentMiningTime / miningTime);  // 0 / 1
+        float t = Mathf.Clamp01(currentMiningTime / MiningTime);  // 0 / 1
 
         if (miningProgressSlider != null)
         {
@@ -74,7 +81,7 @@ public class GoldOreMineable : MonoBehaviour
             Debug.Log($"[Ore {name}] Mining t={t:0.00}, sliderActive={miningProgressSlider.gameObject.activeInHierarchy}");
         }
 
-        if (currentMiningTime >= miningTime)
+        if (currentMiningTime >= MiningTime)
         {
             CompleteMining();
         }
@@ -126,11 +133,11 @@ public class GoldOreMineable : MonoBehaviour
         // spend energy  inform gamemanager
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.SpendEnergy(mineEnergyCost);
+            GameManager.Instance.SpendEnergy(MineEnergyCost);
             GameManager.Instance.OreCollected();
 
             // ADD SCORE ONCE when mining completes
-            GameManager.Instance.AddScore(scoreValue);
+            GameManager.Instance.AddScore(ScoreValue);
         }
 
 
