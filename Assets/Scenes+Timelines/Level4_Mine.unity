@@ -18308,6 +18308,7 @@ GameObject:
   - component: {fileID: 562526975}
   - component: {fileID: 562526974}
   - component: {fileID: 562526973}
+  - component: {fileID: 562526976}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -18450,7 +18451,7 @@ MonoBehaviour:
   timerLabel: {fileID: 1082068163}
   collapseWarningSeconds: 20
   collapseWarningMessageDuration: 3
-  hudMessageText: {fileID: 410801579}
+  hudMessageController: {fileID: 0}
   energyRechargeDelay: 2
   energyRechargeRate: 15
   collapseOverlaySeconds: 1.2
@@ -18463,10 +18464,7 @@ MonoBehaviour:
   score: 0
   scoreText: {fileID: 1340915265}
   resetRunScoreOnSceneStart: 0
-  checkpointsEnabled: 1
-  respawnHealth: 100
-  deathRespawnDamage: 15
-  lavaRespawnDamage: 25
+  checkpointRespawnController: {fileID: 562526976}
 --- !u!4 &562526975
 Transform:
   m_ObjectHideFlags: 0
@@ -18482,6 +18480,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &562526976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562526972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff3fcd73512a8784f9623ac89bcdcc94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CheckpointRespawnController
+  checkpointsEnabled: 1
+  respawnHealth: 100
+  deathRespawnDamage: 15
+  lavaRespawnDamage: 25
 --- !u!1001 &562688528
 PrefabInstance:
   m_ObjectHideFlags: 0

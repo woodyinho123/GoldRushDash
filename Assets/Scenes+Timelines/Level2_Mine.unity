@@ -8202,7 +8202,7 @@ MonoBehaviour:
   timerLabel: {fileID: 1140468123}
   collapseWarningSeconds: 20
   collapseWarningMessageDuration: 3
-  hudMessageText: {fileID: 460991510}
+  hudMessageController: {fileID: 0}
   energyRechargeDelay: 2
   energyRechargeRate: 15
   collapseOverlaySeconds: 1.2
@@ -8215,10 +8215,7 @@ MonoBehaviour:
   score: 0
   scoreText: {fileID: 624559662}
   resetRunScoreOnSceneStart: 0
-  checkpointsEnabled: 0
-  respawnHealth: 100
-  deathRespawnDamage: 15
-  lavaRespawnDamage: 25
+  checkpointRespawnController: {fileID: 0}
 --- !u!4 &344795534
 Transform:
   m_ObjectHideFlags: 0
