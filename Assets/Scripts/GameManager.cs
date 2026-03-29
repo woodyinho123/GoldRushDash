@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI oreCounterText;
     public TextMeshProUGUI gameOverText;
 
-    // 
+    
     [Header("Fade / Level Exit")]
     [SerializeField] private CanvasGroup fadeCanvasGroup;  // fullscreen black image with canvasgroup
     [SerializeField] private float fadeOutDuration = 1.0f;

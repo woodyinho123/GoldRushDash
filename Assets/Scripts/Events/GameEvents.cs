@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 /// summary
-/// Simple event hub for decoupling gameplay state changes from UI/FX listeners
+/// simple event hub for decoupling gameplay state changes from UI/FX listeners
 
 public static class GameEvents
 {
@@ -18,7 +18,7 @@ public static class GameEvents
     public static event Action<string, float> HudMessage;         // message, duration
     public static event Action<string> GameOver;                  // reason/message
 
-    // raise helpers (keeps callsites tidy)
+    // raise helpers 
     public static void RaiseScoreChanged(int score) => ScoreChanged?.Invoke(score);
     public static void RaiseHealthChanged(float health) => HealthChanged?.Invoke(health);
     public static void RaiseEnergyChanged(float energy) => EnergyChanged?.Invoke(energy);
