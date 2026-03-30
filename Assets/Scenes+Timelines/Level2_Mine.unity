@@ -6844,7 +6844,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 094720442c66bac409da586a256c4c6d, type: 3}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: energyDamage
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: dustVFXPrefab
@@ -6933,7 +6933,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 094720442c66bac409da586a256c4c6d, type: 3}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: energyDamage
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: dustVFXPrefab
@@ -7267,7 +7267,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 094720442c66bac409da586a256c4c6d, type: 3}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: energyDamage
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: dustVFXPrefab
@@ -13619,7 +13619,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 094720442c66bac409da586a256c4c6d, type: 3}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: energyDamage
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: dustVFXPrefab
@@ -14160,7 +14160,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 094720442c66bac409da586a256c4c6d, type: 3}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: energyDamage
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: dustVFXPrefab
@@ -19367,7 +19367,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 094720442c66bac409da586a256c4c6d, type: 3}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: energyDamage
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: dustVFXPrefab
@@ -27991,7 +27991,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 094720442c66bac409da586a256c4c6d, type: 3}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: energyDamage
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: dustVFXPrefab
@@ -29816,7 +29816,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 094720442c66bac409da586a256c4c6d, type: 3}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: energyDamage
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: dustVFXPrefab
@@ -41092,7 +41092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: energyDamage
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6331811324977204770, guid: 077aa6f8915fc374aaffff721e306851, type: 3}
       propertyPath: dustVFXPrefab
